@@ -26,7 +26,7 @@ class _RecordsSource implements RecordsSource {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<Record>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/get_redfdcords',
+                .compose(_dio.options, '/get_records',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
