@@ -1,1 +1,7 @@
-{}
+{
+  "timeout_error": "Timeout error",
+  "server_error": "Server Error",
+  "network_error": "Network error",
+  "unknown_error": "Uknown Error",
+  "retry": "Retry"
+}

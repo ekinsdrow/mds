@@ -30,7 +30,7 @@ class MainPage extends StatelessWidget {
                   ),
                   itemCount: context.read<Records>().records.length,
                 );
-              }
+              },
             ),
           ),
         ),

@@ -4,7 +4,7 @@ part of 'initial_bloc.dart';
 class InitialState with _$InitialState {
   const factory InitialState.loading() = _Loading;
   const factory InitialState.error({
-    required String error,
+    required Exception error,
   }) = _Error;
   const factory InitialState.success({
     required List<Record> records,

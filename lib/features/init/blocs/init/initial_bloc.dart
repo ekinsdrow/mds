@@ -26,13 +26,11 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
 
     List<Record>? records;
 
-    //TODO: errors handling
     try {
       records = await recordsRepository.getRecords();
-    } catch (e) {
-      print(e);
+    } on Exception catch (e) {
       emit(
-        InitialState.error(error: e.toString()),
+        InitialState.error(error: e),
       );
     }
 
