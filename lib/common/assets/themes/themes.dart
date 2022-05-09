@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
-//TODO: add font
 abstract class Themes {
   static get darkTheme => _getTheme(
-        ThemeData.dark(),
+        ThemeData(
+          brightness: Brightness.dark,
+          fontFamily: 'Montserrat',
+        ),
       );
   static get lightTheme => _getTheme(
-        ThemeData.light(),
+        ThemeData(
+          brightness: Brightness.light,
+          fontFamily: 'Montserrat',
+        ),
       );
 
   static ThemeData _getTheme(ThemeData themeData) => themeData.copyWith(
