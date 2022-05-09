@@ -31,7 +31,7 @@ class _BottomBarState extends State<BottomBar> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(.5),
+            color: Theme.of(context).shadowColor,
             offset: const Offset(
               0,
               2,
@@ -133,7 +133,7 @@ class _PlayerWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(
         Constants.borderRadius,
       ),
-      color: Colors.grey[200],
+      color: Theme.of(context).splashColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(
           Constants.borderRadius,

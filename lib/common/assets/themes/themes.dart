@@ -9,15 +9,16 @@ abstract class Themes {
       );
 
   static ThemeData _getTheme(ThemeData themeData) => themeData.copyWith(
-        primaryColor: Colors.primaryColor,
+        primaryColor: AppColors.primaryColor,
         progressIndicatorTheme: const ProgressIndicatorThemeData(
-          color: Colors.primaryColor,
+          color: AppColors.primaryColor,
         ),
+        shadowColor: Colors.grey.withOpacity(.3),
       );
 }
 
-class Colors {
-  Colors._();
+class AppColors {
+  AppColors._();
 
   static const primaryColor = Color(0xFF446DE6);
 }

@@ -128,7 +128,7 @@ class _FilterCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(.5),
+            color: Theme.of(context).shadowColor,
             offset: const Offset(
               0,
               2,
