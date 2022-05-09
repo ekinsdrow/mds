@@ -2,15 +2,21 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mds/common/data/models/record.dart';
+import 'package:mds/features/init/data/repositories/records_repository.dart';
 
 part 'initial_event.dart';
 part 'initial_state.dart';
 part 'initial_bloc.freezed.dart';
 
 class InitialBloc extends Bloc<InitialEvent, InitialState> {
-  InitialBloc() : super(const _Loading()) {
+  InitialBloc({
+    required this.recordsRepository,
+  }) : super(const _Loading()) {
     on<InitialEvent>(_onStarted);
   }
+
+  final IRecordsRepository recordsRepository;
 
   Future<FutureOr<void>> _onStarted(
     InitialEvent event,
@@ -18,11 +24,22 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
   ) async {
     emit(const InitialState.loading());
 
-    //TODO: add initialization
-    await Future.delayed(
-      const Duration(milliseconds: 500),
-    );
+    List<Record>? records;
 
-    emit(const InitialState.success());
+    try {
+      records = await recordsRepository.getRecords();
+    } on Exception catch (e) {
+      emit(
+        InitialState.error(error: e),
+      );
+    }
+
+    if (records != null) {
+      emit(
+        InitialState.success(
+          records: records,
+        ),
+      );
+    }
   }
 }
