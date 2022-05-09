@@ -1,7 +1,8 @@
 {
-  "timeout_error": "Истекло время ожидания",
-  "server_error": "Ошибка сервера",
+  "catalog": "Каталог",
   "network_error": "Сетевая ошибка",
-  "unknown_error": "Неизвестная ошибка",
-  "retry": "Повторить"
+  "retry": "Повторить",
+  "server_error": "Ошибка сервера",
+  "timeout_error": "Истекло время ожидания",
+  "unknown_error": "Неизвестная ошибка"
 }

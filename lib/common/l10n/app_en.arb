@@ -1,7 +1,8 @@
 {
-  "timeout_error": "Timeout error",
-  "server_error": "Server Error",
+  "catalog": "Catalog",
   "network_error": "Network error",
-  "unknown_error": "Uknown Error",
-  "retry": "Retry"
+  "retry": "Retry",
+  "server_error": "Server Error",
+  "timeout_error": "Timeout error",
+  "unknown_error": "Uknown Error"
 }

@@ -7,7 +7,6 @@ part 'record.g.dart';
 
 @freezed
 class Record with _$Record {
-
   Record._();
 
   factory Record({
@@ -31,6 +30,18 @@ class Record with _$Record {
           streamingDate.substring(8),
         ),
       );
+
+  String get authorsString {
+    var res = '';
+
+    for (final author in authors) {
+      res += '${author.title}, ';
+    }
+
+    res = res.substring(0, res.length - 2);
+
+    return res;
+  }
 
   factory Record.fromJson(Map<String, dynamic> json) => _$RecordFromJson(json);
 }
