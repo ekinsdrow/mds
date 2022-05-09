@@ -22,8 +22,10 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const InitialPage());
     },
     MainRoute.name: (routeData) {
+      final args = routeData.argsAs<MainRouteArgs>();
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const MainPage());
+          routeData: routeData,
+          child: MainPage(key: args.key, records: args.records));
     }
   };
 
@@ -44,8 +46,24 @@ class InitialRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MainPage]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute() : super(MainRoute.name, path: '/main-page');
+class MainRoute extends PageRouteInfo<MainRouteArgs> {
+  MainRoute({Key? key, required List<Record> records})
+      : super(MainRoute.name,
+            path: '/main-page',
+            args: MainRouteArgs(key: key, records: records));
 
   static const String name = 'MainRoute';
+}
+
+class MainRouteArgs {
+  const MainRouteArgs({this.key, required this.records});
+
+  final Key? key;
+
+  final List<Record> records;
+
+  @override
+  String toString() {
+    return 'MainRouteArgs{key: $key, records: $records}';
+  }
 }

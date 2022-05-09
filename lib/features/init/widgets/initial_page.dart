@@ -13,9 +13,11 @@ class InitialPage extends StatelessWidget {
     return InitialPageScope(
       child: BlocListener<InitialBloc, InitialState>(
         listener: (context, state) => state.whenOrNull(
-          success: () => context.router.replaceAll(
+          success: (records) => context.router.replaceAll(
             [
-              const MainRoute(),
+              MainRoute(
+                records: records,
+              ),
             ],
           ),
         ),

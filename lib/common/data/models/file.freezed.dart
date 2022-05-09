@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'file.dart';
@@ -11,36 +12,11 @@ part of 'file.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 File _$FileFromJson(Map<String, dynamic> json) {
   return _File.fromJson(json);
 }
-
-/// @nodoc
-class _$FileTearOff {
-  const _$FileTearOff();
-
-  _File call(
-      {required String bitrate,
-      required String size,
-      @JsonKey(name: 'duration') required String durationString,
-      @JsonKey(name: 'file_id') required String fileId}) {
-    return _File(
-      bitrate: bitrate,
-      size: size,
-      durationString: durationString,
-      fileId: fileId,
-    );
-  }
-
-  File fromJson(Map<String, Object?> json) {
-    return File.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $File = _$FileTearOff();
 
 /// @nodoc
 mixin _$File {
@@ -104,9 +80,9 @@ class _$FileCopyWithImpl<$Res> implements $FileCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$FileCopyWith<$Res> implements $FileCopyWith<$Res> {
-  factory _$FileCopyWith(_File value, $Res Function(_File) then) =
-      __$FileCopyWithImpl<$Res>;
+abstract class _$$_FileCopyWith<$Res> implements $FileCopyWith<$Res> {
+  factory _$$_FileCopyWith(_$_File value, $Res Function(_$_File) then) =
+      __$$_FileCopyWithImpl<$Res>;
   @override
   $Res call(
       {String bitrate,
@@ -116,13 +92,13 @@ abstract class _$FileCopyWith<$Res> implements $FileCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$FileCopyWithImpl<$Res> extends _$FileCopyWithImpl<$Res>
-    implements _$FileCopyWith<$Res> {
-  __$FileCopyWithImpl(_File _value, $Res Function(_File) _then)
-      : super(_value, (v) => _then(v as _File));
+class __$$_FileCopyWithImpl<$Res> extends _$FileCopyWithImpl<$Res>
+    implements _$$_FileCopyWith<$Res> {
+  __$$_FileCopyWithImpl(_$_File _value, $Res Function(_$_File) _then)
+      : super(_value, (v) => _then(v as _$_File));
 
   @override
-  _File get _value => super._value as _File;
+  _$_File get _value => super._value as _$_File;
 
   @override
   $Res call({
@@ -131,7 +107,7 @@ class __$FileCopyWithImpl<$Res> extends _$FileCopyWithImpl<$Res>
     Object? durationString = freezed,
     Object? fileId = freezed,
   }) {
-    return _then(_File(
+    return _then(_$_File(
       bitrate: bitrate == freezed
           ? _value.bitrate
           : bitrate // ignore: cast_nullable_to_non_nullable
@@ -154,12 +130,13 @@ class __$FileCopyWithImpl<$Res> extends _$FileCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_File implements _File {
+class _$_File extends _File {
   _$_File(
       {required this.bitrate,
       required this.size,
       @JsonKey(name: 'duration') required this.durationString,
-      @JsonKey(name: 'file_id') required this.fileId});
+      @JsonKey(name: 'file_id') required this.fileId})
+      : super._();
 
   factory _$_File.fromJson(Map<String, dynamic> json) => _$$_FileFromJson(json);
 
@@ -183,22 +160,27 @@ class _$_File implements _File {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _File &&
-            (identical(other.bitrate, bitrate) || other.bitrate == bitrate) &&
-            (identical(other.size, size) || other.size == size) &&
-            (identical(other.durationString, durationString) ||
-                other.durationString == durationString) &&
-            (identical(other.fileId, fileId) || other.fileId == fileId));
+            other is _$_File &&
+            const DeepCollectionEquality().equals(other.bitrate, bitrate) &&
+            const DeepCollectionEquality().equals(other.size, size) &&
+            const DeepCollectionEquality()
+                .equals(other.durationString, durationString) &&
+            const DeepCollectionEquality().equals(other.fileId, fileId));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, bitrate, size, durationString, fileId);
 
   @JsonKey(ignore: true)
   @override
-  _$FileCopyWith<_File> get copyWith =>
-      __$FileCopyWithImpl<_File>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(bitrate),
+      const DeepCollectionEquality().hash(size),
+      const DeepCollectionEquality().hash(durationString),
+      const DeepCollectionEquality().hash(fileId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_FileCopyWith<_$_File> get copyWith =>
+      __$$_FileCopyWithImpl<_$_File>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -206,26 +188,27 @@ class _$_File implements _File {
   }
 }
 
-abstract class _File implements File {
+abstract class _File extends File {
   factory _File(
-      {required String bitrate,
-      required String size,
-      @JsonKey(name: 'duration') required String durationString,
-      @JsonKey(name: 'file_id') required String fileId}) = _$_File;
+      {required final String bitrate,
+      required final String size,
+      @JsonKey(name: 'duration') required final String durationString,
+      @JsonKey(name: 'file_id') required final String fileId}) = _$_File;
+  _File._() : super._();
 
   factory _File.fromJson(Map<String, dynamic> json) = _$_File.fromJson;
 
   @override
-  String get bitrate;
+  String get bitrate => throw _privateConstructorUsedError;
   @override
-  String get size;
+  String get size => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'duration')
-  String get durationString;
+  String get durationString => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'file_id')
-  String get fileId;
+  String get fileId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$FileCopyWith<_File> get copyWith => throw _privateConstructorUsedError;
+  _$$_FileCopyWith<_$_File> get copyWith => throw _privateConstructorUsedError;
 }

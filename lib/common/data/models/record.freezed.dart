@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'record.dart';
@@ -11,42 +12,11 @@ part of 'record.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Record _$RecordFromJson(Map<String, dynamic> json) {
   return _Record.fromJson(json);
 }
-
-/// @nodoc
-class _$RecordTearOff {
-  const _$RecordTearOff();
-
-  _Record call(
-      {required String title,
-      required String rating,
-      required File file,
-      @JsonKey(name: 'comments_total') required String commentsTotal,
-      @JsonKey(name: 'record_id') required String recordId,
-      @JsonKey(name: 'streaming_date') required String streamingDate,
-      @JsonKey(name: 'author') required List<Author> authors}) {
-    return _Record(
-      title: title,
-      rating: rating,
-      file: file,
-      commentsTotal: commentsTotal,
-      recordId: recordId,
-      streamingDate: streamingDate,
-      authors: authors,
-    );
-  }
-
-  Record fromJson(Map<String, Object?> json) {
-    return Record.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Record = _$RecordTearOff();
 
 /// @nodoc
 mixin _$Record {
@@ -142,9 +112,9 @@ class _$RecordCopyWithImpl<$Res> implements $RecordCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$RecordCopyWith<$Res> implements $RecordCopyWith<$Res> {
-  factory _$RecordCopyWith(_Record value, $Res Function(_Record) then) =
-      __$RecordCopyWithImpl<$Res>;
+abstract class _$$_RecordCopyWith<$Res> implements $RecordCopyWith<$Res> {
+  factory _$$_RecordCopyWith(_$_Record value, $Res Function(_$_Record) then) =
+      __$$_RecordCopyWithImpl<$Res>;
   @override
   $Res call(
       {String title,
@@ -160,13 +130,13 @@ abstract class _$RecordCopyWith<$Res> implements $RecordCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
-    implements _$RecordCopyWith<$Res> {
-  __$RecordCopyWithImpl(_Record _value, $Res Function(_Record) _then)
-      : super(_value, (v) => _then(v as _Record));
+class __$$_RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
+    implements _$$_RecordCopyWith<$Res> {
+  __$$_RecordCopyWithImpl(_$_Record _value, $Res Function(_$_Record) _then)
+      : super(_value, (v) => _then(v as _$_Record));
 
   @override
-  _Record get _value => super._value as _Record;
+  _$_Record get _value => super._value as _$_Record;
 
   @override
   $Res call({
@@ -178,7 +148,7 @@ class __$RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
     Object? streamingDate = freezed,
     Object? authors = freezed,
   }) {
-    return _then(_Record(
+    return _then(_$_Record(
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -204,7 +174,7 @@ class __$RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
           : streamingDate // ignore: cast_nullable_to_non_nullable
               as String,
       authors: authors == freezed
-          ? _value.authors
+          ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<Author>,
     ));
@@ -213,7 +183,7 @@ class __$RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Record implements _Record {
+class _$_Record extends _Record {
   _$_Record(
       {required this.title,
       required this.rating,
@@ -221,7 +191,9 @@ class _$_Record implements _Record {
       @JsonKey(name: 'comments_total') required this.commentsTotal,
       @JsonKey(name: 'record_id') required this.recordId,
       @JsonKey(name: 'streaming_date') required this.streamingDate,
-      @JsonKey(name: 'author') required this.authors});
+      @JsonKey(name: 'author') required final List<Author> authors})
+      : _authors = authors,
+        super._();
 
   factory _$_Record.fromJson(Map<String, dynamic> json) =>
       _$$_RecordFromJson(json);
@@ -241,9 +213,13 @@ class _$_Record implements _Record {
   @override
   @JsonKey(name: 'streaming_date')
   final String streamingDate;
+  final List<Author> _authors;
   @override
   @JsonKey(name: 'author')
-  final List<Author> authors;
+  List<Author> get authors {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_authors);
+  }
 
   @override
   String toString() {
@@ -254,34 +230,34 @@ class _$_Record implements _Record {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Record &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.file, file) || other.file == file) &&
-            (identical(other.commentsTotal, commentsTotal) ||
-                other.commentsTotal == commentsTotal) &&
-            (identical(other.recordId, recordId) ||
-                other.recordId == recordId) &&
-            (identical(other.streamingDate, streamingDate) ||
-                other.streamingDate == streamingDate) &&
-            const DeepCollectionEquality().equals(other.authors, authors));
+            other is _$_Record &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
+            const DeepCollectionEquality().equals(other.file, file) &&
+            const DeepCollectionEquality()
+                .equals(other.commentsTotal, commentsTotal) &&
+            const DeepCollectionEquality().equals(other.recordId, recordId) &&
+            const DeepCollectionEquality()
+                .equals(other.streamingDate, streamingDate) &&
+            const DeepCollectionEquality().equals(other._authors, _authors));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      title,
-      rating,
-      file,
-      commentsTotal,
-      recordId,
-      streamingDate,
-      const DeepCollectionEquality().hash(authors));
 
   @JsonKey(ignore: true)
   @override
-  _$RecordCopyWith<_Record> get copyWith =>
-      __$RecordCopyWithImpl<_Record>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(rating),
+      const DeepCollectionEquality().hash(file),
+      const DeepCollectionEquality().hash(commentsTotal),
+      const DeepCollectionEquality().hash(recordId),
+      const DeepCollectionEquality().hash(streamingDate),
+      const DeepCollectionEquality().hash(_authors));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_RecordCopyWith<_$_Record> get copyWith =>
+      __$$_RecordCopyWithImpl<_$_Record>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -289,37 +265,40 @@ class _$_Record implements _Record {
   }
 }
 
-abstract class _Record implements Record {
+abstract class _Record extends Record {
   factory _Record(
-      {required String title,
-      required String rating,
-      required File file,
-      @JsonKey(name: 'comments_total') required String commentsTotal,
-      @JsonKey(name: 'record_id') required String recordId,
-      @JsonKey(name: 'streaming_date') required String streamingDate,
-      @JsonKey(name: 'author') required List<Author> authors}) = _$_Record;
+          {required final String title,
+          required final String rating,
+          required final File file,
+          @JsonKey(name: 'comments_total') required final String commentsTotal,
+          @JsonKey(name: 'record_id') required final String recordId,
+          @JsonKey(name: 'streaming_date') required final String streamingDate,
+          @JsonKey(name: 'author') required final List<Author> authors}) =
+      _$_Record;
+  _Record._() : super._();
 
   factory _Record.fromJson(Map<String, dynamic> json) = _$_Record.fromJson;
 
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
-  String get rating;
+  String get rating => throw _privateConstructorUsedError;
   @override
-  File get file;
+  File get file => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'comments_total')
-  String get commentsTotal;
+  String get commentsTotal => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'record_id')
-  String get recordId;
+  String get recordId => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'streaming_date')
-  String get streamingDate;
+  String get streamingDate => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'author')
-  List<Author> get authors;
+  List<Author> get authors => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$RecordCopyWith<_Record> get copyWith => throw _privateConstructorUsedError;
+  _$$_RecordCopyWith<_$_Record> get copyWith =>
+      throw _privateConstructorUsedError;
 }

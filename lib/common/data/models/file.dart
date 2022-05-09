@@ -5,6 +5,8 @@ part 'file.g.dart';
 
 @freezed
 class File with _$File {
+  File._();
+
   factory File({
     required String bitrate,
     required String size,

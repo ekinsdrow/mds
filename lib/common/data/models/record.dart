@@ -7,6 +7,9 @@ part 'record.g.dart';
 
 @freezed
 class Record with _$Record {
+
+  Record._();
+
   factory Record({
     required String title,
     required String rating,
