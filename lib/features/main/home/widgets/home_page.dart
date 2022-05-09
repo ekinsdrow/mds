@@ -81,21 +81,27 @@ class _Filters extends StatelessWidget {
           //TODO: localization and tap
           _FilterCard(
             text: 'Favorites',
-            callback: () {},
+            callback: () {
+              //TODO: create filter
+            },
           ),
           const SizedBox(
             width: Constants.smallPadding,
           ),
           _FilterCard(
             text: 'Dowloaded',
-            callback: () {},
+            callback: () {
+              //TODO: create filter
+            },
           ),
           const SizedBox(
             width: Constants.smallPadding,
           ),
           _FilterCard(
             text: 'Other filtres',
-            callback: () {},
+            callback: () {
+              //TODO: open filters
+            },
           ),
         ],
       ),
@@ -245,8 +251,21 @@ class _Item extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(
-              Icons.play_arrow,
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    //TODO:add to fav
+                  },
+                  splashRadius: 20,
+                  icon: const Icon(
+                    Icons.favorite,
+                  ),
+                ),
+                const Icon(
+                  Icons.play_arrow,
+                ),
+              ],
             ),
           ],
         ),

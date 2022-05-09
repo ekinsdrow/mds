@@ -45,6 +45,7 @@ class InitialPage extends StatelessWidget {
   }
 }
 
+//TODO: Create init screen
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
 

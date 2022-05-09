@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
 
-class BottomBar extends StatelessWidget {
+class BottomBar extends StatefulWidget {
   const BottomBar({
     required this.activeIndex,
     required this.callback,
@@ -10,6 +10,13 @@ class BottomBar extends StatelessWidget {
 
   final int activeIndex;
   final Function(int index) callback;
+
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  bool player = true;
 
   @override
   Widget build(BuildContext context) {
@@ -34,29 +41,44 @@ class BottomBar extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Item(
-            icon: Icons.home,
-            active: activeIndex == 0,
-            callback: () {
-              callback(0);
-            },
-          ),
-          _Item(
-            icon: Icons.settings,
-            active: activeIndex == 1,
-            callback: () {
-              callback(1);
-            },
-          ),
-          _Item(
-            icon: Icons.info,
-            active: activeIndex == 2,
-            callback: () {
-              callback(2);
-            },
+          if (player)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                _PlayerWidget(),
+                SizedBox(
+                  height: Constants.smallPadding,
+                ),
+              ],
+            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _Item(
+                icon: Icons.home,
+                active: widget.activeIndex == 0,
+                callback: () {
+                  widget.callback(0);
+                },
+              ),
+              _Item(
+                icon: Icons.settings,
+                active: widget.activeIndex == 1,
+                callback: () {
+                  widget.callback(1);
+                },
+              ),
+              _Item(
+                icon: Icons.info,
+                active: widget.activeIndex == 2,
+                callback: () {
+                  widget.callback(2);
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -95,6 +117,100 @@ class _Item extends StatelessWidget {
                   ? Theme.of(context).primaryColor
                   : Theme.of(context).iconTheme.color,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PlayerWidget extends StatelessWidget {
+  const _PlayerWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      borderRadius: BorderRadius.circular(
+        Constants.borderRadius,
+      ),
+      color: Colors.grey[200],
+      child: InkWell(
+        borderRadius: BorderRadius.circular(
+          Constants.borderRadius,
+        ),
+        onTap: () {
+          //TODO: open player
+        },
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            horizontal: Constants.smallPadding,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Title - Author',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          //TODO:add to fav
+                        },
+                        splashRadius: 20,
+                        icon: const Icon(
+                          Icons.favorite,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          //TODO: play
+                        },
+                        splashRadius: 20,
+                        icon: const Icon(
+                          Icons.play_arrow,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              //TODO: progress bar
+              Stack(
+                children: [
+                  Container(
+                    height: 5,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(
+                        Constants.borderRadius,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 5,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(
+                        Constants.borderRadius,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: Constants.smallPadding,
+              ),
+            ],
           ),
         ),
       ),
