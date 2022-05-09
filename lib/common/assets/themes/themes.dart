@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//TODO: add font
 abstract class Themes {
   static get darkTheme => _getTheme(
         ThemeData.dark(),
