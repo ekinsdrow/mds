@@ -1,6 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/data/models/records.dart';
+import 'package:mds/features/app/router/router.dart';
+import 'package:mds/features/main/home/widgets/home_page.dart';
+import 'package:mds/features/main/widgets/components/bottom_bar.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
@@ -22,13 +27,37 @@ class MainPage extends StatelessWidget {
           child: Center(
             child: Builder(
               builder: (context) {
-                return ListView.builder(
-                  itemBuilder: (context, index) => ListTile(
-                    title: Text(
-                      context.read<Records>().records[index].title,
-                    ),
-                  ),
-                  itemCount: context.read<Records>().records.length,
+                return AutoTabsRouter(
+                  routes: const [
+                    HomeRouter(),
+                    SettingsRouter(),
+                    InfoRouter(),
+                  ],
+                  builder: (context, child, _) {
+                    final tabsRouter = AutoTabsRouter.of(context);
+
+                    return Stack(
+                      children: [
+                        child,
+                        Positioned(
+                          bottom: 0,
+                          width: MediaQuery.of(context).size.width,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: Constants.smallPadding,
+                              horizontal: Constants.mediumPadding,
+                            ),
+                            child: BottomBar(
+                              activeIndex: tabsRouter.activeIndex,
+                              callback: (index) {
+                                tabsRouter.setActiveIndex(index);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
             ),
