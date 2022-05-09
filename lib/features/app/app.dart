@@ -6,12 +6,13 @@ import 'package:mds/features/app/router/router.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
-  App({
+  const App({
     required this.dio,
+    required this.router,
     Key? key,
   }) : super(key: key);
 
-  final _router = AppRouter();
+  final  AppRouter router;
 
   final Dio dio;
 
@@ -21,8 +22,8 @@ class App extends StatelessWidget {
       create: (context) => dio,
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        routeInformationParser: _router.defaultRouteParser(),
-        routerDelegate: _router.delegate(),
+        routeInformationParser: router.defaultRouteParser(),
+        routerDelegate: router.delegate(),
         title: 'Flutter DAW',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
