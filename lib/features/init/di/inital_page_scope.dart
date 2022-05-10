@@ -21,9 +21,10 @@ class InitialPageScope extends StatelessWidget {
         context.read<Dio>(),
       ),
       child: RepositoryProvider<IRecordsRepository>(
-        create: (context) => RecordsRepository(
-          recordsSource: context.read<RecordsSource>(),
-        ),
+        //TODO: change repo to network
+        create: (context) => AssetsRecordsRepository(
+            // recordsSource: context.read<RecordsSource>(),
+            ),
         child: BlocProvider(
           create: (context) => InitialBloc(
             recordsRepository: context.read<IRecordsRepository>(),

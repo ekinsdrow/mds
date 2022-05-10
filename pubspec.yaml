@@ -53,6 +53,7 @@ flutter:
     - assets/images/png/
     - assets/images/svg/
     - assets/images/jpg/
+    - assets/catalog.json
   fonts:
     - family: Montserrat
       fonts:
