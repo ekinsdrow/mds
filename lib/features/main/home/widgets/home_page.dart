@@ -7,6 +7,8 @@ import 'package:mds/common/data/models/records.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
 
+import 'package:mds/features/main/home/widgets/modals/filter_modal.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -127,7 +129,7 @@ class _Filters extends StatelessWidget {
           _FilterCard(
             text: AppLocalizations.of(context)!.other_filters,
             callback: () {
-              //TODO: open filters
+              showFilterModal(context);
             },
           ),
         ],
