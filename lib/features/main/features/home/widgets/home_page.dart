@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
-import 'package:mds/common/data/models/records.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
-import 'package:mds/features/main/home/widgets/modals/sort_modal.dart';
+import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
+import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -45,6 +45,27 @@ class _Header extends StatefulWidget {
 class _HeaderState extends State<_Header> {
   bool _searchOpen = false;
 
+  final _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _searchController.addListener(
+      () {
+        context.read<CatalogNotifier>().search(
+              _searchController.text,
+            );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,11 +83,12 @@ class _HeaderState extends State<_Header> {
                   ),
             ),
           if (_searchOpen)
-            const Expanded(
+            Expanded(
               child: SizedBox(
                 height: 48,
                 child: TextField(
                   autofocus: true,
+                  controller: _searchController,
                 ),
               ),
             ),
@@ -75,6 +97,12 @@ class _HeaderState extends State<_Header> {
             onPressed: () {
               setState(() {
                 _searchOpen = !_searchOpen;
+
+                if (!_searchOpen) {
+                  context.read<CatalogNotifier>().clearFilters();
+                } else {
+                  _searchController.clear();
+                }
               });
             },
             icon: Icon(
@@ -216,9 +244,9 @@ class _Records extends StatelessWidget {
           horizontal: Constants.smallPadding,
         ),
         itemBuilder: (context, index) => _Item(
-          record: context.read<Records>().records[index],
+          record: context.watch<CatalogNotifier>().nowList[index],
         ),
-        itemCount: context.read<Records>().records.length,
+        itemCount: context.watch<CatalogNotifier>().nowList.length,
       ),
     );
   }

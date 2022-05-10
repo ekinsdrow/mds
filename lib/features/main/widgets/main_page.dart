@@ -2,10 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
-import 'package:mds/common/data/models/records.dart';
 import 'package:mds/features/app/router/router.dart';
+import 'package:mds/features/main/di/main_scope.dart';
 import 'package:mds/features/main/widgets/components/bottom_bar.dart';
-import 'package:provider/provider.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({
@@ -17,10 +16,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => Records(
-        records: records,
-      ),
+    return MainScope(
+      records: records,
       child: Scaffold(
         body: SafeArea(
           child: Center(
@@ -35,6 +32,7 @@ class MainPage extends StatelessWidget {
                   builder: (context, child, _) {
                     final tabsRouter = AutoTabsRouter.of(context);
 
+                    //TODO: bug with scroll listview in the end on the homepage
                     return Stack(
                       children: [
                         child,
