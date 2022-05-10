@@ -1,6 +1,10 @@
 {
   "catalog": "Catalog",
+  "dowloaded": "Dowloaded",
+  "favorites": "Favorites",
   "network_error": "Network error",
+  "other_filters": "Other filtres",
+  "recently_listening": "Recently listening",
   "retry": "Retry",
   "server_error": "Server Error",
   "timeout_error": "Timeout error",

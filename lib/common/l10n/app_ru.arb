@@ -1,6 +1,10 @@
 {
   "catalog": "Каталог",
+  "dowloaded": "Скачаное",
+  "favorites": "Избранное",
   "network_error": "Сетевая ошибка",
+  "other_filters": "Другие фильтры",
+  "recently_listening": "Недавно прослушаное",
   "retry": "Повторить",
   "server_error": "Ошибка сервера",
   "timeout_error": "Истекло время ожидания",

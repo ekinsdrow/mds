@@ -78,9 +78,8 @@ class _Filters extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
-          //TODO: localization and tap
           _FilterCard(
-            text: 'Favorites',
+            text: AppLocalizations.of(context)!.favorites,
             callback: () {
               //TODO: create filter
             },
@@ -89,7 +88,7 @@ class _Filters extends StatelessWidget {
             width: Constants.smallPadding,
           ),
           _FilterCard(
-            text: 'Dowloaded',
+            text: AppLocalizations.of(context)!.dowloaded,
             callback: () {
               //TODO: create filter
             },
@@ -98,7 +97,7 @@ class _Filters extends StatelessWidget {
             width: Constants.smallPadding,
           ),
           _FilterCard(
-            text: 'Other filtres',
+            text: AppLocalizations.of(context)!.other_filters,
             callback: () {
               //TODO: open filters
             },
