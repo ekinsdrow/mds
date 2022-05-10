@@ -1,5 +1,11 @@
 {
+  "ascending": "По возрастанию",
+  "by_author": "По автору",
+  "by_duration": "По длительности",
+  "by_name": "По названию",
+  "by_year_of_issue": "По году выпуска",
   "catalog": "Каталог",
+  "descending": "По убыванию",
   "dowloaded": "Скачаное",
   "favorites": "Избранное",
   "network_error": "Сетевая ошибка",
@@ -7,6 +13,7 @@
   "recently_listening": "Недавно прослушаное",
   "retry": "Повторить",
   "server_error": "Ошибка сервера",
+  "sorting": "Сортировка",
   "timeout_error": "Истекло время ожидания",
   "unknown_error": "Неизвестная ошибка"
 }

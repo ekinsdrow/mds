@@ -32,6 +32,9 @@ abstract class Themes {
             horizontal: Constants.mediumPadding,
           ),
         ),
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+        ),
       );
 
   static final InputBorder _inputBorder = OutlineInputBorder(

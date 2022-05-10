@@ -1,5 +1,11 @@
 {
+  "ascending": "Ascending",
+  "by_author": "By author",
+  "by_duration": "By duration",
+  "by_name": "By name",
+  "by_year_of_issue": "By year of issue",
   "catalog": "Catalog",
+  "descending": "Descending",
   "dowloaded": "Dowloaded",
   "favorites": "Favorites",
   "network_error": "Network error",
@@ -7,6 +13,7 @@
   "recently_listening": "Recently listening",
   "retry": "Retry",
   "server_error": "Server Error",
+  "sorting": "Sorting",
   "timeout_error": "Timeout error",
   "unknown_error": "Uknown Error"
 }

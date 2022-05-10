@@ -6,8 +6,7 @@ import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/data/models/records.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
-
-import 'package:mds/features/main/home/widgets/modals/filter_modal.dart';
+import 'package:mds/features/main/home/widgets/modals/sort_modal.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -86,16 +85,18 @@ class _HeaderState extends State<_Header> {
 }
 
 class _Filters extends StatelessWidget {
-  const _Filters({Key? key}) : super(key: key);
+  const _Filters({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Constants.mediumPadding,
-      ),
+    return SizedBox(
       height: 40,
       child: ListView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Constants.mediumPadding,
+        ),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
@@ -123,14 +124,18 @@ class _Filters extends StatelessWidget {
               //TODO: recently listneng filter
             },
           ),
-          const SizedBox(
-            width: Constants.smallPadding,
-          ),
-          _FilterCard(
-            text: AppLocalizations.of(context)!.other_filters,
-            callback: () {
-              showFilterModal(context);
-            },
+          Row(
+            children: [
+              const SizedBox(
+                width: Constants.smallPadding,
+              ),
+              _FilterCard(
+                text: AppLocalizations.of(context)!.sorting,
+                callback: () {
+                  showSortModal(context);
+                },
+              ),
+            ],
           ),
         ],
       ),
