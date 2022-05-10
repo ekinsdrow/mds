@@ -240,8 +240,10 @@ class _Records extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(
-          horizontal: Constants.smallPadding,
+        padding: const EdgeInsets.only(
+          left: Constants.smallPadding,
+          right: Constants.smallPadding,
+          bottom: 150,
         ),
         itemBuilder: (context, index) => _Item(
           record: context.watch<CatalogNotifier>().nowList[index],
