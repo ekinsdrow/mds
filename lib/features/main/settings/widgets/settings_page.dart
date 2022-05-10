@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           children: [
             //TODO: settings
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
