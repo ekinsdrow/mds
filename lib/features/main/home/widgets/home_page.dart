@@ -31,8 +31,15 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
+class _Header extends StatefulWidget {
   const _Header({Key? key}) : super(key: key);
+
+  @override
+  State<_Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<_Header> {
+  bool _searchOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +50,31 @@ class _Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            AppLocalizations.of(context)!.catalog,
-            style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.bold,
+          if (!_searchOpen)
+            Text(
+              AppLocalizations.of(context)!.catalog,
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          if (_searchOpen)
+            const Expanded(
+              child: SizedBox(
+                height: 48,
+                child: TextField(
+                  autofocus: true,
                 ),
-          ),
+              ),
+            ),
           IconButton(
             splashRadius: 20,
             onPressed: () {
-              //TODO: search
+              setState(() {
+                _searchOpen = !_searchOpen;
+              });
             },
-            icon: const Icon(
-              Icons.search,
+            icon: Icon(
+              !_searchOpen ? Icons.search : Icons.close,
             ),
           ),
         ],

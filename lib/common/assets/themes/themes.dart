@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mds/common/assets/constants.dart';
 
 abstract class Themes {
   static get darkTheme => _getTheme(
@@ -19,12 +20,33 @@ abstract class Themes {
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: AppColors.primaryColor,
         ),
-        shadowColor: Colors.grey.withOpacity(.3),
+        shadowColor: AppColors.greyColor,
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: AppColors.primaryColor,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: _inputBorder,
+          border: _inputBorder,
+          enabledBorder: _inputBorder,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: Constants.mediumPadding,
+          ),
+        ),
       );
+
+  static final InputBorder _inputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(
+      Constants.borderRadius * 2,
+    ),
+    borderSide: const BorderSide(
+      color: AppColors.primaryColor,
+    ),
+  );
 }
 
 class AppColors {
   AppColors._();
 
   static const primaryColor = Color(0xFF446DE6);
+  static const greyColor = Color(0xFFBDBDBD);
 }
