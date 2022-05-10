@@ -97,6 +97,15 @@ class _Filters extends StatelessWidget {
             width: Constants.smallPadding,
           ),
           _FilterCard(
+            text: AppLocalizations.of(context)!.recently_listening,
+            callback: () {
+              //TODO: recently listneng filter
+            },
+          ),
+          const SizedBox(
+            width: Constants.smallPadding,
+          ),
+          _FilterCard(
             text: AppLocalizations.of(context)!.other_filters,
             callback: () {
               //TODO: open filters
