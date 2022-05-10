@@ -12,7 +12,11 @@ void main() => runZonedGuarded(
       () {
         BlocOverrides.runZoned(
           () {
-            final dio = Dio();
+            final dio = Dio(
+              BaseOptions(
+                connectTimeout: 10000,
+              ),
+            );
             final router = AppRouter();
 
             runApp(

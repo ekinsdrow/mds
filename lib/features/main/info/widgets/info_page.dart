@@ -14,6 +14,7 @@ class InfoPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(Constants.mediumPadding),
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             Text(
               AppLocalizations.of(context)!.develop,

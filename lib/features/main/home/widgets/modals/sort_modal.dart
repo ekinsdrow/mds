@@ -89,39 +89,50 @@ class _AscDeskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(
-        Constants.smallPadding,
-      ),
-      decoration: BoxDecoration(
-        color: choosen ? Theme.of(context).primaryColor : Colors.transparent,
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 1,
-        ),
-        borderRadius: type == _AscDeskItemType.left
-            ? const BorderRadius.only(
-                topLeft: Radius.circular(
-                  Constants.borderRadius,
-                ),
-                bottomLeft: Radius.circular(
-                  Constants.borderRadius,
-                ),
-              )
-            : const BorderRadius.only(
-                topRight: Radius.circular(
-                  Constants.borderRadius,
-                ),
-                bottomRight: Radius.circular(
-                  Constants.borderRadius,
-                ),
-              ),
-      ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: choosen ? Colors.white : Theme.of(context).primaryColor,
+    final borderRadius = type == _AscDeskItemType.left
+        ? const BorderRadius.only(
+            topLeft: Radius.circular(
+              Constants.borderRadius,
+            ),
+            bottomLeft: Radius.circular(
+              Constants.borderRadius,
+            ),
+          )
+        : const BorderRadius.only(
+            topRight: Radius.circular(
+              Constants.borderRadius,
+            ),
+            bottomRight: Radius.circular(
+              Constants.borderRadius,
+            ),
+          );
+
+    return Material(
+      borderRadius: borderRadius,
+      color: choosen ? Theme.of(context).primaryColor : Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          //TODO: change sort type
+        },
+        borderRadius: borderRadius,
+        child: Container(
+          padding: const EdgeInsets.all(
+            Constants.smallPadding,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).primaryColor,
+              width: 1,
+            ),
+            borderRadius: borderRadius,
+          ),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: choosen ? Colors.white : Theme.of(context).primaryColor,
+            ),
+          ),
         ),
       ),
     );
