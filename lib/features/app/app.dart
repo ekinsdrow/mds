@@ -12,7 +12,7 @@ class App extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final  AppRouter router;
+  final AppRouter router;
 
   final Dio dio;
 
@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         title: 'Flutter DAW',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        theme: Themes.darkTheme,
+        theme: Themes.lightTheme,
       ),
     );
   }

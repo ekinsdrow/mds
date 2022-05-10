@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/widgets/retry_error_widget.dart';
 import 'package:mds/features/app/router/router.dart';
 import 'package:mds/features/init/blocs/init/initial_bloc.dart';
@@ -50,8 +51,22 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'MDS',
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(
+            height: Constants.bigPadding,
+          ),
+          const CircularProgressIndicator(),
+        ],
+      ),
     );
   }
 }

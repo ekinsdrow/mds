@@ -1,7 +1,7 @@
 name: mds
 description: App for mds
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 0.0.1+1
 
@@ -28,6 +28,7 @@ dependencies:
   #Utils
   intl: ^0.17.0
   freezed: ^2.0.3
+  url_launcher: ^6.1.0
   freezed_annotation: ^2.0.3
   json_annotation: ^4.3.0
   spider: ^2.0.0
@@ -52,6 +53,12 @@ flutter:
     - assets/images/png/
     - assets/images/svg/
     - assets/images/jpg/
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+          weight: 700
 
 flutter_gen:
   output: lib/common/generated

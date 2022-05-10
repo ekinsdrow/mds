@@ -1,7 +1,22 @@
 {
-  "timeout_error": "Timeout error",
-  "server_error": "Server Error",
+  "about_app": "About app",
+  "ascending": "Ascending",
+  "by_author": "By author",
+  "by_duration": "By duration",
+  "by_name": "By name",
+  "by_year_of_issue": "By year of issue",
+  "catalog": "Catalog",
+  "descending": "Descending",
+  "develop": "Develop",
+  "dowloaded": "Dowloaded",
+  "favorites": "Favorites",
   "network_error": "Network error",
-  "unknown_error": "Uknown Error",
-  "retry": "Retry"
+  "other_filters": "Other filtres",
+  "recently_listening": "Recently listening",
+  "remove_all_downloaded_files": "Remove all downloaded files",
+  "retry": "Retry",
+  "server_error": "Server Error",
+  "sorting": "Sorting",
+  "timeout_error": "Timeout error",
+  "unknown_error": "Uknown Error"
 }
