@@ -6,7 +6,7 @@ import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/data/models/records.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
-import 'package:mds/features/main/home/widgets/modals/sort_modal.dart';
+import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

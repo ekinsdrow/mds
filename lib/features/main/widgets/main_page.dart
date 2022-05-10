@@ -4,6 +4,7 @@ import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/data/models/records.dart';
 import 'package:mds/features/app/router/router.dart';
+import 'package:mds/features/main/di/main_scope.dart';
 import 'package:mds/features/main/widgets/components/bottom_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -17,10 +18,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => Records(
-        records: records,
-      ),
+    return MainScope(
+      records: records,
       child: Scaffold(
         body: SafeArea(
           child: Center(
