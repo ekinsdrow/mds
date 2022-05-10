@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mds/common/data/models/record.dart';
-import 'package:mds/common/data/models/records.dart';
+import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MainScope extends StatelessWidget {
@@ -15,9 +15,9 @@ class MainScope extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-       create: (context) => Records(
-        records: records,
+    return ChangeNotifierProvider(
+      create: (context) => CatalogNotifier(
+        records,
       ),
       child: child,
     );

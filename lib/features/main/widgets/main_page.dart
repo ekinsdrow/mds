@@ -32,6 +32,7 @@ class MainPage extends StatelessWidget {
                   builder: (context, child, _) {
                     final tabsRouter = AutoTabsRouter.of(context);
 
+                    //TODO: bug with scroll listview in the end on the homepage
                     return Stack(
                       children: [
                         child,
