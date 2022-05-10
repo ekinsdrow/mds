@@ -1,4 +1,5 @@
 {
+  "about_app": "About app",
   "ascending": "Ascending",
   "by_author": "By author",
   "by_duration": "By duration",
@@ -6,6 +7,7 @@
   "by_year_of_issue": "By year of issue",
   "catalog": "Catalog",
   "descending": "Descending",
+  "develop": "Develop",
   "dowloaded": "Dowloaded",
   "favorites": "Favorites",
   "network_error": "Network error",

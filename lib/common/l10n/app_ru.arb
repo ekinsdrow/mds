@@ -1,4 +1,5 @@
 {
+  "about_app": "О приложении",
   "ascending": "По возрастанию",
   "by_author": "По автору",
   "by_duration": "По длительности",
@@ -6,6 +7,7 @@
   "by_year_of_issue": "По году выпуска",
   "catalog": "Каталог",
   "descending": "По убыванию",
+  "develop": "Разработка",
   "dowloaded": "Скачаное",
   "favorites": "Избранное",
   "network_error": "Сетевая ошибка",
