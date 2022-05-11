@@ -17,6 +17,7 @@ class Record with _$Record {
     @JsonKey(name: 'record_id') required String recordId,
     @JsonKey(name: 'streaming_date') required String streamingDate,
     @JsonKey(name: 'author') required List<Author> authors,
+    @Default(false) bool isFavorite,
   }) = _Record;
 
   DateTime get date => DateTime(

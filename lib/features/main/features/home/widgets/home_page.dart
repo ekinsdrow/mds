@@ -5,6 +5,7 @@ import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
+import 'package:mds/features/main/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
 
@@ -130,11 +131,46 @@ class _Filters extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  offset: const Offset(
+                    0,
+                    2,
+                  ),
+                  blurRadius: 4,
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            width: 40,
+            height: 40,
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50),
+              child: InkWell(
+                onTap: () {
+                  context.read<CatalogNotifier>().clearFiltres();
+                },
+                borderRadius: BorderRadius.circular(50),
+                child: const Icon(
+                  Icons.clear,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: Constants.smallPadding,
+          ),
           _FilterCard(
             text: AppLocalizations.of(context)!.favorites,
             callback: () {
-              //TODO: create filter
+              context.read<CatalogNotifier>().toogleShowOnlyFav();
             },
+            active: context.watch<CatalogNotifier>().showOnlyFav,
           ),
           const SizedBox(
             width: Constants.smallPadding,
@@ -144,6 +180,7 @@ class _Filters extends StatelessWidget {
             callback: () {
               //TODO: create filter
             },
+            active: false,
           ),
           const SizedBox(
             width: Constants.smallPadding,
@@ -153,6 +190,7 @@ class _Filters extends StatelessWidget {
             callback: () {
               //TODO: recently listneng filter
             },
+            active: false,
           ),
           Row(
             children: [
@@ -164,6 +202,7 @@ class _Filters extends StatelessWidget {
                 callback: () {
                   showSortModal(context);
                 },
+                active: true,
               ),
             ],
           ),
@@ -178,14 +217,17 @@ class _FilterCard extends StatelessWidget {
     Key? key,
     required this.text,
     required this.callback,
+    required this.active,
   }) : super(key: key);
 
   final String text;
   final VoidCallback callback;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           Constants.borderRadius * 2,
@@ -206,7 +248,7 @@ class _FilterCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           Constants.borderRadius * 2,
         ),
-        color: Theme.of(context).primaryColor,
+        color: active ? Theme.of(context).primaryColor : Colors.white,
         child: InkWell(
           onTap: callback,
           borderRadius: BorderRadius.circular(
@@ -217,11 +259,20 @@ class _FilterCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: Constants.mediumPadding,
             ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).primaryColor,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(
+                Constants.borderRadius * 2,
+              ),
+            ),
             height: 40,
             child: Text(
               text,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: !active ? Theme.of(context).primaryColor : Colors.white,
               ),
             ),
           ),
@@ -321,11 +372,23 @@ class _Item extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    //TODO:add to fav
+                    if (record.isFavorite) {
+                      context.read<FavoritesBloc>().add(
+                            FavoritesEvent.delete(
+                              id: record.recordId,
+                            ),
+                          );
+                    } else {
+                      context.read<FavoritesBloc>().add(
+                            FavoritesEvent.save(
+                              id: record.recordId,
+                            ),
+                          );
+                    }
                   },
                   splashRadius: 20,
-                  icon: const Icon(
-                    Icons.favorite,
+                  icon: Icon(
+                    record.isFavorite ? Icons.favorite : Icons.favorite_border,
                   ),
                 ),
                 const Icon(

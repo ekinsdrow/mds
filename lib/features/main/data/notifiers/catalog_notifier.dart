@@ -16,7 +16,12 @@ class CatalogNotifier extends ChangeNotifier {
 
   var _searchText = '';
 
-  CatalogNotifier(this._fullList) : _nowList = [..._fullList] {
+  var _showOnlyFav = false;
+  bool get showOnlyFav => _showOnlyFav;
+
+  CatalogNotifier(List<Record> list)
+      : _fullList = [...list],
+        _nowList = [...list] {
     _applyFiltres();
   }
 
@@ -40,8 +45,61 @@ class CatalogNotifier extends ChangeNotifier {
     _applyFiltres();
   }
 
+  void deleteRecordFromFav({required String id}) {
+    final records = [..._fullList];
+    _fullList.clear();
+
+    for (final record in records) {
+      if (record.recordId == id) {
+        _fullList.add(
+          record.copyWith(
+            isFavorite: false,
+          ),
+        );
+      } else {
+        _fullList.add(record);
+      }
+    }
+
+    _applyFiltres();
+  }
+
+  void addRecordToFav({required String id}) {
+    final records = [..._fullList];
+    _fullList.clear();
+
+    for (final record in records) {
+      if (record.recordId == id) {
+        _fullList.add(
+          record.copyWith(
+            isFavorite: true,
+          ),
+        );
+      } else {
+        _fullList.add(record);
+      }
+    }
+
+    _applyFiltres();
+  }
+
+  void toogleShowOnlyFav() {
+    _showOnlyFav = !_showOnlyFav;
+    _applyFiltres();
+  }
+
+  void clearFiltres() {
+    _showOnlyFav = false;
+    _searchText = '';
+    _sortDirection = SortDirections.asc;
+    _sortType = SortTypes.name;
+
+    _applyFiltres();
+  }
+
   void _applyFiltres() {
     _applySearch();
+    _applyShowOnlyFav();
     _applySort();
     notifyListeners();
   }
@@ -94,6 +152,19 @@ class CatalogNotifier extends ChangeNotifier {
       _nowList.clear();
 
       _nowList.addAll(reversed);
+    }
+  }
+
+  void _applyShowOnlyFav() {
+    if (_showOnlyFav) {
+      final list = [..._nowList];
+
+      _nowList.clear();
+      for (final record in list) {
+        if (record.isFavorite) {
+          _nowList.add(record);
+        }
+      }
     }
   }
 }

@@ -31,6 +31,7 @@ mixin _$Record {
   String get streamingDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'author')
   List<Author> get authors => throw _privateConstructorUsedError;
+  bool get isFavorite => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +49,8 @@ abstract class $RecordCopyWith<$Res> {
       @JsonKey(name: 'comments_total') String commentsTotal,
       @JsonKey(name: 'record_id') String recordId,
       @JsonKey(name: 'streaming_date') String streamingDate,
-      @JsonKey(name: 'author') List<Author> authors});
+      @JsonKey(name: 'author') List<Author> authors,
+      bool isFavorite});
 
   $FileCopyWith<$Res> get file;
 }
@@ -70,6 +72,7 @@ class _$RecordCopyWithImpl<$Res> implements $RecordCopyWith<$Res> {
     Object? recordId = freezed,
     Object? streamingDate = freezed,
     Object? authors = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
@@ -100,6 +103,10 @@ class _$RecordCopyWithImpl<$Res> implements $RecordCopyWith<$Res> {
           ? _value.authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<Author>,
+      isFavorite: isFavorite == freezed
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -123,7 +130,8 @@ abstract class _$$_RecordCopyWith<$Res> implements $RecordCopyWith<$Res> {
       @JsonKey(name: 'comments_total') String commentsTotal,
       @JsonKey(name: 'record_id') String recordId,
       @JsonKey(name: 'streaming_date') String streamingDate,
-      @JsonKey(name: 'author') List<Author> authors});
+      @JsonKey(name: 'author') List<Author> authors,
+      bool isFavorite});
 
   @override
   $FileCopyWith<$Res> get file;
@@ -147,6 +155,7 @@ class __$$_RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
     Object? recordId = freezed,
     Object? streamingDate = freezed,
     Object? authors = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_$_Record(
       title: title == freezed
@@ -177,6 +186,10 @@ class __$$_RecordCopyWithImpl<$Res> extends _$RecordCopyWithImpl<$Res>
           ? _value._authors
           : authors // ignore: cast_nullable_to_non_nullable
               as List<Author>,
+      isFavorite: isFavorite == freezed
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -191,7 +204,8 @@ class _$_Record extends _Record {
       @JsonKey(name: 'comments_total') required this.commentsTotal,
       @JsonKey(name: 'record_id') required this.recordId,
       @JsonKey(name: 'streaming_date') required this.streamingDate,
-      @JsonKey(name: 'author') required final List<Author> authors})
+      @JsonKey(name: 'author') required final List<Author> authors,
+      this.isFavorite = false})
       : _authors = authors,
         super._();
 
@@ -222,8 +236,12 @@ class _$_Record extends _Record {
   }
 
   @override
+  @JsonKey()
+  final bool isFavorite;
+
+  @override
   String toString() {
-    return 'Record(title: $title, rating: $rating, file: $file, commentsTotal: $commentsTotal, recordId: $recordId, streamingDate: $streamingDate, authors: $authors)';
+    return 'Record(title: $title, rating: $rating, file: $file, commentsTotal: $commentsTotal, recordId: $recordId, streamingDate: $streamingDate, authors: $authors, isFavorite: $isFavorite)';
   }
 
   @override
@@ -239,7 +257,9 @@ class _$_Record extends _Record {
             const DeepCollectionEquality().equals(other.recordId, recordId) &&
             const DeepCollectionEquality()
                 .equals(other.streamingDate, streamingDate) &&
-            const DeepCollectionEquality().equals(other._authors, _authors));
+            const DeepCollectionEquality().equals(other._authors, _authors) &&
+            const DeepCollectionEquality()
+                .equals(other.isFavorite, isFavorite));
   }
 
   @JsonKey(ignore: true)
@@ -252,7 +272,8 @@ class _$_Record extends _Record {
       const DeepCollectionEquality().hash(commentsTotal),
       const DeepCollectionEquality().hash(recordId),
       const DeepCollectionEquality().hash(streamingDate),
-      const DeepCollectionEquality().hash(_authors));
+      const DeepCollectionEquality().hash(_authors),
+      const DeepCollectionEquality().hash(isFavorite));
 
   @JsonKey(ignore: true)
   @override
@@ -267,14 +288,14 @@ class _$_Record extends _Record {
 
 abstract class _Record extends Record {
   factory _Record(
-          {required final String title,
-          required final String rating,
-          required final File file,
-          @JsonKey(name: 'comments_total') required final String commentsTotal,
-          @JsonKey(name: 'record_id') required final String recordId,
-          @JsonKey(name: 'streaming_date') required final String streamingDate,
-          @JsonKey(name: 'author') required final List<Author> authors}) =
-      _$_Record;
+      {required final String title,
+      required final String rating,
+      required final File file,
+      @JsonKey(name: 'comments_total') required final String commentsTotal,
+      @JsonKey(name: 'record_id') required final String recordId,
+      @JsonKey(name: 'streaming_date') required final String streamingDate,
+      @JsonKey(name: 'author') required final List<Author> authors,
+      final bool isFavorite}) = _$_Record;
   _Record._() : super._();
 
   factory _Record.fromJson(Map<String, dynamic> json) = _$_Record.fromJson;
@@ -297,6 +318,8 @@ abstract class _Record extends Record {
   @override
   @JsonKey(name: 'author')
   List<Author> get authors => throw _privateConstructorUsedError;
+  @override
+  bool get isFavorite => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_RecordCopyWith<_$_Record> get copyWith =>
