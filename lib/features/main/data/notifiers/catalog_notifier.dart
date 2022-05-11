@@ -17,6 +17,7 @@ class CatalogNotifier extends ChangeNotifier {
   var _searchText = '';
 
   var _showOnlyFav = false;
+  bool get showOnlyFav => _showOnlyFav;
 
   CatalogNotifier(List<Record> list)
       : _fullList = [...list],

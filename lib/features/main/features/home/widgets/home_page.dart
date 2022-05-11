@@ -136,6 +136,7 @@ class _Filters extends StatelessWidget {
             callback: () {
               context.read<CatalogNotifier>().toogleShowOnlyFav();
             },
+            active: context.watch<CatalogNotifier>().showOnlyFav,
           ),
           const SizedBox(
             width: Constants.smallPadding,
@@ -145,6 +146,7 @@ class _Filters extends StatelessWidget {
             callback: () {
               //TODO: create filter
             },
+            active: false,
           ),
           const SizedBox(
             width: Constants.smallPadding,
@@ -154,6 +156,7 @@ class _Filters extends StatelessWidget {
             callback: () {
               //TODO: recently listneng filter
             },
+            active: false,
           ),
           Row(
             children: [
@@ -165,6 +168,7 @@ class _Filters extends StatelessWidget {
                 callback: () {
                   showSortModal(context);
                 },
+                active: true,
               ),
             ],
           ),
@@ -179,10 +183,12 @@ class _FilterCard extends StatelessWidget {
     Key? key,
     required this.text,
     required this.callback,
+    required this.active,
   }) : super(key: key);
 
   final String text;
   final VoidCallback callback;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +213,7 @@ class _FilterCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           Constants.borderRadius * 2,
         ),
-        color: Theme.of(context).primaryColor,
+        color: active ? Theme.of(context).primaryColor : Colors.white,
         child: InkWell(
           onTap: callback,
           borderRadius: BorderRadius.circular(
@@ -218,11 +224,20 @@ class _FilterCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: Constants.mediumPadding,
             ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).primaryColor,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(
+                Constants.borderRadius * 2,
+              ),
+            ),
             height: 40,
             child: Text(
               text,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: !active ? Theme.of(context).primaryColor : Colors.white,
               ),
             ),
           ),
