@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
+import 'package:mds/features/app/router/router.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({
@@ -139,7 +141,9 @@ class _PlayerWidget extends StatelessWidget {
           Constants.borderRadius,
         ),
         onTap: () {
-          //TODO: open player
+          context.router.push(
+            const PlayerRoute(),
+          );
         },
         child: Container(
           width: double.infinity,

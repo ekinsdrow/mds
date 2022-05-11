@@ -6,6 +6,7 @@ import 'package:mds/features/main/features/home/widgets/home_page.dart';
 import 'package:mds/features/main/features/info/widgets/info_page.dart';
 import 'package:mds/features/main/features/settings/widgets/settings_page.dart';
 import 'package:mds/features/main/widgets/main_page.dart';
+import 'package:mds/features/player/widgets/player_page.dart';
 
 part 'router.gr.dart';
 
@@ -36,6 +37,10 @@ part 'router.gr.dart';
           page: InfoPage,
         ),
       ],
+    ),
+    AutoRoute(
+      name: 'PlayerRoute',
+      page: PlayerPage,
     ),
   ],
 )
