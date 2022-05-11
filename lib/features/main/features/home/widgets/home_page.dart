@@ -134,7 +134,7 @@ class _Filters extends StatelessWidget {
           _FilterCard(
             text: AppLocalizations.of(context)!.favorites,
             callback: () {
-              //TODO: create filter
+              context.read<CatalogNotifier>().toogleShowOnlyFav();
             },
           ),
           const SizedBox(

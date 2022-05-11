@@ -16,6 +16,8 @@ class CatalogNotifier extends ChangeNotifier {
 
   var _searchText = '';
 
+  var _showOnlyFav = false;
+
   CatalogNotifier(List<Record> list)
       : _fullList = [...list],
         _nowList = [...list] {
@@ -80,8 +82,14 @@ class CatalogNotifier extends ChangeNotifier {
     _applyFiltres();
   }
 
+  void toogleShowOnlyFav() {
+    _showOnlyFav = !_showOnlyFav;
+    _applyFiltres();
+  }
+
   void _applyFiltres() {
     _applySearch();
+    _applyShowOnlyFav();
     _applySort();
     notifyListeners();
   }
@@ -134,6 +142,19 @@ class CatalogNotifier extends ChangeNotifier {
       _nowList.clear();
 
       _nowList.addAll(reversed);
+    }
+  }
+
+  void _applyShowOnlyFav() {
+    if (_showOnlyFav) {
+      final list = [..._nowList];
+
+      _nowList.clear();
+      for (final record in list) {
+        if (record.isFavorite) {
+          _nowList.add(record);
+        }
+      }
     }
   }
 }
