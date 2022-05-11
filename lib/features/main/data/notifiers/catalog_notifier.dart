@@ -50,7 +50,7 @@ class CatalogNotifier extends ChangeNotifier {
       if (record.recordId == id) {
         _fullList.add(
           record.copyWith(
-            isFavorite: true,
+            isFavorite: false,
           ),
         );
       } else {
@@ -69,7 +69,7 @@ class CatalogNotifier extends ChangeNotifier {
       if (record.recordId == id) {
         _fullList.add(
           record.copyWith(
-            isFavorite: false,
+            isFavorite: true,
           ),
         );
       } else {

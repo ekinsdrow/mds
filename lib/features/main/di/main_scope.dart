@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/data/repositories/favorites_repository.dart';
+import 'package:mds/common/widgets/error_snackbar.dart';
 import 'package:mds/features/main/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
 import 'package:provider/provider.dart';
@@ -32,15 +34,18 @@ class MainScope extends StatelessWidget {
         ],
         child: BlocListener<FavoritesBloc, FavoritesState>(
           listener: (context, state) => state.whenOrNull(
-            error: (){
-              //TODO: error
+            error: () {
+              showErrorSnackBar(
+                context: context,
+                message: AppLocalizations.of(context)!.fav_error,
+              );
             },
             successDelete: (id) =>
                 context.read<CatalogNotifier>().deleteRecordFromFav(
                       id: id,
                     ),
             successAdd: (id) =>
-                context.read<CatalogNotifier>().deleteRecordFromFav(
+                context.read<CatalogNotifier>().addRecordToFav(
                       id: id,
                     ),
           ),
