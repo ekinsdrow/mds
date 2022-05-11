@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/features/main/data/enums/sort_enums.dart';
 
+
+//TODO: separate logic
 class CatalogNotifier extends ChangeNotifier {
   final List<Record> _nowList;
   List<Record> get nowList => _nowList;
