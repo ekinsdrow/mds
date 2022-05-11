@@ -4,6 +4,9 @@ import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/widgets/progress_bar.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
+import 'package:mds/features/player/widgets/modals/info_modal.dart';
+
+import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
 
 class PlayerPage extends StatelessWidget {
   const PlayerPage({Key? key}) : super(key: key);
@@ -177,7 +180,7 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            //TODO: add to fav
+            showInfoModal(context);
           },
           icon: const Icon(
             Icons.info,
@@ -229,7 +232,7 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            //TODO: open sleep timer
+            showSleepTimerModal(context);
           },
           icon: const Icon(
             Icons.timer,
