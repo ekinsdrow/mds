@@ -180,7 +180,11 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            showInfoModal(context);
+            //TODO: real record
+            showInfoModal(
+              context: context,
+              record: Record.placeholder(),
+            );
           },
           icon: const Icon(
             Icons.info,
