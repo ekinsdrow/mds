@@ -25,9 +25,6 @@ class HomePage extends StatelessWidget {
             height: Constants.mediumPadding,
           ),
           _Filters(),
-          SizedBox(
-            height: Constants.smallPadding,
-          ),
           _Records(),
         ],
       ),
@@ -99,7 +96,7 @@ class _HeaderState extends State<_Header> {
                 _searchOpen = !_searchOpen;
 
                 if (!_searchOpen) {
-                  context.read<CatalogNotifier>().clearFilters();
+                  context.read<CatalogNotifier>().clearSearch();
                 } else {
                   _searchController.clear();
                 }
@@ -123,10 +120,12 @@ class _Filters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 60,
       child: ListView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Constants.mediumPadding,
+        padding: const EdgeInsets.only(
+          left: Constants.mediumPadding,
+          right: Constants.mediumPadding,
+          bottom: Constants.mediumPadding,
         ),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,

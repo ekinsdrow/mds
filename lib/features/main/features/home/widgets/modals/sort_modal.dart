@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
+import 'package:mds/features/main/data/enums/sort_enums.dart';
+import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
+import 'package:provider/provider.dart';
 
 void showSortModal(
   BuildContext context,
 ) {
+  final catalogProvider = context.read<CatalogNotifier>();
+
   showModalBottomSheet(
     isScrollControlled: true,
     context: context,
-    builder: (context) => const _FilterModal(),
+    builder: (context) => ChangeNotifierProvider.value(
+      value: catalogProvider,
+      child: const _FilterModal(),
+    ),
   );
 }
 
@@ -52,16 +60,20 @@ class _AscDesc extends StatelessWidget {
         children: [
           Expanded(
             child: _AscDeskItem(
-              choosen: true,
+              choosen: context.watch<CatalogNotifier>().sortDirection ==
+                  SortDirections.asc,
               type: _AscDeskItemType.left,
               text: AppLocalizations.of(context)!.ascending,
+              sortDirection: SortDirections.asc,
             ),
           ),
           Expanded(
             child: _AscDeskItem(
-              choosen: false,
+              choosen: context.watch<CatalogNotifier>().sortDirection ==
+                  SortDirections.desc,
               type: _AscDeskItemType.right,
               text: AppLocalizations.of(context)!.descending,
+              sortDirection: SortDirections.desc,
             ),
           ),
         ],
@@ -81,11 +93,13 @@ class _AscDeskItem extends StatelessWidget {
     required this.choosen,
     required this.type,
     required this.text,
+    required this.sortDirection,
   }) : super(key: key);
 
   final bool choosen;
   final _AscDeskItemType type;
   final String text;
+  final SortDirections sortDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +126,7 @@ class _AscDeskItem extends StatelessWidget {
       color: choosen ? Theme.of(context).primaryColor : Colors.transparent,
       child: InkWell(
         onTap: () {
-          //TODO: change sort type
+          context.read<CatalogNotifier>().changeSortDirection(sortDirection);
         },
         borderRadius: borderRadius,
         child: Container(
@@ -151,16 +165,25 @@ class _Types extends StatelessWidget {
       children: [
         _Item(
           text: AppLocalizations.of(context)!.by_name,
-          choosed: true,
+          choosed: context.watch<CatalogNotifier>().sortType == SortTypes.name,
+          sortType: SortTypes.name,
         ),
         _Item(
           text: AppLocalizations.of(context)!.by_author,
+          choosed:
+              context.watch<CatalogNotifier>().sortType == SortTypes.author,
+          sortType: SortTypes.author,
         ),
         _Item(
           text: AppLocalizations.of(context)!.by_duration,
+          choosed:
+              context.watch<CatalogNotifier>().sortType == SortTypes.duration,
+          sortType: SortTypes.duration,
         ),
         _Item(
           text: AppLocalizations.of(context)!.by_year_of_issue,
+          choosed: context.watch<CatalogNotifier>().sortType == SortTypes.date,
+          sortType: SortTypes.date,
         ),
       ],
     );
@@ -171,17 +194,19 @@ class _Item extends StatelessWidget {
   const _Item({
     Key? key,
     required this.text,
-    this.choosed = false,
+    required this.choosed,
+    required this.sortType,
   }) : super(key: key);
 
   final String text;
   final bool choosed;
+  final SortTypes sortType;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //TODO: change sorting
+        context.read<CatalogNotifier>().changeSortType(sortType);
       },
       child: Container(
         padding: const EdgeInsets.all(
@@ -191,10 +216,12 @@ class _Item extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(text),
-            Checkbox(
-              value: choosed,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              onChanged: (v) {},
+            IgnorePointer(
+              child: Checkbox(
+                value: choosed,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                onChanged: (v) {},
+              ),
             ),
           ],
         ),
