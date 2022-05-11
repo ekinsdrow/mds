@@ -88,6 +88,15 @@ class CatalogNotifier extends ChangeNotifier {
     _applyFiltres();
   }
 
+  void clearFiltres() {
+    _showOnlyFav = false;
+    _searchText = '';
+    _sortDirection = SortDirections.asc;
+    _sortType = SortTypes.name;
+
+    _applyFiltres();
+  }
+
   void _applyFiltres() {
     _applySearch();
     _applyShowOnlyFav();

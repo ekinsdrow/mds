@@ -131,6 +131,40 @@ class _Filters extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  offset: const Offset(
+                    0,
+                    2,
+                  ),
+                  blurRadius: 4,
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            width: 40,
+            height: 40,
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50),
+              child: InkWell(
+                onTap: () {
+                  context.read<CatalogNotifier>().clearFiltres();
+                },
+                borderRadius: BorderRadius.circular(50),
+                child: const Icon(
+                  Icons.clear,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: Constants.smallPadding,
+          ),
           _FilterCard(
             text: AppLocalizations.of(context)!.favorites,
             callback: () {
@@ -193,6 +227,7 @@ class _FilterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           Constants.borderRadius * 2,
