@@ -1,172 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/features/main/data/enums/sort_enums.dart';
+import 'package:mds/features/main/data/notifiers/models/decorators/favorites_decorator.dart';
+import 'package:mds/features/main/data/notifiers/models/decorators/search_decorator.dart';
+import 'package:mds/features/main/data/notifiers/models/decorators/sort_decorator.dart';
+import 'package:mds/features/main/data/notifiers/models/records_collection.dart';
+import 'package:mds/features/main/data/notifiers/models/records_interface.dart';
 
-
-//TODO: separate logic
 class CatalogNotifier extends ChangeNotifier {
-  final List<Record> _nowList;
-  List<Record> get nowList => _nowList;
+  CatalogNotifier(List<Record> records)
+      : _collection = RecordsCollection(
+          records: records,
+        ),
+        _initCollection = RecordsCollection(
+          records: records,
+        );
 
-  final List<Record> _fullList;
+  RecordsCollection _initCollection;
 
-  var _sortDirection = SortDirections.asc;
-  SortDirections get sortDirection => _sortDirection;
+  late IRecords _collection;
+  List<Record> get nowList => _collection.getRecords;
 
-  var _sortType = SortTypes.name;
-  SortTypes get sortType => _sortType;
-
-  var _searchText = '';
-
+  //Fav
   var _showOnlyFav = false;
   bool get showOnlyFav => _showOnlyFav;
 
-  CatalogNotifier(List<Record> list)
-      : _fullList = [...list],
-        _nowList = [...list] {
-    _applyFiltres();
+  void toogleShowOnlyFav() {
+    _showOnlyFav = !_showOnlyFav;
+    _applyFilters();
+  }
+
+  void deleteRecordFromFav({
+    required String id,
+  }) {
+    _initCollection = _initCollection.deleteRecordFromFav(id: id);
+    _applyFilters();
+  }
+
+  void addRecordToFav({
+    required String id,
+  }) {
+    _initCollection = _initCollection.addRecordToFav(id: id);
+    _applyFilters();
+  }
+
+  //Search
+  var _searchRequest = '';
+
+  void search(String request) {
+    _searchRequest = request;
+    _applyFilters();
   }
 
   void clearSearch() {
-    _searchText = '';
-    _applyFiltres();
+    _searchRequest = '';
+    _applyFilters();
   }
 
-  void search(String text) {
-    _searchText = text;
-    _applyFiltres();
+  //Sort
+  var _sortDirection = SortDirections.asc;
+  SortDirections get sortDirection => _sortDirection;
+  var _sortType = SortTypes.name;
+  SortTypes get sortType => _sortType;
+
+  void changeSortDirection(SortDirections sortDirection) {
+    _sortDirection = sortDirection;
+    _applyFilters();
   }
 
   void changeSortType(SortTypes sortType) {
     _sortType = sortType;
-    _applyFiltres();
+    _applyFilters();
   }
 
-  void changeSortDirection(SortDirections sortDirection) {
-    _sortDirection = sortDirection;
-    _applyFiltres();
-  }
-
-  void deleteRecordFromFav({required String id}) {
-    final records = [..._fullList];
-    _fullList.clear();
-
-    for (final record in records) {
-      if (record.recordId == id) {
-        _fullList.add(
-          record.copyWith(
-            isFavorite: false,
-          ),
-        );
-      } else {
-        _fullList.add(record);
-      }
-    }
-
-    _applyFiltres();
-  }
-
-  void addRecordToFav({required String id}) {
-    final records = [..._fullList];
-    _fullList.clear();
-
-    for (final record in records) {
-      if (record.recordId == id) {
-        _fullList.add(
-          record.copyWith(
-            isFavorite: true,
-          ),
-        );
-      } else {
-        _fullList.add(record);
-      }
-    }
-
-    _applyFiltres();
-  }
-
-  void toogleShowOnlyFav() {
-    _showOnlyFav = !_showOnlyFav;
-    _applyFiltres();
-  }
-
+  //Clear filtres
   void clearFiltres() {
     _showOnlyFav = false;
-    _searchText = '';
     _sortDirection = SortDirections.asc;
     _sortType = SortTypes.name;
-
-    _applyFiltres();
+    _searchRequest = '';
+    _applyFilters();
   }
 
-  void _applyFiltres() {
-    _applySearch();
-    _applyShowOnlyFav();
-    _applySort();
-    notifyListeners();
-  }
+  //Apply Filtres
+  void _applyFilters() {
+    IRecords records = _initCollection;
 
-  void _applySearch() {
-    _nowList.clear();
-
-    if (_searchText == '') {
-      _nowList.addAll(_fullList);
-    } else {
-      for (final record in _fullList) {
-        if (record.title.toLowerCase().contains(_searchText.toLowerCase()) ||
-            record.authorsString
-                .toLowerCase()
-                .contains(_searchText.toLowerCase())) {
-          _nowList.add(record);
-        }
-      }
-    }
-  }
-
-  void _applySort() {
-    if (_sortType == SortTypes.name) {
-      _nowList.sort(
-        (a, b) => a.title.toLowerCase().compareTo(
-              b.title.toLowerCase(),
-            ),
-      );
-    } else if (_sortType == SortTypes.author) {
-      _nowList.sort(
-        (a, b) => a.authorsString.toLowerCase().compareTo(
-              b.authorsString.toLowerCase(),
-            ),
-      );
-    } else if (_sortType == SortTypes.date) {
-      _nowList.sort(
-        (a, b) => a.streamingDate.compareTo(b.streamingDate),
-      );
-    } else if (_sortType == SortTypes.duration) {
-      _nowList.sort(
-        (a, b) => a.file.duration.compareTo(
-          b.file.duration,
-        ),
-      );
-    }
-
-    if (_sortDirection == SortDirections.desc) {
-      final reversed = [..._nowList.reversed];
-
-      _nowList.clear();
-
-      _nowList.addAll(reversed);
-    }
-  }
-
-  void _applyShowOnlyFav() {
     if (_showOnlyFav) {
-      final list = [..._nowList];
-
-      _nowList.clear();
-      for (final record in list) {
-        if (record.isFavorite) {
-          _nowList.add(record);
-        }
-      }
+      records = FavoritesDecorator(records);
     }
+
+    if (_searchRequest.isNotEmpty) {
+      records = SearchDecorator(
+        records,
+        request: _searchRequest,
+      );
+    }
+
+    records = SortDecorator(
+      records,
+      sortDirection: _sortDirection,
+      sortType: _sortType,
+    );
+
+    _collection = records;
+    notifyListeners();
   }
 }
