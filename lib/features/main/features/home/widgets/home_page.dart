@@ -99,7 +99,7 @@ class _HeaderState extends State<_Header> {
                 _searchOpen = !_searchOpen;
 
                 if (!_searchOpen) {
-                  context.read<CatalogNotifier>().clearFilters();
+                  context.read<CatalogNotifier>().clearSearch();
                 } else {
                   _searchController.clear();
                 }
