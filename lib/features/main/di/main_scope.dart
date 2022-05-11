@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mds/common/data/models/record.dart';
+import 'package:mds/common/data/repositories/favorites_repository.dart';
+import 'package:mds/features/main/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +22,31 @@ class MainScope extends StatelessWidget {
       create: (context) => CatalogNotifier(
         records,
       ),
-      child: child,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => FavoritesBloc(
+              favoritesRepository: context.read<IFavoritesRepository>(),
+            ),
+          ),
+        ],
+        child: BlocListener<FavoritesBloc, FavoritesState>(
+          listener: (context, state) => state.whenOrNull(
+            error: (){
+              //TODO: error
+            },
+            successDelete: (id) =>
+                context.read<CatalogNotifier>().deleteRecordFromFav(
+                      id: id,
+                    ),
+            successAdd: (id) =>
+                context.read<CatalogNotifier>().deleteRecordFromFav(
+                      id: id,
+                    ),
+          ),
+          child: child,
+        ),
+      ),
     );
   }
 }

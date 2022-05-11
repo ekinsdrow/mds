@@ -16,6 +16,7 @@ _$_Record _$$_RecordFromJson(Map<String, dynamic> json) => _$_Record(
       authors: (json['author'] as List<dynamic>)
           .map((e) => Author.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isFavorite: json['isFavorite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_RecordToJson(_$_Record instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$$_RecordToJson(_$_Record instance) => <String, dynamic>{
       'record_id': instance.recordId,
       'streaming_date': instance.streamingDate,
       'author': instance.authors,
+      'isFavorite': instance.isFavorite,
     };

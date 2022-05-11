@@ -11,13 +11,14 @@ import 'package:mds/features/app/router/router.dart';
 void main() => runZonedGuarded(
       () {
         BlocOverrides.runZoned(
-          () {
+          () async {
             final dio = Dio(
               BaseOptions(
                 connectTimeout: 10000,
               ),
             );
             final router = AppRouter();
+
 
             runApp(
               App(

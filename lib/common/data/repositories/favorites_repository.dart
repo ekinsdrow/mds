@@ -5,19 +5,17 @@ abstract class IFavoritesRepository {
     required String id,
   });
   Future<List<String>> getAllFavorites();
+  Future<void> deleteFavorite({
+    required String id,
+  });
 }
 
 class FavoritesRepository implements IFavoritesRepository {
-  final SharedPreferences sharedPreferences;
-
   final _key = 'favorites';
-
-  FavoritesRepository({
-    required this.sharedPreferences,
-  });
 
   @override
   Future<List<String>> getAllFavorites() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
     final favorites = sharedPreferences.getStringList(
       _key,
     );
@@ -31,9 +29,24 @@ class FavoritesRepository implements IFavoritesRepository {
 
   @override
   Future<void> saveFavorite({required String id}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
     final favorites = [
       ...await getAllFavorites(),
       id,
+    ];
+
+    await sharedPreferences.setStringList(
+      _key,
+      favorites,
+    );
+  }
+
+  @override
+  Future<void> deleteFavorite({required String id}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final favorites = [
+      for (final i in await getAllFavorites())
+        if (id != i) i
     ];
 
     await sharedPreferences.setStringList(

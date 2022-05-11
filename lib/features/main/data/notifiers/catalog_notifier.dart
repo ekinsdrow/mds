@@ -16,7 +16,9 @@ class CatalogNotifier extends ChangeNotifier {
 
   var _searchText = '';
 
-  CatalogNotifier(this._fullList) : _nowList = [..._fullList] {
+  CatalogNotifier(List<Record> list)
+      : _fullList = [...list],
+        _nowList = [...list] {
     _applyFiltres();
   }
 
@@ -37,6 +39,44 @@ class CatalogNotifier extends ChangeNotifier {
 
   void changeSortDirection(SortDirections sortDirection) {
     _sortDirection = sortDirection;
+    _applyFiltres();
+  }
+
+  void deleteRecordFromFav({required String id}) {
+    final records = [..._fullList];
+    _fullList.clear();
+
+    for (final record in records) {
+      if (record.recordId == id) {
+        _fullList.add(
+          record.copyWith(
+            isFavorite: true,
+          ),
+        );
+      } else {
+        _fullList.add(record);
+      }
+    }
+
+    _applyFiltres();
+  }
+
+  void addRecordToFav({required String id}) {
+    final records = [..._fullList];
+    _fullList.clear();
+
+    for (final record in records) {
+      if (record.recordId == id) {
+        _fullList.add(
+          record.copyWith(
+            isFavorite: false,
+          ),
+        );
+      } else {
+        _fullList.add(record);
+      }
+    }
+
     _applyFiltres();
   }
 

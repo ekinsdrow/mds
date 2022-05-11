@@ -5,6 +5,7 @@ import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
+import 'package:mds/features/main/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
 
@@ -321,11 +322,23 @@ class _Item extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    //TODO:add to fav
+                    if (record.isFavorite) {
+                      context.read<FavoritesBloc>().add(
+                            FavoritesEvent.delete(
+                              id: record.recordId,
+                            ),
+                          );
+                    } else {
+                      context.read<FavoritesBloc>().add(
+                            FavoritesEvent.save(
+                              id: record.recordId,
+                            ),
+                          );
+                    }
                   },
                   splashRadius: 20,
-                  icon: const Icon(
-                    Icons.favorite,
+                  icon: Icon(
+                    record.isFavorite ? Icons.favorite : Icons.favorite_border,
                   ),
                 ),
                 const Icon(

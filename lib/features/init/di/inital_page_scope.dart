@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mds/common/data/repositories/favorites_repository.dart';
 import 'package:mds/features/init/blocs/init/initial_bloc.dart';
 import 'package:mds/features/init/data/repositories/records_repository.dart';
 import 'package:mds/features/init/data/sources/records_source.dart';
@@ -28,6 +29,7 @@ class InitialPageScope extends StatelessWidget {
         child: BlocProvider(
           create: (context) => InitialBloc(
             recordsRepository: context.read<IRecordsRepository>(),
+            favoritesRepository: context.read<IFavoritesRepository>(),
           )..add(
               const InitialEvent.started(),
             ),
