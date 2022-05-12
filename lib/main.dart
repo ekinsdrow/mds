@@ -8,6 +8,8 @@ import 'package:mds/features/app/app.dart';
 
 import 'package:mds/features/app/router/router.dart';
 
+
+//TODO: change package name to com.ekinsdrow.mds
 void main() => runZonedGuarded(
       () {
         BlocOverrides.runZoned(
