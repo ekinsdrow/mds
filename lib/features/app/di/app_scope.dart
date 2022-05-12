@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mds/common/data/repositories/favorites_repository.dart';
 import 'package:provider/provider.dart';
 
+
+//TODO: add fav bloc and playing bloc there
 class AppScope extends StatelessWidget {
   const AppScope({
     required this.child,
