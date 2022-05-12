@@ -113,9 +113,6 @@ class Queue extends StatelessWidget {
         right: Constants.smallPadding,
       ),
       itemBuilder: (context, index) => RecordListItem(
-        callback: () {
-          //TODO: tap
-        },
         record: Record.placeholder(),
         active: index == 2,
       ),

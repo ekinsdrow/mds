@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:mds/common/data/models/record.dart';
-import 'package:mds/features/main/data/enums/sort_enums.dart';
-import 'package:mds/features/main/data/notifiers/models/decorators/favorites_decorator.dart';
-import 'package:mds/features/main/data/notifiers/models/decorators/search_decorator.dart';
-import 'package:mds/features/main/data/notifiers/models/decorators/sort_decorator.dart';
-import 'package:mds/features/main/data/notifiers/models/records_collection.dart';
-import 'package:mds/features/main/data/notifiers/models/records_interface.dart';
+import 'package:mds/features/app/data/enums/sort_enums.dart';
+import 'package:mds/features/app/data/notifiers/models/decorators/favorites_decorator.dart';
+import 'package:mds/features/app/data/notifiers/models/decorators/search_decorator.dart';
+import 'package:mds/features/app/data/notifiers/models/decorators/sort_decorator.dart';
+import 'package:mds/features/app/data/notifiers/models/records_collection.dart';
+import 'package:mds/features/app/data/notifiers/models/records_interface.dart';
 
 class CatalogNotifier extends ChangeNotifier {
-  CatalogNotifier(List<Record> records)
+  CatalogNotifier()
       : _collection = RecordsCollection(
-          records: records,
+          records: [],
         ),
         _initCollection = RecordsCollection(
-          records: records,
+          records: [],
         );
+
+  void init(List<Record> records) {
+    _initCollection = RecordsCollection(
+      records: records,
+    );
+
+    _collection = _initCollection;
+
+    notifyListeners();
+  }
 
   RecordsCollection _initCollection;
 

@@ -6,8 +6,8 @@ import 'package:mds/features/playing/data/repositories/record_link_repository.da
 import 'package:mds/features/playing/data/sources/record_link_source.dart';
 import 'package:provider/provider.dart';
 
-class PlayerScope extends StatelessWidget {
-  const PlayerScope({
+class Playingcope extends StatelessWidget {
+  const Playingcope({
     Key? key,
     required this.child,
   }) : super(key: key);
