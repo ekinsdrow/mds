@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mds/common/data/models/record.dart';
-import 'package:mds/features/main/features/playing/data/models/record_link.dart';
-import 'package:mds/features/main/features/playing/data/models/record_link_body.dart';
+import 'package:mds/features/main/features/player/data/models/record_link.dart';
+import 'package:mds/features/main/features/player/data/models/record_link_body.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'record_link_source.g.dart';
