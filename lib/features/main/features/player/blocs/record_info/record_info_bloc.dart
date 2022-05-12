@@ -10,6 +10,7 @@ part 'record_info_event.dart';
 part 'record_info_state.dart';
 part 'record_info_bloc.freezed.dart';
 
+//TODO: move feature
 class RecordInfoBloc extends Bloc<RecordInfoEvent, RecordInfoState> {
   RecordInfoBloc({
     required this.recordLinkRepository,
