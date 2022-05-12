@@ -46,6 +46,7 @@ dev_dependencies:
   retrofit_generator: ^4.0.1
   build_runner: ^2.1.5
   flutter_lints: ^1.0.0
+  change_app_package_name: ^1.0.0
 
 flutter:
   generate: true

@@ -1,4 +1,4 @@
-package com.example.mds
+package com.ekinsdrow.mds
 
 import io.flutter.embedding.android.FlutterActivity
 
