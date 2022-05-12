@@ -17,6 +17,9 @@ class PlayerPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: const [
+            SizedBox(
+              height: Constants.mediumPadding,
+            ),
             _Header(),
             Expanded(
               child: Queue(),
