@@ -6,7 +6,7 @@ import 'package:mds/common/widgets/custom_icon_button.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
-import 'package:mds/features/main/features/player/blocs/record_info/record_info_bloc.dart';
+import 'package:mds/features/playing/blocs/record_info/record_info_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
