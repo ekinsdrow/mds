@@ -45,4 +45,23 @@ class Record with _$Record {
   }
 
   factory Record.fromJson(Map<String, dynamic> json) => _$RecordFromJson(json);
+
+  factory Record.placeholder() {
+    return Record(
+      title: 'Title',
+      rating: '5.0',
+      file: File(
+        bitrate: '128',
+        durationString: '1000',
+        fileId: '11',
+        size: '100',
+      ),
+      commentsTotal: '4',
+      recordId: '0',
+      streamingDate: '2000-01-01',
+      authors: [
+        Author(title: 'Author'),
+      ],
+    );
+  }
 }

@@ -11,13 +11,17 @@
   "dowloaded": "Скачаное",
   "fav_error": "Ошибка добавления в избранное",
   "favorites": "Избранное",
+  "hours": "час",
+  "min": "мин",
   "network_error": "Сетевая ошибка",
   "other_filters": "Другие фильтры",
   "recently_listening": "Недавно прослушаное",
   "remove_all_downloaded_files": "Стереть все скачиные файлы",
   "retry": "Повторить",
+  "sec": "сек",
   "server_error": "Ошибка сервера",
   "sorting": "Сортировка",
+  "start": "Старт",
   "timeout_error": "Истекло время ожидания",
   "unknown_error": "Неизвестная ошибка"
 }

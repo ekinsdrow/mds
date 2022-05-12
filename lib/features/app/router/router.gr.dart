@@ -27,6 +27,10 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData,
           child: MainPage(key: args.key, records: args.records));
     },
+    PlayerRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+          routeData: routeData, child: const PlayerPage());
+    },
     HomeRouter.name: (routeData) {
       return AdaptivePage<dynamic>(
           routeData: routeData, child: const HomePage());
@@ -49,7 +53,8 @@ class _$AppRouter extends RootStackRouter {
           RouteConfig(SettingsRouter.name,
               path: 'settings', parent: MainRoute.name),
           RouteConfig(InfoRouter.name, path: 'info', parent: MainRoute.name)
-        ])
+        ]),
+        RouteConfig(PlayerRoute.name, path: '/player-page')
       ];
 }
 
@@ -85,6 +90,14 @@ class MainRouteArgs {
   String toString() {
     return 'MainRouteArgs{key: $key, records: $records}';
   }
+}
+
+/// generated route for
+/// [PlayerPage]
+class PlayerRoute extends PageRouteInfo<void> {
+  const PlayerRoute() : super(PlayerRoute.name, path: '/player-page');
+
+  static const String name = 'PlayerRoute';
 }
 
 /// generated route for

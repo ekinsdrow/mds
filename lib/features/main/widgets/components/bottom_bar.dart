@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
+import 'package:mds/common/widgets/progress_bar.dart';
+import 'package:mds/features/app/router/router.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({
@@ -139,7 +142,9 @@ class _PlayerWidget extends StatelessWidget {
           Constants.borderRadius,
         ),
         onTap: () {
-          //TODO: open player
+          context.router.push(
+            const PlayerRoute(),
+          );
         },
         child: Container(
           width: double.infinity,
@@ -181,32 +186,7 @@ class _PlayerWidget extends StatelessWidget {
                   ),
                 ],
               ),
-
-              //TODO: progress bar
-              Stack(
-                children: [
-                  Container(
-                    height: 5,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        Constants.borderRadius,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 5,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(
-                        Constants.borderRadius,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              const ProgressBar(),
               const SizedBox(
                 height: Constants.smallPadding,
               ),

@@ -17,6 +17,13 @@ abstract class Themes {
 
   static ThemeData _getTheme(ThemeData themeData) => themeData.copyWith(
         primaryColor: AppColors.primaryColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: themeData.scaffoldBackgroundColor,
+          elevation: 0,
+          iconTheme: const IconThemeData(
+            color: AppColors.primaryColor,
+          ),
+        ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: AppColors.primaryColor,
         ),
