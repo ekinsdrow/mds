@@ -216,10 +216,10 @@ class _Buttons extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               Constants.borderRadius * 1.5,
             ),
-            child: Container(
+            child: const SizedBox(
               width: 60,
               height: 60,
-              child: const Icon(
+              child: Icon(
                 Icons.pause,
                 color: Colors.white,
               ),

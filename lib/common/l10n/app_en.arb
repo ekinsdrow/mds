@@ -11,13 +11,17 @@
   "dowloaded": "Dowloaded",
   "fav_error": "Error when add to fav",
   "favorites": "Favorites",
+  "hours": "hour",
+  "min": "min",
   "network_error": "Network error",
   "other_filters": "Other filtres",
   "recently_listening": "Recently listening",
   "remove_all_downloaded_files": "Remove all downloaded files",
   "retry": "Retry",
+  "sec": "sec",
   "server_error": "Server Error",
   "sorting": "Sorting",
+  "start": "Start",
   "timeout_error": "Timeout error",
   "unknown_error": "Uknown Error"
 }
