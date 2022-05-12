@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
-import 'package:mds/features/main/data/enums/sort_enums.dart';
-import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
+import 'package:mds/features/app/data/enums/sort_enums.dart';
+import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:provider/provider.dart';
 
 void showSortModal(

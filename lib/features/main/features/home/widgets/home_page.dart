@@ -4,9 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/widgets/custom_icon_button.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
-import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
+import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
-import 'package:mds/features/main/features/player/blocs/record_info/record_info_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -271,17 +270,6 @@ class _Records extends StatelessWidget {
         ),
         itemBuilder: (context, index) => RecordListItem(
           record: context.watch<CatalogNotifier>().nowList[index],
-          callback: () {
-            context.read<RecordInfoBloc>().add(
-                  RecordInfoEvent.fetch(
-                    fileId: context
-                        .read<CatalogNotifier>()
-                        .nowList[index]
-                        .file
-                        .fileId,
-                  ),
-                );
-          },
         ),
         itemCount: context.watch<CatalogNotifier>().nowList.length,
       ),
