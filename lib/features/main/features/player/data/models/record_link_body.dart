@@ -7,8 +7,10 @@ class RecordLinkBody with _$RecordLinkBody {
   factory RecordLinkBody({
     required String fileId,
   }) = _RecordLinkBody;
+}
 
-  String toJson() {
+extension RecordToBody on RecordLinkBody {
+  String toBody() {
     return 'file_id=$fileId';
   }
 }

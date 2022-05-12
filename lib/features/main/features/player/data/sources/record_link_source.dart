@@ -1,18 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:mds/features/main/features/player/data/models/record_link.dart';
 import 'package:mds/features/main/features/player/data/models/record_link_body.dart';
-import 'package:retrofit/retrofit.dart';
 
-part 'record_link_source.g.dart';
+class RecordLinkSource {
+  RecordLinkSource({
+    required this.dio,
+  });
 
-@RestApi(baseUrl: "http://mds.norn.su/api")
-abstract class RecordLinkSource {
-  factory RecordLinkSource(Dio dio, {String baseUrl}) = _RecordLinkSource;
+  final Dio dio;
 
-  @POST(
-    '/get_records',
-  )
-  Future<RecordLink> getRecordLink(
-    @Body() final RecordLinkBody recordLinkBody,
-  );
+  Future<RecordLink> getRecordLink(RecordLinkBody body) async {
+    final response = await dio.post(
+      '/get_record_file',
+      //TODO: request body
+      // data: {body.toBody()},
+    );
+
+    return RecordLink.fromJson(
+      response.data,
+    );
+  }
 }

@@ -15,6 +15,7 @@ void main() => runZonedGuarded(
             final dio = Dio(
               BaseOptions(
                 connectTimeout: 10000,
+                baseUrl: 'http://mds.norn.su/api',
               ),
             );
             final router = AppRouter();
