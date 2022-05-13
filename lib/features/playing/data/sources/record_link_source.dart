@@ -12,8 +12,9 @@ class RecordLinkSource {
   Future<RecordLink> getRecordLink(RecordLinkBody body) async {
     final response = await dio.post(
       '/get_record_file',
-      //TODO: request body
-      // data: {body.toBody()},
+      data: FormData.fromMap(
+        body.toJson(),
+      ),
     );
 
     return RecordLink.fromJson(

@@ -1,16 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'record_link_body.freezed.dart';
+part 'record_link_body.g.dart';
 
 @freezed
 class RecordLinkBody with _$RecordLinkBody {
   factory RecordLinkBody({
-    required String fileId,
+    @JsonKey(name: 'file_id') required String fileId,
   }) = _RecordLinkBody;
-}
 
-extension RecordToBody on RecordLinkBody {
-  String toBody() {
-    return 'file_id=$fileId';
-  }
+  factory RecordLinkBody.fromJson(Map<String, dynamic> json) =>
+      _$RecordLinkBodyFromJson(json);
 }

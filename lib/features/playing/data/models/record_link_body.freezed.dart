@@ -14,10 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+RecordLinkBody _$RecordLinkBodyFromJson(Map<String, dynamic> json) {
+  return _RecordLinkBody.fromJson(json);
+}
+
 /// @nodoc
 mixin _$RecordLinkBody {
+  @JsonKey(name: 'file_id')
   String get fileId => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $RecordLinkBodyCopyWith<RecordLinkBody> get copyWith =>
       throw _privateConstructorUsedError;
@@ -28,7 +34,7 @@ abstract class $RecordLinkBodyCopyWith<$Res> {
   factory $RecordLinkBodyCopyWith(
           RecordLinkBody value, $Res Function(RecordLinkBody) then) =
       _$RecordLinkBodyCopyWithImpl<$Res>;
-  $Res call({String fileId});
+  $Res call({@JsonKey(name: 'file_id') String fileId});
 }
 
 /// @nodoc
@@ -60,7 +66,7 @@ abstract class _$$_RecordLinkBodyCopyWith<$Res>
           _$_RecordLinkBody value, $Res Function(_$_RecordLinkBody) then) =
       __$$_RecordLinkBodyCopyWithImpl<$Res>;
   @override
-  $Res call({String fileId});
+  $Res call({@JsonKey(name: 'file_id') String fileId});
 }
 
 /// @nodoc
@@ -88,11 +94,15 @@ class __$$_RecordLinkBodyCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_RecordLinkBody implements _RecordLinkBody {
-  _$_RecordLinkBody({required this.fileId});
+  _$_RecordLinkBody({@JsonKey(name: 'file_id') required this.fileId});
+
+  factory _$_RecordLinkBody.fromJson(Map<String, dynamic> json) =>
+      _$$_RecordLinkBodyFromJson(json);
 
   @override
+  @JsonKey(name: 'file_id')
   final String fileId;
 
   @override
@@ -108,6 +118,7 @@ class _$_RecordLinkBody implements _RecordLinkBody {
             const DeepCollectionEquality().equals(other.fileId, fileId));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(fileId));
@@ -116,12 +127,23 @@ class _$_RecordLinkBody implements _RecordLinkBody {
   @override
   _$$_RecordLinkBodyCopyWith<_$_RecordLinkBody> get copyWith =>
       __$$_RecordLinkBodyCopyWithImpl<_$_RecordLinkBody>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RecordLinkBodyToJson(this);
+  }
 }
 
 abstract class _RecordLinkBody implements RecordLinkBody {
-  factory _RecordLinkBody({required final String fileId}) = _$_RecordLinkBody;
+  factory _RecordLinkBody(
+          {@JsonKey(name: 'file_id') required final String fileId}) =
+      _$_RecordLinkBody;
+
+  factory _RecordLinkBody.fromJson(Map<String, dynamic> json) =
+      _$_RecordLinkBody.fromJson;
 
   @override
+  @JsonKey(name: 'file_id')
   String get fileId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
