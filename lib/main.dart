@@ -8,6 +8,7 @@ import 'package:mds/features/app/app.dart';
 
 import 'package:mds/features/app/router/router.dart';
 
+
 void main() => runZonedGuarded(
       () {
         BlocOverrides.runZoned(
@@ -15,6 +16,7 @@ void main() => runZonedGuarded(
             final dio = Dio(
               BaseOptions(
                 connectTimeout: 10000,
+                baseUrl: 'http://mds.norn.su/api',
               ),
             );
             final router = AppRouter();

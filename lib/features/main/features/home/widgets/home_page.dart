@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/widgets/custom_icon_button.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
-import 'package:mds/features/main/data/notifiers/catalog_notifier.dart';
+import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
 
 class HomePage extends StatelessWidget {

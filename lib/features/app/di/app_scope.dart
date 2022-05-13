@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mds/common/data/repositories/favorites_repository.dart';
+import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
+import 'package:mds/features/favorites/di/favorites_scope.dart';
+import 'package:mds/features/playing/di/playing_scope.dart';
 import 'package:provider/provider.dart';
 
 class AppScope extends StatelessWidget {
@@ -16,19 +17,19 @@ class AppScope extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<Dio>(
-          create: (context) => dio,
-        ),
-      ],
-      child: MultiRepositoryProvider(
+    return ChangeNotifierProvider(
+      create: (context) => CatalogNotifier(),
+      child: MultiProvider(
         providers: [
-          RepositoryProvider<IFavoritesRepository>(
-            create: (context) => FavoritesRepository(),
+          Provider<Dio>(
+            create: (context) => dio,
           ),
         ],
-        child: child,
+        child: FavoritesScope(
+          child: Playingcope(
+            child: child,
+          ),
+        ),
       ),
     );
   }

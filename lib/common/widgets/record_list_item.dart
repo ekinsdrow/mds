@@ -3,7 +3,8 @@ import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
-import 'package:mds/features/main/blocs/favorites/favorites_bloc.dart';
+import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
+import 'package:mds/features/playing/blocs/record_info/record_info_bloc.dart';
 import 'package:provider/provider.dart';
 
 class RecordListItem extends StatelessWidget {
@@ -30,7 +31,11 @@ class RecordListItem extends StatelessWidget {
           Constants.borderRadius * 2,
         ),
         onTap: () {
-          //TODO: tap
+          context.read<RecordInfoBloc>().add(
+                RecordInfoEvent.fetch(
+                  fileId: record.file.fileId,
+                ),
+              );
         },
         child: Container(
           padding: const EdgeInsets.symmetric(

@@ -1,5 +1,5 @@
 import 'package:mds/common/data/models/record.dart';
-import 'package:mds/features/main/data/notifiers/models/records_interface.dart';
+import 'package:mds/features/app/data/notifiers/models/records_interface.dart';
 
 class RecordsCollection implements IRecords {
   RecordsCollection({

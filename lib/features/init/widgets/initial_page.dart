@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/widgets/retry_error_widget.dart';
+import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/app/router/router.dart';
 import 'package:mds/features/init/blocs/init/initial_bloc.dart';
 import 'package:mds/features/init/di/inital_page_scope.dart';
@@ -17,13 +18,17 @@ class InitialPage extends StatelessWidget {
         body: SafeArea(
           child: BlocConsumer<InitialBloc, InitialState>(
             listener: (context, state) => state.whenOrNull(
-              success: (records) => context.router.replaceAll(
-                [
-                  MainRoute(
-                    records: records,
-                  ),
-                ],
-              ),
+              success: (records) {
+                context.read<CatalogNotifier>().init(records);
+
+                context.router.replaceAll(
+                  [
+                    MainRoute(
+                      records: records,
+                    ),
+                  ],
+                );
+              },
             ),
             builder: (context, state) => state.when(
               loading: () => const Body(),
