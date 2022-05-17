@@ -25,6 +25,11 @@ dependencies:
   bloc: ^8.0.1
   flutter_bloc: ^8.0.1
 
+  #Audio
+  just_audio: ^0.9.21
+  audio_service: ^0.18.4
+  audio_session: ^0.1.6+1
+
   #Utils
   intl: ^0.17.0
   freezed: ^2.0.3
