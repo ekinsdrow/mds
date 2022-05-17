@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mds/features/playing/data/models/record_link.dart';
-import 'package:mds/features/playing/data/models/record_link_body.dart';
+import 'package:mds/features/record_info/data/models/record_link.dart';
+import 'package:mds/features/record_info/data/models/record_link_body.dart';
 
 class RecordLinkSource {
   RecordLinkSource({

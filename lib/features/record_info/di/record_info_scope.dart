@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mds/features/playing/blocs/record_info/record_info_bloc.dart';
-import 'package:mds/features/playing/data/repositories/record_link_repository.dart';
-import 'package:mds/features/playing/data/sources/record_link_source.dart';
+import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
+import 'package:mds/features/record_info/data/repositories/record_link_repository.dart';
+import 'package:mds/features/record_info/data/sources/record_link_source.dart';
 import 'package:provider/provider.dart';
 
-class Playingcope extends StatelessWidget {
-  const Playingcope({
+class RecordInfoScope extends StatelessWidget {
+  const RecordInfoScope({
     Key? key,
     required this.child,
   }) : super(key: key);

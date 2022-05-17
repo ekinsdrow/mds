@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mds/features/playing/data/models/record_link.dart';
-import 'package:mds/features/playing/data/models/record_link_body.dart';
-import 'package:mds/features/playing/data/repositories/record_link_repository.dart';
+import 'package:mds/features/record_info/data/models/record_link.dart';
+import 'package:mds/features/record_info/data/models/record_link_body.dart';
+import 'package:mds/features/record_info/data/repositories/record_link_repository.dart';
 
 part 'record_info_event.dart';
 part 'record_info_state.dart';
