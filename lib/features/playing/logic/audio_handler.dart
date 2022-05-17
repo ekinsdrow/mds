@@ -28,6 +28,8 @@ class MdsAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     String mediaId, [
     Map<String, dynamic>? extras,
   ]) async {
+    await player.pause();
+    
     final item = queue.value.firstWhere(
       (element) => element.id == mediaId,
     );

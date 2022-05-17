@@ -115,6 +115,9 @@ class Queue extends StatelessWidget {
       itemBuilder: (context, index) => RecordListItem(
         record: Record.placeholder(),
         active: index == 2,
+        callback: () {
+          //TODO: play
+        },
       ),
       itemCount: 100,
     );

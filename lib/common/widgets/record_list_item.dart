@@ -4,18 +4,19 @@ import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
-import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:provider/provider.dart';
 
 class RecordListItem extends StatelessWidget {
   const RecordListItem({
     required this.record,
+    required this.callback,
     this.active = false,
     Key? key,
   }) : super(key: key);
 
   final Record record;
   final bool active;
+  final VoidCallback callback;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +31,7 @@ class RecordListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           Constants.borderRadius * 2,
         ),
-        onTap: () {
-          context.read<RecordInfoBloc>().add(
-                RecordInfoEvent.fetch(
-                  fileId: record.file.fileId,
-                ),
-              );
-        },
+        onTap: callback,
         child: Container(
           padding: const EdgeInsets.symmetric(
             vertical: Constants.mediumPadding,

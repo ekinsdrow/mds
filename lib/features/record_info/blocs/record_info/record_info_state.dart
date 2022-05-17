@@ -9,5 +9,7 @@ class RecordInfoState with _$RecordInfoState {
   }) = _Error;
   const factory RecordInfoState.success({
     required RecordLink recordLink,
+    required Record record,
+    required List<Record> queue,
   }) = _Success;
 }

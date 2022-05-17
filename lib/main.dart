@@ -15,7 +15,7 @@ void main() => runZonedGuarded(
       () {
         BlocOverrides.runZoned(
           () async {
-            await AudioService.init(
+            final audioHandler = await AudioService.init(
               builder: () => MdsAudioHandler(
                 player: AudioPlayer(),
               ),
@@ -38,6 +38,7 @@ void main() => runZonedGuarded(
               App(
                 dio: dio,
                 router: router,
+                mdsAudioHandler: audioHandler,
               ),
             );
           },

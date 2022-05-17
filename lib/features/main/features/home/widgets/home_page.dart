@@ -6,6 +6,7 @@ import 'package:mds/common/widgets/custom_icon_button.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
+import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -270,6 +271,14 @@ class _Records extends StatelessWidget {
         ),
         itemBuilder: (context, index) => RecordListItem(
           record: context.watch<CatalogNotifier>().nowList[index],
+          callback: () {
+            context.read<RecordInfoBloc>().add(
+                  RecordInfoEvent.fetch(
+                    record: context.read<CatalogNotifier>().nowList[index],
+                    queue: context.read<CatalogNotifier>().nowList,
+                  ),
+                );
+          },
         ),
         itemCount: context.watch<CatalogNotifier>().nowList.length,
       ),
