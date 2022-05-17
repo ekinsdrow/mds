@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/favorites/di/favorites_scope.dart';
+import 'package:mds/features/playing/di/playing_scope.dart';
 import 'package:mds/features/record_info/di/record_info_scope.dart';
 import 'package:provider/provider.dart';
 
@@ -25,9 +26,11 @@ class AppScope extends StatelessWidget {
             create: (context) => dio,
           ),
         ],
-        child: FavoritesScope(
-          child: RecordInfoScope(
-            child: child,
+        child: PlayingScope(
+          child: FavoritesScope(
+            child: RecordInfoScope(
+              child: child,
+            ),
           ),
         ),
       ),
