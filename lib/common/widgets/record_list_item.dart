@@ -1,9 +1,11 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/date_extension.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:provider/provider.dart';
 
 class RecordListItem extends StatelessWidget {
@@ -104,8 +106,22 @@ class RecordListItem extends StatelessWidget {
                           : Icons.favorite_border,
                     ),
                   ),
-                  const Icon(
-                    Icons.play_arrow,
+
+                  //TODO: check states
+                  StreamBuilder<PlaybackState>(
+                    stream: context.read<MdsAudioHandler>().playbackState,
+                    builder: (context, snapshot) {
+                      if (snapshot.data != null) {
+                        if (snapshot.data!.playing) {
+                          return const Icon(
+                            Icons.pause,
+                          );
+                        }
+                      }
+                      return const Icon(
+                        Icons.play_arrow,
+                      );
+                    },
                   ),
                 ],
               ),
