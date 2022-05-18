@@ -8,8 +8,6 @@ import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:provider/provider.dart';
 
-
-//TODO: bug then scroll listview
 class RecordListItem extends StatelessWidget {
   const RecordListItem({
     required this.record,
@@ -24,7 +22,6 @@ class RecordListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<Record?>(
       stream: player.recordStream.stream,
       builder: (context, recordSnapshot) {

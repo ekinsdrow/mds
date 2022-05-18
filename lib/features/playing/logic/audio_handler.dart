@@ -36,20 +36,28 @@ class MdsAudioHandler extends BaseAudioHandler
     required String url,
     required Record record,
   }) async {
-    recordStream.add(
-      record,
-    );
+    if (record.recordId == recordStream.value?.recordId) {
+      if (playbackState.value.playing) {
+        pause();
+      } else {
+        play();
+      }
+    } else {
+      recordStream.add(
+        record,
+      );
 
-    playbackState.add(PlayingStates.loadingState);
-    await _player.pause();
+      playbackState.add(PlayingStates.loadingState);
+      await _player.pause();
 
-    try {
-      await _player.setUrl(url);
-      playbackState.add(PlayingStates.playState);
+      try {
+        await _player.setUrl(url);
+        playbackState.add(PlayingStates.playState);
 
-      _player.play();
-    } catch (_) {
-      playbackState.add(PlayingStates.errorState);
+        _player.play();
+      } catch (_) {
+        playbackState.add(PlayingStates.errorState);
+      }
     }
   }
 }
