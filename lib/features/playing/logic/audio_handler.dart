@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
-import 'package:mds/features/playing/logic/record_stream_mixin.dart';
+import 'package:rxdart/rxdart.dart';
 
 //TODO: playing error
 class MdsAudioHandler extends BaseAudioHandler
@@ -36,16 +36,14 @@ class MdsAudioHandler extends BaseAudioHandler
     required String url,
     required Record record,
   }) async {
-    if (record.recordId == recordStream.value?.recordId) {
+    if (record.recordId == _recordStream.value?.recordId) {
       if (playbackState.value.playing) {
         pause();
       } else {
         play();
       }
     } else {
-      recordStream.add(
-        record,
-      );
+      addRecord(record);
 
       playbackState.add(PlayingStates.loadingState);
       await _player.pause();
@@ -59,6 +57,16 @@ class MdsAudioHandler extends BaseAudioHandler
         playbackState.add(PlayingStates.errorState);
       }
     }
+  }
+
+  void addRecord(Record record) {
+    _recordStream.add(
+      record,
+    );
+
+    mediaItem.add(
+      record.toMediaItem(),
+    );
   }
 }
 
@@ -117,4 +125,10 @@ abstract class PlayingStates {
     processingState: AudioProcessingState.error,
     playing: false,
   );
+}
+
+mixin RecordStreamMixin on BaseAudioHandler {
+  // ignore: close_sinks
+  final _recordStream = BehaviorSubject<Record?>.seeded(null);
+  ValueStream<Record?> get recordStream => _recordStream.stream;
 }

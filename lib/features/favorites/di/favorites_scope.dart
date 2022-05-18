@@ -44,7 +44,7 @@ class FavoritesScope extends StatelessWidget {
                     id: record.recordId,
                   );
 
-              context.read<MdsAudioHandler>().recordStream.add(
+              context.read<MdsAudioHandler>().addRecord(
                     record,
                   );
             },
@@ -53,7 +53,7 @@ class FavoritesScope extends StatelessWidget {
                     id: record.recordId,
                   );
 
-              context.read<MdsAudioHandler>().recordStream.add(
+              context.read<MdsAudioHandler>().addRecord(
                     record,
                   );
             },
