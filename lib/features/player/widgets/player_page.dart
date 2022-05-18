@@ -7,6 +7,8 @@ import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/player/widgets/modals/info_modal.dart';
 
 import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
+import 'package:provider/provider.dart';
 
 class PlayerPage extends StatelessWidget {
   const PlayerPage({Key? key}) : super(key: key);
@@ -106,6 +108,8 @@ class Queue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final player = context.read<MdsAudioHandler>();
+
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(
@@ -113,8 +117,8 @@ class Queue extends StatelessWidget {
         right: Constants.smallPadding,
       ),
       itemBuilder: (context, index) => RecordListItem(
+        player: player,
         record: Record.placeholder(),
-        active: index == 2,
         callback: () {
           //TODO: play
         },

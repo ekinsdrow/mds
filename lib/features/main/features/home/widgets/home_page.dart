@@ -6,6 +6,7 @@ import 'package:mds/common/widgets/custom_icon_button.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/main/features/home/widgets/modals/sort_modal.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 
 class HomePage extends StatelessWidget {
@@ -261,6 +262,8 @@ class _Records extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final player = context.read<MdsAudioHandler>();
+    
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -270,6 +273,7 @@ class _Records extends StatelessWidget {
           bottom: 150,
         ),
         itemBuilder: (context, index) => RecordListItem(
+          player: player,
           record: context.watch<CatalogNotifier>().nowList[index],
           callback: () {
             context.read<RecordInfoBloc>().add(

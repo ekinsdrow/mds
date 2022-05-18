@@ -44,10 +44,10 @@ class MdsAudioHandler extends BaseAudioHandler
     await _player.pause();
 
     try {
-      _player.setUrl(url);
-      await _player.play();
-
+      await _player.setUrl(url);
       playbackState.add(PlayingStates.playState);
+
+      _player.play();
     } catch (_) {
       playbackState.add(PlayingStates.errorState);
     }

@@ -230,6 +230,11 @@ class _PlayerWidget extends StatelessWidget {
                                     : Icons.play_arrow,
                               ),
                             )
+                          else if (playbackState.processingState !=
+                              AudioProcessingState.error)
+                            const Icon(
+                              Icons.cancel,
+                            )
                           else
                             Row(
                               children: const [
