@@ -48,7 +48,7 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ],
       ),
-      child: StreamBuilder<Record>(
+      child: StreamBuilder<Record?>(
         stream: context.read<MdsAudioHandler>().recordStream.stream,
         builder: (context, snapshot) {
           return Column(

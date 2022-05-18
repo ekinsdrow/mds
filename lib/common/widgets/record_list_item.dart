@@ -25,7 +25,7 @@ class RecordListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return StreamBuilder<Record>(
+    return StreamBuilder<Record?>(
       stream: player.recordStream.stream,
       builder: (context, recordSnapshot) {
         var active = false;
