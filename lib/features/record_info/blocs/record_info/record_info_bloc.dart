@@ -39,7 +39,6 @@ class RecordInfoBloc extends Bloc<RecordInfoEvent, RecordInfoState> {
         _Success(
           recordLink: recordLink,
           record: event.record,
-          queue: event.queue,
         ),
       );
     } on Exception catch (e) {

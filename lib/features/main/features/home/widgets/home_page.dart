@@ -275,7 +275,6 @@ class _Records extends StatelessWidget {
             context.read<RecordInfoBloc>().add(
                   RecordInfoEvent.fetch(
                     record: context.read<CatalogNotifier>().nowList[index],
-                    queue: context.read<CatalogNotifier>().nowList,
                   ),
                 );
           },

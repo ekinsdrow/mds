@@ -23,20 +23,12 @@ class MdsAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await player.stop();
   }
 
-  @override
-  Future<void> playFromMediaId(
-    String mediaId, [
-    Map<String, dynamic>? extras,
-  ]) async {
+  Future<void> playFromUrl(
+    String url,
+  ) async {
     await player.pause();
-    
-    final item = queue.value.firstWhere(
-      (element) => element.id == mediaId,
-    );
 
-    await player.setUrl(
-      item.extras!['url'],
-    );
+    player.setUrl(url);
 
     await player.play();
   }

@@ -17,20 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RecordInfoEvent {
   Record get record => throw _privateConstructorUsedError;
-  List<Record> get queue => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Record record, List<Record> queue) fetch,
+    required TResult Function(Record record) fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Record record, List<Record> queue)? fetch,
+    TResult Function(Record record)? fetch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Record record, List<Record> queue)? fetch,
+    TResult Function(Record record)? fetch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +60,7 @@ abstract class $RecordInfoEventCopyWith<$Res> {
   factory $RecordInfoEventCopyWith(
           RecordInfoEvent value, $Res Function(RecordInfoEvent) then) =
       _$RecordInfoEventCopyWithImpl<$Res>;
-  $Res call({Record record, List<Record> queue});
+  $Res call({Record record});
 
   $RecordCopyWith<$Res> get record;
 }
@@ -78,17 +77,12 @@ class _$RecordInfoEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? record = freezed,
-    Object? queue = freezed,
   }) {
     return _then(_value.copyWith(
       record: record == freezed
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
               as Record,
-      queue: queue == freezed
-          ? _value.queue
-          : queue // ignore: cast_nullable_to_non_nullable
-              as List<Record>,
     ));
   }
 
@@ -106,7 +100,7 @@ abstract class _$$FetchCopyWith<$Res>
   factory _$$FetchCopyWith(_$Fetch value, $Res Function(_$Fetch) then) =
       __$$FetchCopyWithImpl<$Res>;
   @override
-  $Res call({Record record, List<Record> queue});
+  $Res call({Record record});
 
   @override
   $RecordCopyWith<$Res> get record;
@@ -124,17 +118,12 @@ class __$$FetchCopyWithImpl<$Res> extends _$RecordInfoEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? record = freezed,
-    Object? queue = freezed,
   }) {
     return _then(_$Fetch(
       record: record == freezed
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
               as Record,
-      queue: queue == freezed
-          ? _value._queue
-          : queue // ignore: cast_nullable_to_non_nullable
-              as List<Record>,
     ));
   }
 }
@@ -142,21 +131,14 @@ class __$$FetchCopyWithImpl<$Res> extends _$RecordInfoEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Fetch implements Fetch {
-  const _$Fetch({required this.record, required final List<Record> queue})
-      : _queue = queue;
+  const _$Fetch({required this.record});
 
   @override
   final Record record;
-  final List<Record> _queue;
-  @override
-  List<Record> get queue {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_queue);
-  }
 
   @override
   String toString() {
-    return 'RecordInfoEvent.fetch(record: $record, queue: $queue)';
+    return 'RecordInfoEvent.fetch(record: $record)';
   }
 
   @override
@@ -164,15 +146,12 @@ class _$Fetch implements Fetch {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Fetch &&
-            const DeepCollectionEquality().equals(other.record, record) &&
-            const DeepCollectionEquality().equals(other._queue, _queue));
+            const DeepCollectionEquality().equals(other.record, record));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(record),
-      const DeepCollectionEquality().hash(_queue));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(record));
 
   @JsonKey(ignore: true)
   @override
@@ -182,27 +161,27 @@ class _$Fetch implements Fetch {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Record record, List<Record> queue) fetch,
+    required TResult Function(Record record) fetch,
   }) {
-    return fetch(record, queue);
+    return fetch(record);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Record record, List<Record> queue)? fetch,
+    TResult Function(Record record)? fetch,
   }) {
-    return fetch?.call(record, queue);
+    return fetch?.call(record);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Record record, List<Record> queue)? fetch,
+    TResult Function(Record record)? fetch,
     required TResult orElse(),
   }) {
     if (fetch != null) {
-      return fetch(record, queue);
+      return fetch(record);
     }
     return orElse();
   }
@@ -237,14 +216,10 @@ class _$Fetch implements Fetch {
 }
 
 abstract class Fetch implements RecordInfoEvent {
-  const factory Fetch(
-      {required final Record record,
-      required final List<Record> queue}) = _$Fetch;
+  const factory Fetch({required final Record record}) = _$Fetch;
 
   @override
   Record get record => throw _privateConstructorUsedError;
-  @override
-  List<Record> get queue => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$FetchCopyWith<_$Fetch> get copyWith => throw _privateConstructorUsedError;
@@ -257,9 +232,7 @@ mixin _$RecordInfoState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Exception error) error,
-    required TResult Function(
-            RecordLink recordLink, Record record, List<Record> queue)
-        success,
+    required TResult Function(RecordLink recordLink, Record record) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -267,8 +240,7 @@ mixin _$RecordInfoState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -276,8 +248,7 @@ mixin _$RecordInfoState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -367,9 +338,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Exception error) error,
-    required TResult Function(
-            RecordLink recordLink, Record record, List<Record> queue)
-        success,
+    required TResult Function(RecordLink recordLink, Record record) success,
   }) {
     return initial();
   }
@@ -380,8 +349,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
   }) {
     return initial?.call();
   }
@@ -392,8 +360,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -486,9 +453,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Exception error) error,
-    required TResult Function(
-            RecordLink recordLink, Record record, List<Record> queue)
-        success,
+    required TResult Function(RecordLink recordLink, Record record) success,
   }) {
     return loading();
   }
@@ -499,8 +464,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
   }) {
     return loading?.call();
   }
@@ -511,8 +475,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -628,9 +591,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Exception error) error,
-    required TResult Function(
-            RecordLink recordLink, Record record, List<Record> queue)
-        success,
+    required TResult Function(RecordLink recordLink, Record record) success,
   }) {
     return error(this.error);
   }
@@ -641,8 +602,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
   }) {
     return error?.call(this.error);
   }
@@ -653,8 +613,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -715,7 +674,7 @@ abstract class _$$_SuccessCopyWith<$Res> {
   factory _$$_SuccessCopyWith(
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
-  $Res call({RecordLink recordLink, Record record, List<Record> queue});
+  $Res call({RecordLink recordLink, Record record});
 
   $RecordLinkCopyWith<$Res> get recordLink;
   $RecordCopyWith<$Res> get record;
@@ -734,7 +693,6 @@ class __$$_SuccessCopyWithImpl<$Res> extends _$RecordInfoStateCopyWithImpl<$Res>
   $Res call({
     Object? recordLink = freezed,
     Object? record = freezed,
-    Object? queue = freezed,
   }) {
     return _then(_$_Success(
       recordLink: recordLink == freezed
@@ -745,10 +703,6 @@ class __$$_SuccessCopyWithImpl<$Res> extends _$RecordInfoStateCopyWithImpl<$Res>
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
               as Record,
-      queue: queue == freezed
-          ? _value._queue
-          : queue // ignore: cast_nullable_to_non_nullable
-              as List<Record>,
     ));
   }
 
@@ -770,26 +724,16 @@ class __$$_SuccessCopyWithImpl<$Res> extends _$RecordInfoStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Success implements _Success {
-  const _$_Success(
-      {required this.recordLink,
-      required this.record,
-      required final List<Record> queue})
-      : _queue = queue;
+  const _$_Success({required this.recordLink, required this.record});
 
   @override
   final RecordLink recordLink;
   @override
   final Record record;
-  final List<Record> _queue;
-  @override
-  List<Record> get queue {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_queue);
-  }
 
   @override
   String toString() {
-    return 'RecordInfoState.success(recordLink: $recordLink, record: $record, queue: $queue)';
+    return 'RecordInfoState.success(recordLink: $recordLink, record: $record)';
   }
 
   @override
@@ -799,16 +743,14 @@ class _$_Success implements _Success {
             other is _$_Success &&
             const DeepCollectionEquality()
                 .equals(other.recordLink, recordLink) &&
-            const DeepCollectionEquality().equals(other.record, record) &&
-            const DeepCollectionEquality().equals(other._queue, _queue));
+            const DeepCollectionEquality().equals(other.record, record));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(recordLink),
-      const DeepCollectionEquality().hash(record),
-      const DeepCollectionEquality().hash(_queue));
+      const DeepCollectionEquality().hash(record));
 
   @JsonKey(ignore: true)
   @override
@@ -821,11 +763,9 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Exception error) error,
-    required TResult Function(
-            RecordLink recordLink, Record record, List<Record> queue)
-        success,
+    required TResult Function(RecordLink recordLink, Record record) success,
   }) {
-    return success(recordLink, record, queue);
+    return success(recordLink, record);
   }
 
   @override
@@ -834,10 +774,9 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
   }) {
-    return success?.call(recordLink, record, queue);
+    return success?.call(recordLink, record);
   }
 
   @override
@@ -846,12 +785,11 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Exception error)? error,
-    TResult Function(RecordLink recordLink, Record record, List<Record> queue)?
-        success,
+    TResult Function(RecordLink recordLink, Record record)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(recordLink, record, queue);
+      return success(recordLink, record);
     }
     return orElse();
   }
@@ -897,12 +835,10 @@ class _$_Success implements _Success {
 abstract class _Success implements RecordInfoState {
   const factory _Success(
       {required final RecordLink recordLink,
-      required final Record record,
-      required final List<Record> queue}) = _$_Success;
+      required final Record record}) = _$_Success;
 
   RecordLink get recordLink => throw _privateConstructorUsedError;
   Record get record => throw _privateConstructorUsedError;
-  List<Record> get queue => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;

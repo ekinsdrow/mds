@@ -53,26 +53,12 @@ class RecordInfoScope extends StatelessWidget {
               success: (
                 recordLink,
                 record,
-                queue,
               ) {
                 final player = context.read<MdsAudioHandler>();
 
-                player.updateQueue(
-                  [
-                    for (final item in queue)
-                      MediaItem(
-                        id: item.recordId,
-                        title: item.title,
-                        artist: item.authorsString,
-                        duration: item.file.duration,
-                        extras: {
-                          if (item == record) 'url': recordLink.link,
-                        },
-                      ),
-                  ],
+                player.playFromUrl(
+                  recordLink.link,
                 );
-
-                player.playFromMediaId(record.recordId);
               },
             ),
             child: child,
