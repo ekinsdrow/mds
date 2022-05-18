@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
+import 'package:mds/features/playing/logic/record_stream_mixin.dart';
 
 //TODO: playing error
-class MdsAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
+class MdsAudioHandler extends BaseAudioHandler
+    with QueueHandler, SeekHandler, RecordStreamMixin {
   final AudioPlayer player;
 
   MdsAudioHandler({
@@ -32,11 +36,10 @@ class MdsAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required String url,
     required Record record,
   }) async {
-    mediaItem.add(
-      record.toMediaItem(),
+    recordStream.add(
+      record,
     );
-    
-    
+
     playbackState.add(PlayingStates.loadingState);
     await player.pause();
 
