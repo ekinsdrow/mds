@@ -23,7 +23,7 @@ class RecordListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Record?>(
-      stream: player.recordStream.stream,
+      stream: player.recordStream,
       builder: (context, recordSnapshot) {
         var active = false;
 
@@ -149,13 +149,16 @@ class RecordListItem extends StatelessWidget {
                                 );
                               } else if (playbackState.processingState ==
                                   AudioProcessingState.error) {
-                                icon = Icons.cancel;
+                                icon = Icons.close;
                               }
                             }
                           }
 
                           return Icon(
                             icon,
+                            color: icon == Icons.close
+                                ? Colors.red
+                                : Theme.of(context).iconTheme.color,
                           );
                         },
                       ),

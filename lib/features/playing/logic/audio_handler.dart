@@ -5,7 +5,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:rxdart/rxdart.dart';
 
-//TODO: playing error
 class MdsAudioHandler extends BaseAudioHandler
     with QueueHandler, SeekHandler, RecordStreamMixin {
   final AudioPlayer _player;
@@ -57,6 +56,9 @@ class MdsAudioHandler extends BaseAudioHandler
         playbackState.add(PlayingStates.errorState);
       }
     }
+
+    playbackState.add(PlayingStates.errorState);
+
   }
 
   void addRecord(Record record) {

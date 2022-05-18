@@ -49,7 +49,7 @@ class _BottomBarState extends State<BottomBar> {
         ],
       ),
       child: StreamBuilder<Record?>(
-        stream: context.read<MdsAudioHandler>().recordStream.stream,
+        stream: context.read<MdsAudioHandler>().recordStream,
         builder: (context, snapshot) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,29 +213,8 @@ class _PlayerWidget extends StatelessWidget {
                                   : Icons.favorite_border,
                             ),
                           ),
-                          if (playbackState.processingState !=
+                          if (playbackState.processingState ==
                               AudioProcessingState.loading)
-                            IconButton(
-                              onPressed: () {
-                                if (playbackState.playing) {
-                                  player.pause();
-                                } else {
-                                  player.play();
-                                }
-                              },
-                              splashRadius: 20,
-                              icon: Icon(
-                                playbackState.playing
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
-                              ),
-                            )
-                          else if (playbackState.processingState !=
-                              AudioProcessingState.error)
-                            const Icon(
-                              Icons.cancel,
-                            )
-                          else
                             Row(
                               children: const [
                                 SizedBox(
@@ -252,7 +231,40 @@ class _PlayerWidget extends StatelessWidget {
                                   width: 14,
                                 ),
                               ],
-                            ),
+                            )
+                          else if (playbackState.processingState ==
+                              AudioProcessingState.error)
+                            Row(
+                              children: const [
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                 Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                              ],
+                            )
+                          else
+                            IconButton(
+                              onPressed: () {
+                                if (playbackState.playing) {
+                                  player.pause();
+                                } else {
+                                  player.play();
+                                }
+                              },
+                              splashRadius: 20,
+                              icon: Icon(
+                                playbackState.playing
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                              ),
+                            )
                         ],
                       ),
                     ],
