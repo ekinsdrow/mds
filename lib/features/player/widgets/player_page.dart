@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
+import 'package:mds/common/extensions/duration_extension.dart';
 import 'package:mds/common/widgets/progress_bar.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
@@ -206,7 +207,9 @@ class _Actions extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const _ProgressBar(),
+          _ProgressBar(
+            record: record,
+          ),
           const SizedBox(
             height: Constants.bigPadding,
           ),
@@ -219,26 +222,39 @@ class _Actions extends StatelessWidget {
   }
 }
 
-//TODO: progress bar
 class _ProgressBar extends StatelessWidget {
-  const _ProgressBar({Key? key}) : super(key: key);
+  const _ProgressBar({
+    Key? key,
+    required this.record,
+  }) : super(key: key);
+  final Record record;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ProgressBar(),
+        ProgressBar(
+          record: record,
+          progressBarWidth:MediaQuery.of(context).size.width - 40,
+        ),
         const SizedBox(
           height: Constants.smallPadding,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              '00:50:00',
+          children: [
+            StreamBuilder<Duration>(
+              stream: context.read<MdsAudioHandler>().positionStream,
+              builder: (context, positionSnapshot) {
+                final nowDuration = positionSnapshot.data ?? Duration.zero;
+
+                return Text(
+                  nowDuration.format(),
+                );
+              },
             ),
             Text(
-              '01:40:00',
+              record.file.duration.format(),
             ),
           ],
         ),

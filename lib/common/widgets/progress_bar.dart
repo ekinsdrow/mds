@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
+import 'package:mds/common/data/models/record.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
+import 'package:provider/provider.dart';
 
 class ProgressBar extends StatelessWidget {
-  const ProgressBar({Key? key}) : super(key: key);
+  const ProgressBar({
+    Key? key,
+    required this.record,
+    required this.progressBarWidth,
+  }) : super(key: key);
+
+  final Record record;
+  final double progressBarWidth;
 
   @override
   Widget build(BuildContext context) {
-    //TODO: progressBar
     return Stack(
       children: [
         Container(
@@ -19,15 +28,22 @@ class ProgressBar extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: 5,
-          width: 200,
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(
-              Constants.borderRadius,
-            ),
-          ),
+        StreamBuilder<Duration>(
+          stream: context.read<MdsAudioHandler>().positionStream,
+          builder: (context, positionSnapshot) {
+            final nowDuration = positionSnapshot.data ?? Duration.zero;
+            return Container(
+              height: 5,
+              width: (progressBarWidth * nowDuration.inSeconds) /
+                  record.file.duration.inSeconds,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(
+                  Constants.borderRadius,
+                ),
+              ),
+            );
+          },
         ),
       ],
     );

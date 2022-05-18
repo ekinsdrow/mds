@@ -239,7 +239,7 @@ class _PlayerWidget extends StatelessWidget {
                                 SizedBox(
                                   width: 14,
                                 ),
-                                 Icon(
+                                Icon(
                                   Icons.close,
                                   color: Colors.red,
                                   size: 20,
@@ -269,7 +269,10 @@ class _PlayerWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const ProgressBar(),
+                  ProgressBar(
+                    record: record,
+                    progressBarWidth:MediaQuery.of(context).size.width - 70,
+                  ),
                   const SizedBox(
                     height: Constants.smallPadding,
                   ),

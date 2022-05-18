@@ -1,22 +1,31 @@
 import 'dart:async';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MdsAudioHandler extends BaseAudioHandler
-    with QueueHandler, SeekHandler, RecordStreamMixin {
+    with QueueHandler, SeekHandler, PositionStreamMixin, RecordStreamMixin {
   final AudioPlayer _player;
 
   MdsAudioHandler(
     this._player,
-  );
+  ) {
+    _player.positionStream.listen(
+      (event) {
+        _positionStream.add(event);
+      },
+    );
+  }
 
   @override
   Future<void> play() async {
     _player.play();
-    playbackState.add(PlayingStates.playState);
+    playbackState.add(
+      PlayingStates.playState(
+        player: _player,
+      ),
+    );
   }
 
   @override
@@ -49,7 +58,11 @@ class MdsAudioHandler extends BaseAudioHandler
 
       try {
         await _player.setUrl(url);
-        playbackState.add(PlayingStates.playState);
+        playbackState.add(
+          PlayingStates.playState(
+            player: _player,
+          ),
+        );
 
         _player.play();
       } catch (_) {
@@ -84,22 +97,29 @@ abstract class PlayingStates {
     playing: false,
   );
 
-  static PlaybackState playState = PlaybackState(
-    controls: [
-      MediaControl.skipToPrevious,
-      MediaControl.pause,
-      MediaControl.stop,
-      MediaControl.skipToNext,
-    ],
-    systemActions: const {
-      MediaAction.seek,
-      MediaAction.seekForward,
-      MediaAction.seekBackward,
-    },
-    androidCompactActionIndices: const [0, 1, 3],
-    processingState: AudioProcessingState.completed,
-    playing: true,
-  );
+  static PlaybackState playState({
+    required AudioPlayer player,
+  }) {
+    return PlaybackState(
+      controls: [
+        MediaControl.skipToPrevious,
+        MediaControl.pause,
+        MediaControl.stop,
+        MediaControl.skipToNext,
+      ],
+      systemActions: const {
+        MediaAction.seek,
+        MediaAction.seekForward,
+        MediaAction.seekBackward,
+      },
+      androidCompactActionIndices: const [0, 1, 3],
+      speed: player.speed,
+      processingState: AudioProcessingState.completed,
+      updatePosition: player.position,
+      bufferedPosition: player.bufferedPosition,
+      playing: true,
+    );
+  }
 
   static PlaybackState pauseState = PlaybackState(
     controls: [
@@ -130,4 +150,13 @@ mixin RecordStreamMixin on BaseAudioHandler {
   // ignore: close_sinks
   final _recordStream = BehaviorSubject<Record?>.seeded(null);
   ValueStream<Record?> get recordStream => _recordStream.stream;
+}
+
+mixin PositionStreamMixin on BaseAudioHandler {
+  // ignore: close_sinks
+  final _positionStream = BehaviorSubject<Duration>.seeded(
+    Duration.zero,
+  );
+
+  ValueStream<Duration> get positionStream => _positionStream.stream;
 }
