@@ -5,6 +5,7 @@ import 'package:mds/common/data/repositories/favorites_repository.dart';
 import 'package:mds/common/widgets/error_snackbar.dart';
 import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
 
 class FavoritesScope extends StatelessWidget {
   const FavoritesScope({
@@ -38,13 +39,24 @@ class FavoritesScope extends StatelessWidget {
                 message: AppLocalizations.of(context)!.fav_error,
               );
             },
-            successDelete: (id) =>
-                context.read<CatalogNotifier>().deleteRecordFromFav(
-                      id: id,
-                    ),
-            successAdd: (id) => context.read<CatalogNotifier>().addRecordToFav(
-                  id: id,
-                ),
+            successDelete: (record) {
+              context.read<CatalogNotifier>().deleteRecordFromFav(
+                    id: record.recordId,
+                  );
+
+              context.read<MdsAudioHandler>().recordStream.add(
+                    record,
+                  );
+            },
+            successAdd: (record) {
+              context.read<CatalogNotifier>().addRecordToFav(
+                    id: record.recordId,
+                  );
+
+              context.read<MdsAudioHandler>().recordStream.add(
+                    record,
+                  );
+            },
           ),
           child: child,
         ),

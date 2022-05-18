@@ -88,13 +88,13 @@ class RecordListItem extends StatelessWidget {
                       if (record.isFavorite) {
                         context.read<FavoritesBloc>().add(
                               FavoritesEvent.delete(
-                                id: record.recordId,
+                                record: record,
                               ),
                             );
                       } else {
                         context.read<FavoritesBloc>().add(
                               FavoritesEvent.save(
-                                id: record.recordId,
+                                record: record,
                               ),
                             );
                       }

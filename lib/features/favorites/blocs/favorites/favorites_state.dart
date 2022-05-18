@@ -6,9 +6,9 @@ class FavoritesState with _$FavoritesState {
   const factory FavoritesState.loading() = _Loading;
   const factory FavoritesState.error() = _Error;
   const factory FavoritesState.successDelete({
-    required String id,
+    required Record record,
   }) = _SuccessDelete;
   const factory FavoritesState.successAdd({
-    required String id,
+    required Record record,
   }) = _SuccessAdd;
 }

@@ -16,23 +16,23 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FavoritesEvent {
-  String get id => throw _privateConstructorUsedError;
+  Record get record => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) save,
-    required TResult Function(String id) delete,
+    required TResult Function(Record record) save,
+    required TResult Function(Record record) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? save,
-    TResult Function(String id)? delete,
+    TResult Function(Record record)? save,
+    TResult Function(Record record)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? save,
-    TResult Function(String id)? delete,
+    TResult Function(Record record)? save,
+    TResult Function(Record record)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -66,7 +66,9 @@ abstract class $FavoritesEventCopyWith<$Res> {
   factory $FavoritesEventCopyWith(
           FavoritesEvent value, $Res Function(FavoritesEvent) then) =
       _$FavoritesEventCopyWithImpl<$Res>;
-  $Res call({String id});
+  $Res call({Record record});
+
+  $RecordCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -80,14 +82,21 @@ class _$FavoritesEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? record = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      record: record == freezed
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Record,
     ));
+  }
+
+  @override
+  $RecordCopyWith<$Res> get record {
+    return $RecordCopyWith<$Res>(_value.record, (value) {
+      return _then(_value.copyWith(record: value));
+    });
   }
 }
 
@@ -96,7 +105,10 @@ abstract class _$$SaveCopyWith<$Res> implements $FavoritesEventCopyWith<$Res> {
   factory _$$SaveCopyWith(_$Save value, $Res Function(_$Save) then) =
       __$$SaveCopyWithImpl<$Res>;
   @override
-  $Res call({String id});
+  $Res call({Record record});
+
+  @override
+  $RecordCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -110,13 +122,13 @@ class __$$SaveCopyWithImpl<$Res> extends _$FavoritesEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? record = freezed,
   }) {
     return _then(_$Save(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      record: record == freezed
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Record,
     ));
   }
 }
@@ -124,14 +136,14 @@ class __$$SaveCopyWithImpl<$Res> extends _$FavoritesEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Save implements Save {
-  const _$Save({required this.id});
+  const _$Save({required this.record});
 
   @override
-  final String id;
+  final Record record;
 
   @override
   String toString() {
-    return 'FavoritesEvent.save(id: $id)';
+    return 'FavoritesEvent.save(record: $record)';
   }
 
   @override
@@ -139,12 +151,12 @@ class _$Save implements Save {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Save &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.record, record));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(record));
 
   @JsonKey(ignore: true)
   @override
@@ -154,30 +166,30 @@ class _$Save implements Save {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) save,
-    required TResult Function(String id) delete,
+    required TResult Function(Record record) save,
+    required TResult Function(Record record) delete,
   }) {
-    return save(id);
+    return save(record);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? save,
-    TResult Function(String id)? delete,
+    TResult Function(Record record)? save,
+    TResult Function(Record record)? delete,
   }) {
-    return save?.call(id);
+    return save?.call(record);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? save,
-    TResult Function(String id)? delete,
+    TResult Function(Record record)? save,
+    TResult Function(Record record)? delete,
     required TResult orElse(),
   }) {
     if (save != null) {
-      return save(id);
+      return save(record);
     }
     return orElse();
   }
@@ -215,10 +227,10 @@ class _$Save implements Save {
 }
 
 abstract class Save implements FavoritesEvent {
-  const factory Save({required final String id}) = _$Save;
+  const factory Save({required final Record record}) = _$Save;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  Record get record => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$SaveCopyWith<_$Save> get copyWith => throw _privateConstructorUsedError;
@@ -230,7 +242,10 @@ abstract class _$$DeleteCopyWith<$Res>
   factory _$$DeleteCopyWith(_$Delete value, $Res Function(_$Delete) then) =
       __$$DeleteCopyWithImpl<$Res>;
   @override
-  $Res call({String id});
+  $Res call({Record record});
+
+  @override
+  $RecordCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -244,13 +259,13 @@ class __$$DeleteCopyWithImpl<$Res> extends _$FavoritesEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? record = freezed,
   }) {
     return _then(_$Delete(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      record: record == freezed
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Record,
     ));
   }
 }
@@ -258,14 +273,14 @@ class __$$DeleteCopyWithImpl<$Res> extends _$FavoritesEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Delete implements Delete {
-  const _$Delete({required this.id});
+  const _$Delete({required this.record});
 
   @override
-  final String id;
+  final Record record;
 
   @override
   String toString() {
-    return 'FavoritesEvent.delete(id: $id)';
+    return 'FavoritesEvent.delete(record: $record)';
   }
 
   @override
@@ -273,12 +288,12 @@ class _$Delete implements Delete {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Delete &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.record, record));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(record));
 
   @JsonKey(ignore: true)
   @override
@@ -288,30 +303,30 @@ class _$Delete implements Delete {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) save,
-    required TResult Function(String id) delete,
+    required TResult Function(Record record) save,
+    required TResult Function(Record record) delete,
   }) {
-    return delete(id);
+    return delete(record);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? save,
-    TResult Function(String id)? delete,
+    TResult Function(Record record)? save,
+    TResult Function(Record record)? delete,
   }) {
-    return delete?.call(id);
+    return delete?.call(record);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? save,
-    TResult Function(String id)? delete,
+    TResult Function(Record record)? save,
+    TResult Function(Record record)? delete,
     required TResult orElse(),
   }) {
     if (delete != null) {
-      return delete(id);
+      return delete(record);
     }
     return orElse();
   }
@@ -349,10 +364,10 @@ class _$Delete implements Delete {
 }
 
 abstract class Delete implements FavoritesEvent {
-  const factory Delete({required final String id}) = _$Delete;
+  const factory Delete({required final Record record}) = _$Delete;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  Record get record => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$DeleteCopyWith<_$Delete> get copyWith =>
@@ -366,8 +381,8 @@ mixin _$FavoritesState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(String id) successDelete,
-    required TResult Function(String id) successAdd,
+    required TResult Function(Record record) successDelete,
+    required TResult Function(Record record) successAdd,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -375,8 +390,8 @@ mixin _$FavoritesState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -384,8 +399,8 @@ mixin _$FavoritesState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -478,8 +493,8 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(String id) successDelete,
-    required TResult Function(String id) successAdd,
+    required TResult Function(Record record) successDelete,
+    required TResult Function(Record record) successAdd,
   }) {
     return initial();
   }
@@ -490,8 +505,8 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
   }) {
     return initial?.call();
   }
@@ -502,8 +517,8 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -599,8 +614,8 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(String id) successDelete,
-    required TResult Function(String id) successAdd,
+    required TResult Function(Record record) successDelete,
+    required TResult Function(Record record) successAdd,
   }) {
     return loading();
   }
@@ -611,8 +626,8 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
   }) {
     return loading?.call();
   }
@@ -623,8 +638,8 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -719,8 +734,8 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(String id) successDelete,
-    required TResult Function(String id) successAdd,
+    required TResult Function(Record record) successDelete,
+    required TResult Function(Record record) successAdd,
   }) {
     return error();
   }
@@ -731,8 +746,8 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
   }) {
     return error?.call();
   }
@@ -743,8 +758,8 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -803,7 +818,9 @@ abstract class _$$_SuccessDeleteCopyWith<$Res> {
   factory _$$_SuccessDeleteCopyWith(
           _$_SuccessDelete value, $Res Function(_$_SuccessDelete) then) =
       __$$_SuccessDeleteCopyWithImpl<$Res>;
-  $Res call({String id});
+  $Res call({Record record});
+
+  $RecordCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -819,28 +836,35 @@ class __$$_SuccessDeleteCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? record = freezed,
   }) {
     return _then(_$_SuccessDelete(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      record: record == freezed
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Record,
     ));
+  }
+
+  @override
+  $RecordCopyWith<$Res> get record {
+    return $RecordCopyWith<$Res>(_value.record, (value) {
+      return _then(_value.copyWith(record: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_SuccessDelete implements _SuccessDelete {
-  const _$_SuccessDelete({required this.id});
+  const _$_SuccessDelete({required this.record});
 
   @override
-  final String id;
+  final Record record;
 
   @override
   String toString() {
-    return 'FavoritesState.successDelete(id: $id)';
+    return 'FavoritesState.successDelete(record: $record)';
   }
 
   @override
@@ -848,12 +872,12 @@ class _$_SuccessDelete implements _SuccessDelete {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SuccessDelete &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.record, record));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(record));
 
   @JsonKey(ignore: true)
   @override
@@ -866,10 +890,10 @@ class _$_SuccessDelete implements _SuccessDelete {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(String id) successDelete,
-    required TResult Function(String id) successAdd,
+    required TResult Function(Record record) successDelete,
+    required TResult Function(Record record) successAdd,
   }) {
-    return successDelete(id);
+    return successDelete(record);
   }
 
   @override
@@ -878,10 +902,10 @@ class _$_SuccessDelete implements _SuccessDelete {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
   }) {
-    return successDelete?.call(id);
+    return successDelete?.call(record);
   }
 
   @override
@@ -890,12 +914,12 @@ class _$_SuccessDelete implements _SuccessDelete {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
     required TResult orElse(),
   }) {
     if (successDelete != null) {
-      return successDelete(id);
+      return successDelete(record);
     }
     return orElse();
   }
@@ -942,9 +966,10 @@ class _$_SuccessDelete implements _SuccessDelete {
 }
 
 abstract class _SuccessDelete implements FavoritesState {
-  const factory _SuccessDelete({required final String id}) = _$_SuccessDelete;
+  const factory _SuccessDelete({required final Record record}) =
+      _$_SuccessDelete;
 
-  String get id => throw _privateConstructorUsedError;
+  Record get record => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_SuccessDeleteCopyWith<_$_SuccessDelete> get copyWith =>
       throw _privateConstructorUsedError;
@@ -955,7 +980,9 @@ abstract class _$$_SuccessAddCopyWith<$Res> {
   factory _$$_SuccessAddCopyWith(
           _$_SuccessAdd value, $Res Function(_$_SuccessAdd) then) =
       __$$_SuccessAddCopyWithImpl<$Res>;
-  $Res call({String id});
+  $Res call({Record record});
+
+  $RecordCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -971,28 +998,35 @@ class __$$_SuccessAddCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? record = freezed,
   }) {
     return _then(_$_SuccessAdd(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      record: record == freezed
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Record,
     ));
+  }
+
+  @override
+  $RecordCopyWith<$Res> get record {
+    return $RecordCopyWith<$Res>(_value.record, (value) {
+      return _then(_value.copyWith(record: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_SuccessAdd implements _SuccessAdd {
-  const _$_SuccessAdd({required this.id});
+  const _$_SuccessAdd({required this.record});
 
   @override
-  final String id;
+  final Record record;
 
   @override
   String toString() {
-    return 'FavoritesState.successAdd(id: $id)';
+    return 'FavoritesState.successAdd(record: $record)';
   }
 
   @override
@@ -1000,12 +1034,12 @@ class _$_SuccessAdd implements _SuccessAdd {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SuccessAdd &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.record, record));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(record));
 
   @JsonKey(ignore: true)
   @override
@@ -1018,10 +1052,10 @@ class _$_SuccessAdd implements _SuccessAdd {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(String id) successDelete,
-    required TResult Function(String id) successAdd,
+    required TResult Function(Record record) successDelete,
+    required TResult Function(Record record) successAdd,
   }) {
-    return successAdd(id);
+    return successAdd(record);
   }
 
   @override
@@ -1030,10 +1064,10 @@ class _$_SuccessAdd implements _SuccessAdd {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
   }) {
-    return successAdd?.call(id);
+    return successAdd?.call(record);
   }
 
   @override
@@ -1042,12 +1076,12 @@ class _$_SuccessAdd implements _SuccessAdd {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(String id)? successDelete,
-    TResult Function(String id)? successAdd,
+    TResult Function(Record record)? successDelete,
+    TResult Function(Record record)? successAdd,
     required TResult orElse(),
   }) {
     if (successAdd != null) {
-      return successAdd(id);
+      return successAdd(record);
     }
     return orElse();
   }
@@ -1094,9 +1128,9 @@ class _$_SuccessAdd implements _SuccessAdd {
 }
 
 abstract class _SuccessAdd implements FavoritesState {
-  const factory _SuccessAdd({required final String id}) = _$_SuccessAdd;
+  const factory _SuccessAdd({required final Record record}) = _$_SuccessAdd;
 
-  String get id => throw _privateConstructorUsedError;
+  Record get record => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_SuccessAddCopyWith<_$_SuccessAdd> get copyWith =>
       throw _privateConstructorUsedError;

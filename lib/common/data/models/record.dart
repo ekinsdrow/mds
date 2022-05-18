@@ -44,6 +44,8 @@ class Record with _$Record {
     return res;
   }
 
+  String get fullTitle => '$title - $authorsString';
+
   factory Record.fromJson(Map<String, dynamic> json) => _$RecordFromJson(json);
 
   factory Record.placeholder() {

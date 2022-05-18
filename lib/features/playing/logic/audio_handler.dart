@@ -8,27 +8,27 @@ import 'package:mds/features/playing/logic/record_stream_mixin.dart';
 //TODO: playing error
 class MdsAudioHandler extends BaseAudioHandler
     with QueueHandler, SeekHandler, RecordStreamMixin {
-  final AudioPlayer player;
+  final AudioPlayer _player;
 
-  MdsAudioHandler({
-    required this.player,
-  });
+  MdsAudioHandler(
+    this._player,
+  );
 
   @override
   Future<void> play() async {
-    await player.play();
+    _player.play();
     playbackState.add(PlayingStates.playState);
   }
 
   @override
   Future<void> pause() async {
-    await player.pause();
+    await _player.pause();
     playbackState.add(PlayingStates.pauseState);
   }
 
   @override
   Future<void> stop() async {
-    await player.stop();
+    await _player.stop();
     playbackState.add(PlayingStates.stopState);
   }
 
@@ -41,11 +41,11 @@ class MdsAudioHandler extends BaseAudioHandler
     );
 
     playbackState.add(PlayingStates.loadingState);
-    await player.pause();
+    await _player.pause();
 
     try {
-      player.setUrl(url);
-      await player.play();
+      _player.setUrl(url);
+      await _player.play();
 
       playbackState.add(PlayingStates.playState);
     } catch (_) {

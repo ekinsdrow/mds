@@ -17,7 +17,7 @@ void main() => runZonedGuarded(
           () async {
             final audioHandler = await AudioService.init(
               builder: () => MdsAudioHandler(
-                player: AudioPlayer(),
+                AudioPlayer(),
               ),
               config: const AudioServiceConfig(
                 androidNotificationChannelId: 'com.ekinsdrow.mds',
