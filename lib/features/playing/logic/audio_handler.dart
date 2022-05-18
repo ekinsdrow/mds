@@ -56,9 +56,6 @@ class MdsAudioHandler extends BaseAudioHandler
         playbackState.add(PlayingStates.errorState);
       }
     }
-
-    playbackState.add(PlayingStates.errorState);
-
   }
 
   void addRecord(Record record) {
