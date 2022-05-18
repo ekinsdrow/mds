@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
@@ -16,36 +18,51 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 5,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(
-              Constants.borderRadius,
+    final player = context.read<MdsAudioHandler>();
+
+    return GestureDetector(
+      onTapDown: (details) {
+        final offsetX = details.localPosition.dx;
+
+        final seekPosition = Duration(
+          seconds:
+              (record.file.duration.inSeconds * offsetX) ~/ progressBarWidth,
+        );
+
+
+        player.seek(seekPosition);
+      },
+      child: Stack(
+        children: [
+          Container(
+            height: 5,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                Constants.borderRadius,
+              ),
             ),
           ),
-        ),
-        StreamBuilder<Duration>(
-          stream: context.read<MdsAudioHandler>().positionStream,
-          builder: (context, positionSnapshot) {
-            final nowDuration = positionSnapshot.data ?? Duration.zero;
-            return Container(
-              height: 5,
-              width: (progressBarWidth * nowDuration.inSeconds) /
-                  record.file.duration.inSeconds,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(
-                  Constants.borderRadius,
+          StreamBuilder<Duration>(
+            stream: player.positionStream,
+            builder: (context, positionSnapshot) {
+              final nowDuration = positionSnapshot.data ?? Duration.zero;
+              return Container(
+                height: 5,
+                width: (progressBarWidth * nowDuration.inSeconds) /
+                    record.file.duration.inSeconds,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(
+                    Constants.borderRadius,
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-      ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

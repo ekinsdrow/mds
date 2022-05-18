@@ -40,6 +40,9 @@ class MdsAudioHandler extends BaseAudioHandler
     playbackState.add(PlayingStates.stopState);
   }
 
+  @override
+  Future<void> seek(Duration position) => _player.seek(position);
+
   Future<void> playFromUrl({
     required String url,
     required Record record,
