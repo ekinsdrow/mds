@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mds/common/data/models/author.dart';
 import 'package:mds/common/data/models/file.dart';
@@ -44,6 +45,8 @@ class Record with _$Record {
     return res;
   }
 
+  String get fullTitle => '$title - $authorsString';
+
   factory Record.fromJson(Map<String, dynamic> json) => _$RecordFromJson(json);
 
   factory Record.placeholder() {
@@ -62,6 +65,15 @@ class Record with _$Record {
       authors: [
         Author(title: 'Author'),
       ],
+    );
+  }
+
+  MediaItem toMediaItem() {
+    return MediaItem(
+      id: recordId,
+      title: title,
+      artist: authorsString,
+      duration: file.duration,
     );
   }
 }

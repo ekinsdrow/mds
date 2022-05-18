@@ -15,6 +15,7 @@
   "min": "min",
   "network_error": "Network error",
   "other_filters": "Other filtres",
+  "playing_error": "Playing Error",
   "recently_listening": "Recently listening",
   "remove_all_downloaded_files": "Remove all downloaded files",
   "retry": "Retry",

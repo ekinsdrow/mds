@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mds/common/data/models/record.dart';
 import 'package:mds/features/record_info/data/models/record_link.dart';
 import 'package:mds/features/record_info/data/models/record_link_body.dart';
 import 'package:mds/features/record_info/data/repositories/record_link_repository.dart';
@@ -30,12 +31,15 @@ class RecordInfoBloc extends Bloc<RecordInfoEvent, RecordInfoState> {
     try {
       final recordLink = await recordLinkRepository.getRecordLink(
         recordLinkBody: RecordLinkBody(
-          fileId: event.fileId,
+          fileId: event.record.file.fileId,
         ),
       );
 
       emit(
-        _Success(recordLink: recordLink),
+        _Success(
+          recordLink: recordLink,
+          record: event.record,
+        ),
       );
     } on Exception catch (e) {
       emit(

@@ -1,8 +1,14 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
+import 'package:mds/common/data/models/record.dart';
+import 'package:mds/common/extensions/string_extension.dart';
 import 'package:mds/common/widgets/progress_bar.dart';
 import 'package:mds/features/app/router/router.dart';
+import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
+import 'package:provider/provider.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({
@@ -19,8 +25,6 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  bool player = true;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,46 +48,53 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (player)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                _PlayerWidget(),
-                SizedBox(
-                  height: Constants.smallPadding,
-                ),
-              ],
-            ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: StreamBuilder<Record?>(
+        stream: context.read<MdsAudioHandler>().recordStream,
+        builder: (context, snapshot) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Item(
-                icon: Icons.home,
-                active: widget.activeIndex == 0,
-                callback: () {
-                  widget.callback(0);
-                },
-              ),
-              _Item(
-                icon: Icons.settings,
-                active: widget.activeIndex == 1,
-                callback: () {
-                  widget.callback(1);
-                },
-              ),
-              _Item(
-                icon: Icons.info,
-                active: widget.activeIndex == 2,
-                callback: () {
-                  widget.callback(2);
-                },
+              if (snapshot.data != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _PlayerWidget(
+                      record: snapshot.data!,
+                    ),
+                    const SizedBox(
+                      height: Constants.smallPadding,
+                    ),
+                  ],
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _Item(
+                    icon: Icons.home,
+                    active: widget.activeIndex == 0,
+                    callback: () {
+                      widget.callback(0);
+                    },
+                  ),
+                  _Item(
+                    icon: Icons.settings,
+                    active: widget.activeIndex == 1,
+                    callback: () {
+                      widget.callback(1);
+                    },
+                  ),
+                  _Item(
+                    icon: Icons.info,
+                    active: widget.activeIndex == 2,
+                    callback: () {
+                      widget.callback(2);
+                    },
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -128,10 +139,17 @@ class _Item extends StatelessWidget {
 }
 
 class _PlayerWidget extends StatelessWidget {
-  const _PlayerWidget({Key? key}) : super(key: key);
+  const _PlayerWidget({
+    Key? key,
+    required this.record,
+  }) : super(key: key);
+
+  final Record record;
 
   @override
   Widget build(BuildContext context) {
+    final player = context.read<MdsAudioHandler>();
+
     return Material(
       borderRadius: BorderRadius.circular(
         Constants.borderRadius,
@@ -146,52 +164,119 @@ class _PlayerWidget extends StatelessWidget {
             const PlayerRoute(),
           );
         },
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            horizontal: Constants.smallPadding,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: StreamBuilder<PlaybackState>(
+          stream: player.playbackState.stream,
+          builder: (context, playbackStateValue) {
+            final playbackState = playbackStateValue.data ?? PlaybackState();
+
+            return Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Constants.smallPadding,
+              ),
+              child: Column(
                 children: [
-                  const Text(
-                    'Title - Author',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          //TODO:add to fav
-                        },
-                        splashRadius: 20,
-                        icon: const Icon(
-                          Icons.favorite,
+                      Expanded(
+                        child: Text(
+                          record.fullTitle.sub(30),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.fade,
+                          ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          //TODO: play
-                        },
-                        splashRadius: 20,
-                        icon: const Icon(
-                          Icons.play_arrow,
-                        ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              if (record.isFavorite) {
+                                context.read<FavoritesBloc>().add(
+                                      FavoritesEvent.delete(
+                                        record: record,
+                                      ),
+                                    );
+                              } else {
+                                context.read<FavoritesBloc>().add(
+                                      FavoritesEvent.save(
+                                        record: record,
+                                      ),
+                                    );
+                              }
+                            },
+                            splashRadius: 20,
+                            icon: Icon(
+                              record.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                            ),
+                          ),
+                          if (playbackState.processingState ==
+                              AudioProcessingState.loading)
+                            Row(
+                              children: const [
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                              ],
+                            )
+                          else if (playbackState.processingState ==
+                              AudioProcessingState.error)
+                            Row(
+                              children: const [
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                 Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                              ],
+                            )
+                          else
+                            IconButton(
+                              onPressed: () {
+                                if (playbackState.playing) {
+                                  player.pause();
+                                } else {
+                                  player.play();
+                                }
+                              },
+                              splashRadius: 20,
+                              icon: Icon(
+                                playbackState.playing
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                              ),
+                            )
+                        ],
                       ),
                     ],
                   ),
+                  const ProgressBar(),
+                  const SizedBox(
+                    height: Constants.smallPadding,
+                  ),
                 ],
               ),
-              const ProgressBar(),
-              const SizedBox(
-                height: Constants.smallPadding,
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/data/repositories/favorites_repository.dart';
 
 part 'favorites_event.dart';
@@ -28,12 +29,14 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     try {
       await favoritesRepository.saveFavorite(
-        id: event.id,
+        id: event.record.recordId,
       );
 
       emit(
         _SuccessAdd(
-          id: event.id,
+          record: event.record.copyWith(
+            isFavorite: true,
+          ),
         ),
       );
     } catch (e) {
@@ -53,12 +56,14 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     try {
       await favoritesRepository.deleteFavorite(
-        id: event.id,
+        id: event.record.recordId,
       );
 
       emit(
         _SuccessDelete(
-          id: event.id,
+          record: event.record.copyWith(
+            isFavorite: false,
+          ),
         ),
       );
     } catch (e) {
