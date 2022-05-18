@@ -1,7 +1,7 @@
 extension StringExtension on String {
-  String get sub30 {
-    if (length < 30) return this;
+  String sub(int length) {
+    if (length < length) return this;
 
-    return substring(0, 29);
+    return substring(0, length - 1);
   }
 }

@@ -181,7 +181,7 @@ class _PlayerWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          record.fullTitle.sub30,
+                          record.fullTitle.sub(30),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.fade,
