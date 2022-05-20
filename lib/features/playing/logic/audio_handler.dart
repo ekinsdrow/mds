@@ -18,9 +18,17 @@ class MdsAudioHandler extends BaseAudioHandler
   MdsAudioHandler(
     this._player,
   ) {
+    //TODO: map to
     _player.positionStream.listen(
       (event) {
-        _positionStream.add(event);
+        _positionStream.add(
+          event,
+        );
+
+        if (event.inSeconds + 1 >=
+            recordQueueStream.value[_queueIndex].file.duration.inSeconds) {
+          skipToNext();
+        }
       },
     );
   }
@@ -169,7 +177,6 @@ mixin RecordQueueMixin on BaseAudioHandler {
     _recordQueue.add(records);
   }
 }
-
 
 mixin SkipActionsMixin on BaseAudioHandler {
   final _skipActionStream = BehaviorSubject<SkipAction?>.seeded(null);
