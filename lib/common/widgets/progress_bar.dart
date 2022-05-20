@@ -27,13 +27,12 @@ class ProgressBar extends StatelessWidget {
               (record.file.duration.inSeconds * offsetX) ~/ progressBarWidth,
         );
 
-
         player.seek(seekPosition);
       },
       child: Stack(
         children: [
           Container(
-            height: 5,
+            height: 10,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -47,7 +46,7 @@ class ProgressBar extends StatelessWidget {
             builder: (context, positionSnapshot) {
               final nowDuration = positionSnapshot.data ?? Duration.zero;
               return Container(
-                height: 5,
+                height: 10,
                 width: (progressBarWidth * nowDuration.inSeconds) /
                     record.file.duration.inSeconds,
                 decoration: BoxDecoration(
