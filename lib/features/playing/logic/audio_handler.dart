@@ -18,7 +18,6 @@ class MdsAudioHandler extends BaseAudioHandler
   MdsAudioHandler(
     this._player,
   ) {
-    //TODO: map to
     _player.positionStream.listen(
       (event) {
         _positionStream.add(
