@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
