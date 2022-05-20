@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
@@ -8,9 +9,9 @@ import 'package:mds/common/widgets/progress_bar.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/player/widgets/modals/info_modal.dart';
-
 import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
+import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:provider/provider.dart';
 
 class PlayerPage extends StatelessWidget {
@@ -163,7 +164,6 @@ class _Header extends StatelessWidget {
   }
 }
 
-//TODO: now playing queue
 class Queue extends StatelessWidget {
   const Queue({Key? key}) : super(key: key);
 
@@ -171,20 +171,38 @@ class Queue extends StatelessWidget {
   Widget build(BuildContext context) {
     final player = context.read<MdsAudioHandler>();
 
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(
-        left: Constants.smallPadding,
-        right: Constants.smallPadding,
-      ),
-      itemBuilder: (context, index) => RecordListItem(
-        player: player,
-        record: Record.placeholder(),
-        callback: () {
-          //TODO: play
-        },
-      ),
-      itemCount: 100,
+    return StreamBuilder<List<Record>>(
+      stream: player.recordQueueStream,
+      builder: (context, snapshot) {
+        final queue = snapshot.data;
+        if (queue != null) {
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.only(
+              left: Constants.smallPadding,
+              right: Constants.smallPadding,
+            ),
+            itemBuilder: (context, index) => RecordListItem(
+              player: player,
+              record: queue[index],
+              callback: () {
+                context.read<RecordInfoBloc>().add(
+                      RecordInfoEvent.fetch(
+                        record: queue[index],
+                      ),
+                    );
+              },
+            ),
+            itemCount: queue.length,
+          );
+        }
+
+        return Center(
+          child: Text(
+            AppLocalizations.of(context)!.queue_is_empty,
+          ),
+        );
+      },
     );
   }
 }
@@ -235,7 +253,7 @@ class _ProgressBar extends StatelessWidget {
       children: [
         ProgressBar(
           record: record,
-          progressBarWidth:MediaQuery.of(context).size.width - 40,
+          progressBarWidth: MediaQuery.of(context).size.width - 40,
         ),
         const SizedBox(
           height: Constants.smallPadding,
@@ -294,7 +312,7 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            //TODO: prev track
+            player.skipToPrevious();
           },
           icon: Icon(
             Icons.skip_previous,
@@ -364,7 +382,7 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            //TODO: next track
+            player.skipToNext();
           },
           icon: Icon(
             Icons.skip_next,

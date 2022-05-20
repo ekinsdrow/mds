@@ -1,11 +1,18 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
+import 'package:mds/features/playing/data/models/skip_actions.dart';
+import 'package:mds/features/playing/logic/playing_states.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MdsAudioHandler extends BaseAudioHandler
-    with QueueHandler, SeekHandler, PositionStreamMixin, RecordStreamMixin {
+    with
+        PositionStreamMixin,
+        RecordStreamMixin,
+        RecordQueueMixin,
+        SkipActionsMixin {
   final AudioPlayer _player;
 
   MdsAudioHandler(
@@ -43,6 +50,44 @@ class MdsAudioHandler extends BaseAudioHandler
   @override
   Future<void> seek(Duration position) => _player.seek(position);
 
+  @override
+  Future<void> skipToNext() async {
+    playbackState.add(PlayingStates.pauseState);
+    await _player.pause();
+
+    final queue = recordQueueStream.value;
+
+    if (_queueIndex == queue.length - 1) {
+      _queueIndex = 0;
+    } else {
+      _queueIndex += 1;
+    }
+
+    addSkipAction(
+      NextSkip(queue[_queueIndex]),
+    );
+  }
+
+  @override
+  Future<void> skipToPrevious() async {
+    playbackState.add(PlayingStates.pauseState);
+    await _player.pause();
+
+    final queue = recordQueueStream.value;
+
+    if (_queueIndex == 0) {
+      _queueIndex = queue.length - 1;
+    } else {
+      _queueIndex -= 1;
+    }
+
+    addSkipAction(
+      PreviousSkip(
+        queue[_queueIndex],
+      ),
+    );
+  }
+
   Future<void> playFromUrl({
     required String url,
     required Record record,
@@ -58,6 +103,13 @@ class MdsAudioHandler extends BaseAudioHandler
 
       playbackState.add(PlayingStates.loadingState);
       await _player.pause();
+
+      final queue = recordQueueStream.value;
+
+      _queueIndex =
+          queue.indexWhere((element) => element.recordId == record.recordId);
+
+      log(_queueIndex.toString());
 
       try {
         await _player.setUrl(url);
@@ -82,84 +134,48 @@ class MdsAudioHandler extends BaseAudioHandler
     mediaItem.add(
       record.toMediaItem(),
     );
+
+    final oldQueue = recordQueueStream.value;
+
+    List<Record> newQueue = [
+      for (final rec in oldQueue)
+        if (rec.recordId == record.recordId) record else rec
+    ];
+
+    setRecordQueue(newQueue);
   }
-}
-
-abstract class PlayingStates {
-  static PlaybackState stopState = PlaybackState(
-    controls: [],
-    systemActions: const {},
-    processingState: AudioProcessingState.idle,
-    playing: false,
-  );
-
-  static PlaybackState loadingState = PlaybackState(
-    controls: [],
-    systemActions: const {},
-    processingState: AudioProcessingState.loading,
-    playing: false,
-  );
-
-  static PlaybackState playState({
-    required AudioPlayer player,
-  }) {
-    return PlaybackState(
-      controls: [
-        MediaControl.skipToPrevious,
-        MediaControl.pause,
-        MediaControl.stop,
-        MediaControl.skipToNext,
-      ],
-      systemActions: const {
-        MediaAction.seek,
-        MediaAction.seekForward,
-        MediaAction.seekBackward,
-      },
-      androidCompactActionIndices: const [0, 1, 3],
-      speed: player.speed,
-      processingState: AudioProcessingState.completed,
-      updatePosition: player.position,
-      bufferedPosition: player.bufferedPosition,
-      playing: true,
-    );
-  }
-
-  static PlaybackState pauseState = PlaybackState(
-    controls: [
-      MediaControl.skipToPrevious,
-      MediaControl.play,
-      MediaControl.stop,
-      MediaControl.skipToNext,
-    ],
-    systemActions: const {
-      MediaAction.seek,
-      MediaAction.seekForward,
-      MediaAction.seekBackward,
-    },
-    androidCompactActionIndices: const [0, 1, 3],
-    processingState: AudioProcessingState.ready,
-    playing: false,
-  );
-
-  static PlaybackState errorState = PlaybackState(
-    controls: [],
-    systemActions: const {},
-    processingState: AudioProcessingState.error,
-    playing: false,
-  );
 }
 
 mixin RecordStreamMixin on BaseAudioHandler {
-  // ignore: close_sinks
   final _recordStream = BehaviorSubject<Record?>.seeded(null);
   ValueStream<Record?> get recordStream => _recordStream.stream;
 }
 
 mixin PositionStreamMixin on BaseAudioHandler {
-  // ignore: close_sinks
   final _positionStream = BehaviorSubject<Duration>.seeded(
     Duration.zero,
   );
 
   ValueStream<Duration> get positionStream => _positionStream.stream;
+}
+
+mixin RecordQueueMixin on BaseAudioHandler {
+  final _recordQueue = BehaviorSubject<List<Record>>.seeded([]);
+  ValueStream<List<Record>> get recordQueueStream => _recordQueue.stream;
+
+  var _queueIndex = 0;
+
+  void setRecordQueue(List<Record> records) {
+    _recordQueue.add(records);
+  }
+}
+
+
+mixin SkipActionsMixin on BaseAudioHandler {
+  final _skipActionStream = BehaviorSubject<SkipAction?>.seeded(null);
+  ValueStream<SkipAction?> get skipActionStream => _skipActionStream.stream;
+
+  addSkipAction(SkipAction skipAction) {
+    _skipActionStream.add(skipAction);
+  }
 }

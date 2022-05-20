@@ -263,7 +263,7 @@ class _Records extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final player = context.read<MdsAudioHandler>();
-    
+
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -276,9 +276,13 @@ class _Records extends StatelessWidget {
           player: player,
           record: context.watch<CatalogNotifier>().nowList[index],
           callback: () {
+            final nowList = context.read<CatalogNotifier>().nowList;
+
+            context.read<MdsAudioHandler>().setRecordQueue(nowList);
+
             context.read<RecordInfoBloc>().add(
                   RecordInfoEvent.fetch(
-                    record: context.read<CatalogNotifier>().nowList[index],
+                    record: nowList[index],
                   ),
                 );
           },
