@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
@@ -6,7 +7,7 @@ import 'package:mds/features/playing/logic/playing_states.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MdsAudioHandler extends BaseAudioHandler
-    with PositionStreamMixin, RecordStreamMixin {
+    with PositionStreamMixin, RecordStreamMixin, RecordQueueMixin {
   final AudioPlayer _player;
 
   MdsAudioHandler(
@@ -60,6 +61,13 @@ class MdsAudioHandler extends BaseAudioHandler
       playbackState.add(PlayingStates.loadingState);
       await _player.pause();
 
+      final queue = recordQueueStream.value;
+
+      _queueIndex =
+          queue.indexWhere((element) => element.recordId == record.recordId);
+
+      log(_queueIndex.toString());
+
       try {
         await _player.setUrl(url);
         playbackState.add(
@@ -83,9 +91,17 @@ class MdsAudioHandler extends BaseAudioHandler
     mediaItem.add(
       record.toMediaItem(),
     );
+
+    final oldQueue = recordQueueStream.value;
+
+    List<Record> newQueue = [
+      for (final rec in oldQueue)
+        if (rec.recordId == record.recordId) record else rec
+    ];
+
+    setRecordQueue(newQueue);
   }
 }
-
 
 mixin RecordStreamMixin on BaseAudioHandler {
   // ignore: close_sinks
@@ -102,3 +118,14 @@ mixin PositionStreamMixin on BaseAudioHandler {
   ValueStream<Duration> get positionStream => _positionStream.stream;
 }
 
+mixin RecordQueueMixin on BaseAudioHandler {
+  // ignore: close_sinks
+  final _recordQueue = BehaviorSubject<List<Record>>.seeded([]);
+  ValueStream<List<Record>> get recordQueueStream => _recordQueue.stream;
+
+  var _queueIndex = 0;
+
+  void setRecordQueue(List<Record> records) {
+    _recordQueue.add(records);
+  }
+}

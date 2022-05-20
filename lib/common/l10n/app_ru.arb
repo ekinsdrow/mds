@@ -16,6 +16,7 @@
   "network_error": "Сетевая ошибка",
   "other_filters": "Другие фильтры",
   "playing_error": "Ошибка воспроизведения",
+  "queue_is_empty": "Очередь пустая",
   "recently_listening": "Недавно прослушаное",
   "remove_all_downloaded_files": "Стереть все скачиные файлы",
   "retry": "Повторить",

@@ -11,7 +11,10 @@ import 'package:mds/features/player/widgets/modals/info_modal.dart';
 
 import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
+import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlayerPage extends StatelessWidget {
   const PlayerPage({Key? key}) : super(key: key);
@@ -163,7 +166,6 @@ class _Header extends StatelessWidget {
   }
 }
 
-//TODO: now playing queue
 class Queue extends StatelessWidget {
   const Queue({Key? key}) : super(key: key);
 
@@ -171,20 +173,38 @@ class Queue extends StatelessWidget {
   Widget build(BuildContext context) {
     final player = context.read<MdsAudioHandler>();
 
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(
-        left: Constants.smallPadding,
-        right: Constants.smallPadding,
-      ),
-      itemBuilder: (context, index) => RecordListItem(
-        player: player,
-        record: Record.placeholder(),
-        callback: () {
-          //TODO: play
-        },
-      ),
-      itemCount: 100,
+    return StreamBuilder<List<Record>>(
+      stream: player.recordQueueStream,
+      builder: (context, snapshot) {
+        final queue = snapshot.data;
+        if (queue != null) {
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.only(
+              left: Constants.smallPadding,
+              right: Constants.smallPadding,
+            ),
+            itemBuilder: (context, index) => RecordListItem(
+              player: player,
+              record: queue[index],
+              callback: () {
+                context.read<RecordInfoBloc>().add(
+                      RecordInfoEvent.fetch(
+                        record: queue[index],
+                      ),
+                    );
+              },
+            ),
+            itemCount: queue.length,
+          );
+        }
+
+        return Center(
+          child: Text(
+            AppLocalizations.of(context)!.queue_is_empty,
+          ),
+        );
+      },
     );
   }
 }
@@ -235,7 +255,7 @@ class _ProgressBar extends StatelessWidget {
       children: [
         ProgressBar(
           record: record,
-          progressBarWidth:MediaQuery.of(context).size.width - 40,
+          progressBarWidth: MediaQuery.of(context).size.width - 40,
         ),
         const SizedBox(
           height: Constants.smallPadding,
