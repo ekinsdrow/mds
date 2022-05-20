@@ -7,6 +7,7 @@ import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:mds/features/record_info/data/repositories/record_link_repository.dart';
 import 'package:mds/features/record_info/data/sources/record_link_source.dart';
+import 'package:mds/features/record_info/di/record_info_audio_handler_scope.dart';
 import 'package:provider/provider.dart';
 
 class RecordInfoScope extends StatelessWidget {
@@ -61,7 +62,9 @@ class RecordInfoScope extends StatelessWidget {
                 );
               },
             ),
-            child: child,
+            child: RecordInfoAudioHandlerScope(
+              child: child,
+            ),
           ),
         ),
       ),

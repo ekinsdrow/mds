@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,11 +22,13 @@ class PlayingScope extends StatefulWidget {
 }
 
 class _PlayingScopeState extends State<PlayingScope> {
+  late StreamSubscription<PlaybackState> playbackStateSub;
+
   @override
   void initState() {
     super.initState();
 
-    widget.mdsAudioHandler.playbackState.listen(
+    playbackStateSub = widget.mdsAudioHandler.playbackState.listen(
       (value) {
         if (value.processingState == AudioProcessingState.error) {
           showErrorSnackBar(
@@ -34,6 +38,12 @@ class _PlayingScopeState extends State<PlayingScope> {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    playbackStateSub.cancel();
+    super.dispose();
   }
 
   @override

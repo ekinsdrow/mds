@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/common/extensions/duration_extension.dart';
@@ -8,13 +9,10 @@ import 'package:mds/common/widgets/progress_bar.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/player/widgets/modals/info_modal.dart';
-
 import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlayerPage extends StatelessWidget {
   const PlayerPage({Key? key}) : super(key: key);
@@ -314,7 +312,7 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            //TODO: prev track
+            player.skipToPrevious();
           },
           icon: Icon(
             Icons.skip_previous,
@@ -384,7 +382,7 @@ class _Buttons extends StatelessWidget {
         IconButton(
           splashRadius: 20,
           onPressed: () {
-            //TODO: next track
+            player.skipToNext();
           },
           icon: Icon(
             Icons.skip_next,

@@ -3,11 +3,16 @@ import 'dart:developer';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
+import 'package:mds/features/playing/data/models/skip_actions.dart';
 import 'package:mds/features/playing/logic/playing_states.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MdsAudioHandler extends BaseAudioHandler
-    with PositionStreamMixin, RecordStreamMixin, RecordQueueMixin {
+    with
+        PositionStreamMixin,
+        RecordStreamMixin,
+        RecordQueueMixin,
+        SkipActionsMixin {
   final AudioPlayer _player;
 
   MdsAudioHandler(
@@ -44,6 +49,44 @@ class MdsAudioHandler extends BaseAudioHandler
 
   @override
   Future<void> seek(Duration position) => _player.seek(position);
+
+  @override
+  Future<void> skipToNext() async {
+    playbackState.add(PlayingStates.pauseState);
+    await _player.pause();
+
+    final queue = recordQueueStream.value;
+
+    if (_queueIndex == queue.length - 1) {
+      _queueIndex = 0;
+    } else {
+      _queueIndex += 1;
+    }
+
+    addSkipAction(
+      NextSkip(queue[_queueIndex]),
+    );
+  }
+
+  @override
+  Future<void> skipToPrevious() async {
+    playbackState.add(PlayingStates.pauseState);
+    await _player.pause();
+
+    final queue = recordQueueStream.value;
+
+    if (_queueIndex == 0) {
+      _queueIndex = queue.length - 1;
+    } else {
+      _queueIndex -= 1;
+    }
+
+    addSkipAction(
+      PreviousSkip(
+        queue[_queueIndex],
+      ),
+    );
+  }
 
   Future<void> playFromUrl({
     required String url,
@@ -104,13 +147,11 @@ class MdsAudioHandler extends BaseAudioHandler
 }
 
 mixin RecordStreamMixin on BaseAudioHandler {
-  // ignore: close_sinks
   final _recordStream = BehaviorSubject<Record?>.seeded(null);
   ValueStream<Record?> get recordStream => _recordStream.stream;
 }
 
 mixin PositionStreamMixin on BaseAudioHandler {
-  // ignore: close_sinks
   final _positionStream = BehaviorSubject<Duration>.seeded(
     Duration.zero,
   );
@@ -119,7 +160,6 @@ mixin PositionStreamMixin on BaseAudioHandler {
 }
 
 mixin RecordQueueMixin on BaseAudioHandler {
-  // ignore: close_sinks
   final _recordQueue = BehaviorSubject<List<Record>>.seeded([]);
   ValueStream<List<Record>> get recordQueueStream => _recordQueue.stream;
 
@@ -127,5 +167,15 @@ mixin RecordQueueMixin on BaseAudioHandler {
 
   void setRecordQueue(List<Record> records) {
     _recordQueue.add(records);
+  }
+}
+
+
+mixin SkipActionsMixin on BaseAudioHandler {
+  final _skipActionStream = BehaviorSubject<SkipAction?>.seeded(null);
+  ValueStream<SkipAction?> get skipActionStream => _skipActionStream.stream;
+
+  addSkipAction(SkipAction skipAction) {
+    _skipActionStream.add(skipAction);
   }
 }
