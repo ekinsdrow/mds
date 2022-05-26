@@ -10,6 +10,7 @@ import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/player/widgets/modals/info_modal.dart';
 import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
+import 'package:mds/features/player/widgets/modals/speed_modal.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:provider/provider.dart';
@@ -309,6 +310,26 @@ class _Buttons extends StatelessWidget {
             color: Colors.black54,
           ),
         ),
+        StreamBuilder<bool>(
+          stream: player.shuffleStream,
+          builder: (context, shuffleState) {
+            final shuffle = shuffleState.data ?? false;
+
+            return IconButton(
+              splashRadius: 20,
+              onPressed: () {
+                player.setShuffle(
+                  !shuffle,
+                );
+              },
+              icon: Icon(
+                Icons.shuffle,
+                color:
+                    shuffle ? Theme.of(context).primaryColor : Colors.black54,
+              ),
+            );
+          },
+        ),
         IconButton(
           splashRadius: 20,
           onPressed: () {
@@ -387,6 +408,30 @@ class _Buttons extends StatelessWidget {
           icon: Icon(
             Icons.skip_next,
             color: Theme.of(context).primaryColor,
+          ),
+        ),
+        IconButton(
+          splashRadius: 20,
+          onPressed: () {
+            showSpeedModal(
+              context,
+              player,
+            );
+          },
+          icon: Center(
+            child: StreamBuilder<double>(
+              stream: player.speedStream,
+              builder: (context, speedSnapshot) {
+                final speed = speedSnapshot.data ?? 1.0;
+                return Text(
+                  '${speed.toStringAsFixed(1)}x',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                );
+              },
+            ),
           ),
         ),
         IconButton(

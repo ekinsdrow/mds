@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:audio_service/audio_service.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/features/playing/data/models/skip_actions.dart';
@@ -12,6 +12,9 @@ class MdsAudioHandler extends BaseAudioHandler
         PositionStreamMixin,
         RecordStreamMixin,
         RecordQueueMixin,
+        SpeedMixin,
+        ShuffleMixin,
+        AudioSessionMixin,
         SkipActionsMixin {
   final AudioPlayer _player;
 
@@ -20,9 +23,67 @@ class MdsAudioHandler extends BaseAudioHandler
   ) {
     _player.positionStream.listen(
       (event) {
-        _positionStream.add(event);
+        _positionStream.add(
+          event,
+        );
+
+        if (event.inSeconds + 1 >=
+            recordQueueStream.value[_queueIndex].file.duration.inSeconds) {
+          skipToNext();
+        }
       },
     );
+
+    configureAudioSession();
+  }
+
+  @override
+  void setShuffle(bool value) {
+    _shuffleStream.add(value);
+    final nowRecord = recordStream.value;
+
+    if (nowRecord != null) {
+      if (value) {
+        oldQueue = [...recordQueueStream.value];
+
+        final queue = [...recordQueueStream.value..shuffle()];
+
+        _queueIndex = 0;
+
+        queue.removeWhere((element) => element.recordId == nowRecord.recordId);
+
+        queue.insert(
+          0,
+          nowRecord,
+        );
+
+        _recordQueue.add(
+          queue,
+        );
+      } else {
+        if (oldQueue != null) {
+          _recordQueue.add(
+            oldQueue!,
+          );
+
+          _queueIndex = oldQueue!.indexWhere(
+            (element) => element.recordId == nowRecord.recordId,
+          );
+        }
+      }
+    }
+  }
+
+  @override
+  void setSpeedValue(double value) {
+    if (value > 2) {
+      value = 2;
+    } else if (value < 0.5) {
+      value = 0.5;
+    }
+
+    _speedStream.add(value);
+    _player.setSpeed(value);
   }
 
   @override
@@ -54,7 +115,6 @@ class MdsAudioHandler extends BaseAudioHandler
   Future<void> skipToNext() async {
     playbackState.add(PlayingStates.pauseState);
     await _player.pause();
-
     final queue = recordQueueStream.value;
 
     if (_queueIndex == queue.length - 1) {
@@ -108,8 +168,6 @@ class MdsAudioHandler extends BaseAudioHandler
 
       _queueIndex =
           queue.indexWhere((element) => element.recordId == record.recordId);
-
-      log(_queueIndex.toString());
 
       try {
         await _player.setUrl(url);
@@ -170,12 +228,38 @@ mixin RecordQueueMixin on BaseAudioHandler {
   }
 }
 
-
 mixin SkipActionsMixin on BaseAudioHandler {
   final _skipActionStream = BehaviorSubject<SkipAction?>.seeded(null);
   ValueStream<SkipAction?> get skipActionStream => _skipActionStream.stream;
 
-  addSkipAction(SkipAction skipAction) {
+  void addSkipAction(SkipAction skipAction) {
     _skipActionStream.add(skipAction);
+  }
+}
+
+mixin ShuffleMixin on BaseAudioHandler {
+  final _shuffleStream = BehaviorSubject<bool>.seeded(false);
+  ValueStream<bool> get shuffleStream => _shuffleStream.stream;
+
+  List<Record>? oldQueue;
+
+  void setShuffle(bool value) {
+    _shuffleStream.add(value);
+  }
+}
+
+mixin SpeedMixin on BaseAudioHandler {
+  final _speedStream = BehaviorSubject<double>.seeded(1);
+  ValueStream<double> get speedStream => _speedStream.stream;
+
+  void setSpeedValue(double value) {
+    _speedStream.add(value);
+  }
+}
+
+mixin AudioSessionMixin on BaseAudioHandler {
+  Future<void> configureAudioSession() async {
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.speech());
   }
 }
