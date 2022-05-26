@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:audio_service/audio_service.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/features/playing/data/models/skip_actions.dart';
@@ -13,6 +14,7 @@ class MdsAudioHandler extends BaseAudioHandler
         RecordQueueMixin,
         SpeedMixin,
         ShuffleMixin,
+        AudioSessionMixin,
         SkipActionsMixin {
   final AudioPlayer _player;
 
@@ -31,6 +33,8 @@ class MdsAudioHandler extends BaseAudioHandler
         }
       },
     );
+
+    configureAudioSession();
   }
 
   @override
@@ -250,5 +254,12 @@ mixin SpeedMixin on BaseAudioHandler {
 
   void setSpeedValue(double value) {
     _speedStream.add(value);
+  }
+}
+
+mixin AudioSessionMixin on BaseAudioHandler {
+  Future<void> configureAudioSession() async {
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.speech());
   }
 }
