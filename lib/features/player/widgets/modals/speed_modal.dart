@@ -29,43 +29,44 @@ class _Speed extends StatelessWidget {
           Constants.mediumPadding,
         ),
         child: StreamBuilder<double>(
-            stream: player.speedStream,
-            builder: (context, speedSnapshot) {
-              final speed = speedSnapshot.data ?? 1.0;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    splashRadius: 20,
-                    onPressed: () {
-                      player.setSpeedValue(speed - 0.1);
-                    },
-                    icon: const Icon(
-                      Icons.remove,
-                    ),
+          stream: player.speedStream,
+          builder: (context, speedSnapshot) {
+            final speed = speedSnapshot.data ?? 1.0;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  splashRadius: 20,
+                  onPressed: () {
+                    player.setSpeedValue(speed - 0.1);
+                  },
+                  icon: const Icon(
+                    Icons.remove,
                   ),
-                  const SizedBox(
-                    width: Constants.smallPadding,
+                ),
+                const SizedBox(
+                  width: Constants.smallPadding,
+                ),
+                Text(
+                  '${speed.toStringAsFixed(1)}x',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                const SizedBox(
+                  width: Constants.smallPadding,
+                ),
+                IconButton(
+                  splashRadius: 20,
+                  onPressed: () {
+                    player.setSpeedValue(speed + 0.1);
+                  },
+                  icon: const Icon(
+                    Icons.add,
                   ),
-                  Text(
-                    '${speed.toStringAsFixed(1)}x',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  const SizedBox(
-                    width: Constants.smallPadding,
-                  ),
-                  IconButton(
-                    splashRadius: 20,
-                    onPressed: () {
-                      player.setSpeedValue(speed + 0.1);
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                    ),
-                  ),
-                ],
-              );
-            }),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
