@@ -309,6 +309,25 @@ class _Buttons extends StatelessWidget {
             color: Colors.black54,
           ),
         ),
+        StreamBuilder<bool>(
+            stream: player.shuffleStream,
+            builder: (context, shuffleState) {
+              final shuffle = shuffleState.data ?? false;
+
+              return IconButton(
+                splashRadius: 20,
+                onPressed: () {
+                  player.setShuffle(
+                    !shuffle,
+                  );
+                },
+                icon: Icon(
+                  Icons.shuffle,
+                  color:
+                      shuffle ? Theme.of(context).primaryColor : Colors.black54,
+                ),
+              );
+            }),
         IconButton(
           splashRadius: 20,
           onPressed: () {
@@ -387,6 +406,21 @@ class _Buttons extends StatelessWidget {
           icon: Icon(
             Icons.skip_next,
             color: Theme.of(context).primaryColor,
+          ),
+        ),
+        IconButton(
+          splashRadius: 20,
+          onPressed: () {
+            //TODO: spped
+          },
+          icon: const Center(
+            child: Text(
+              '1.0x',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+            ),
           ),
         ),
         IconButton(

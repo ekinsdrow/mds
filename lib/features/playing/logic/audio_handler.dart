@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+import 'dart:math';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
@@ -12,6 +12,7 @@ class MdsAudioHandler extends BaseAudioHandler
         PositionStreamMixin,
         RecordStreamMixin,
         RecordQueueMixin,
+        ShuffleMixin,
         SkipActionsMixin {
   final AudioPlayer _player;
 
@@ -30,6 +31,43 @@ class MdsAudioHandler extends BaseAudioHandler
         }
       },
     );
+  }
+
+  @override
+  void setShuffle(bool value) {
+    _shuffleStream.add(value);
+    final nowRecord = recordStream.value;
+
+    if (nowRecord != null) {
+      if (value) {
+        oldQueue = [...recordQueueStream.value];
+
+        final queue = [...recordQueueStream.value..shuffle()];
+
+        _queueIndex = 0;
+
+        queue.removeWhere((element) => element.recordId == nowRecord.recordId);
+
+        queue.insert(
+          0,
+          nowRecord,
+        );
+
+        _recordQueue.add(
+          queue,
+        );
+      } else {
+        if (oldQueue != null) {
+          _recordQueue.add(
+            oldQueue!,
+          );
+
+          _queueIndex = oldQueue!.indexWhere(
+            (element) => element.recordId == nowRecord.recordId,
+          );
+        }
+      }
+    }
   }
 
   @override
@@ -61,7 +99,6 @@ class MdsAudioHandler extends BaseAudioHandler
   Future<void> skipToNext() async {
     playbackState.add(PlayingStates.pauseState);
     await _player.pause();
-
     final queue = recordQueueStream.value;
 
     if (_queueIndex == queue.length - 1) {
@@ -115,8 +152,6 @@ class MdsAudioHandler extends BaseAudioHandler
 
       _queueIndex =
           queue.indexWhere((element) => element.recordId == record.recordId);
-
-      log(_queueIndex.toString());
 
       try {
         await _player.setUrl(url);
@@ -181,7 +216,18 @@ mixin SkipActionsMixin on BaseAudioHandler {
   final _skipActionStream = BehaviorSubject<SkipAction?>.seeded(null);
   ValueStream<SkipAction?> get skipActionStream => _skipActionStream.stream;
 
-  addSkipAction(SkipAction skipAction) {
+  void addSkipAction(SkipAction skipAction) {
     _skipActionStream.add(skipAction);
+  }
+}
+
+mixin ShuffleMixin on BaseAudioHandler {
+  final _shuffleStream = BehaviorSubject<bool>.seeded(false);
+  ValueStream<bool> get shuffleStream => _shuffleStream.stream;
+
+  List<Record>? oldQueue;
+
+  void setShuffle(bool value) {
+    _shuffleStream.add(value);
   }
 }
