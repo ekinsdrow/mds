@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mds/common/data/models/record.dart';
@@ -12,6 +11,7 @@ class MdsAudioHandler extends BaseAudioHandler
         PositionStreamMixin,
         RecordStreamMixin,
         RecordQueueMixin,
+        SpeedMixin,
         ShuffleMixin,
         SkipActionsMixin {
   final AudioPlayer _player;
@@ -68,6 +68,18 @@ class MdsAudioHandler extends BaseAudioHandler
         }
       }
     }
+  }
+
+  @override
+  void setSpeedValue(double value) {
+    if (value > 2) {
+      value = 2;
+    } else if (value < 0.5) {
+      value = 0.5;
+    }
+
+    _speedStream.add(value);
+    _player.setSpeed(value);
   }
 
   @override
@@ -229,5 +241,14 @@ mixin ShuffleMixin on BaseAudioHandler {
 
   void setShuffle(bool value) {
     _shuffleStream.add(value);
+  }
+}
+
+mixin SpeedMixin on BaseAudioHandler {
+  final _speedStream = BehaviorSubject<double>.seeded(1);
+  ValueStream<double> get speedStream => _speedStream.stream;
+
+  void setSpeedValue(double value) {
+    _speedStream.add(value);
   }
 }
