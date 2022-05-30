@@ -2,8 +2,8 @@ import 'package:mds/common/data/models/record.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IHistoryRepository {
-  Future<void> saveHistoryRecord(Record record);
-  Future<void> clearHistory();
+  Future<List<String>> saveHistoryRecord(Record record);
+  Future<List<String>> clearHistory();
   Future<List<String>> getHistoryIds();
 }
 
@@ -11,9 +11,11 @@ class HistoryRepository implements IHistoryRepository {
   final _key = 'history';
 
   @override
-  Future<void> clearHistory() async {
+  Future<List<String>> clearHistory() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove(_key);
+
+    return [];
   }
 
   @override
@@ -24,7 +26,7 @@ class HistoryRepository implements IHistoryRepository {
   }
 
   @override
-  Future<void> saveHistoryRecord(Record record) async {
+  Future<List<String>> saveHistoryRecord(Record record) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     final history = [
       ...await getHistoryIds(),
@@ -32,5 +34,7 @@ class HistoryRepository implements IHistoryRepository {
     ];
 
     sharedPreferences.setStringList(_key, history);
+
+    return history;
   }
 }
