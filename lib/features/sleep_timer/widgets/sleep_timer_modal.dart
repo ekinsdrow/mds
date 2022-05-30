@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
-import 'package:mds/features/sleep_timer/logic/sleep_timer.dart';
 
 void showSleepTimerModal(BuildContext context) {
   showModalBottomSheet(
