@@ -19,6 +19,7 @@
   "queue_is_empty": "Очередь пустая",
   "recently_listening": "Недавно прослушаное",
   "remove_all_downloaded_files": "Стереть все скачиные файлы",
+  "remove_all_history": "Очистить историю",
   "retry": "Повторить",
   "sec": "сек",
   "server_error": "Ошибка сервера",

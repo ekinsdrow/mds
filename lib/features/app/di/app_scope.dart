@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/favorites/di/favorites_scope.dart';
+import 'package:mds/features/history/di/history_scope.dart';
 import 'package:mds/features/playing/di/playing_scope.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/di/record_info_scope.dart';
@@ -31,9 +32,11 @@ class AppScope extends StatelessWidget {
         ],
         child: PlayingScope(
           mdsAudioHandler: mdsAudioHandler,
-          child: FavoritesScope(
-            child: RecordInfoScope(
-              child: child,
+          child: HistoryScope(
+            child: FavoritesScope(
+              child: RecordInfoScope(
+                child: child,
+              ),
             ),
           ),
         ),

@@ -19,6 +19,7 @@
   "queue_is_empty": "Queue is empty",
   "recently_listening": "Recently listening",
   "remove_all_downloaded_files": "Remove all downloaded files",
+  "remove_all_history": "Clear history",
   "retry": "Retry",
   "sec": "sec",
   "server_error": "Server Error",

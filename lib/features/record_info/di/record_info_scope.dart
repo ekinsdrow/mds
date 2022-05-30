@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/widgets/error_snackbar.dart';
+import 'package:mds/features/history/bloc/history_bloc/history_bloc.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
 import 'package:mds/features/record_info/data/repositories/record_link_repository.dart';
@@ -55,6 +56,12 @@ class RecordInfoScope extends StatelessWidget {
                 record,
               ) {
                 final player = context.read<MdsAudioHandler>();
+
+                context.read<HistoryBloc>().add(
+                      HistoryEvent.save(
+                        record: record,
+                      ),
+                    );
 
                 player.playFromUrl(
                   url: recordLink.link,

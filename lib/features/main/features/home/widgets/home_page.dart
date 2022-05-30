@@ -163,9 +163,9 @@ class _Filters extends StatelessWidget {
           _FilterCard(
             text: AppLocalizations.of(context)!.recently_listening,
             callback: () {
-              //TODO: recently listneng filter
+              context.read<CatalogNotifier>().toogleShowOnlyHistory();
             },
-            active: false,
+            active: context.watch<CatalogNotifier>().showOnlyHistory,
           ),
           Row(
             children: [
