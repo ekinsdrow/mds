@@ -5,9 +5,10 @@ import 'package:mds/features/sleep_timer/data/models/sleep_timer_state.dart';
 import 'package:mds/features/sleep_timer/data/models/sleep_timer_status.dart';
 import 'package:rxdart/rxdart.dart';
 
+//TODO: pause and resume
 class SleepTimer {
   SleepTimer._();
-  static SleepTimer get instance => SleepTimer._();
+  static SleepTimer instance = SleepTimer._();
 
   BehaviorSubject<SleepTimerState>? _stateStream;
   Stream<SleepTimerState> get stateStream => _stateStream != null
@@ -31,32 +32,26 @@ class SleepTimer {
 
     _receivePort!.listen(_listenIsolateMessages);
 
-    _isolate = await Isolate.spawn(
-      _timer,
-      {
-        'duration': duration,
-        'port': _receivePort!.sendPort,
-      },
+    _spawnIsolate(
+      duration,
+      _receivePort!.sendPort,
     );
   }
 
-  void pause() {
-    _stateStream?.add(
-      _stateStream?.value.copyWith(status: SleepTimerStatus.pause),
-    );
-  }
 
   void stop() {
-    _stateStream?.add(
-      _stateStream?.value.copyWith(
-        duration: Duration.zero,
-        status: SleepTimerStatus.stop,
-      ),
-    );
+    if (_stateStream != null) {
+      _stateStream!.add(
+        _stateStream!.value.copyWith(
+          duration: Duration.zero,
+          status: SleepTimerStatus.stop,
+        ),
+      );
 
-    _stateStream?.close();
-    _receivePort?.close();
-    _isolate?.kill();
+      _stateStream!.close();
+      _receivePort?.close();
+      _isolate?.kill();
+    }
   }
 
   void _listenIsolateMessages(dynamic message) {
@@ -69,29 +64,40 @@ class SleepTimer {
     }
   }
 
-  void _timer(dynamic message) {
-    final duration = message['duration'] as Duration;
-    final port = message['port'] as SendPort;
+  void _spawnIsolate(
+    Duration duration,
+    SendPort sendPort,
+  ) {
+    Isolate.spawn<Map<String, dynamic>>(
+      (message) {
+        final duration = message['duration'] as Duration;
+        final port = message['port'] as SendPort;
 
-    Timer.periodic(
-      const Duration(
-        seconds: 1,
-      ),
-      (timer) {
-        if (timer.tick == duration.inSeconds) {
-          port.send('stop');
-          timer.cancel();
-        }
-
-        port.send(
-          SleepTimerState(
-            duration: duration -
-                Duration(
-                  seconds: timer.tick,
-                ),
-            status: SleepTimerStatus.play,
+        Timer.periodic(
+          const Duration(
+            seconds: 1,
           ),
+          (timer) {
+            if (timer.tick == duration.inSeconds) {
+              port.send('stop');
+              timer.cancel();
+            }
+
+            port.send(
+              SleepTimerState(
+                duration: duration -
+                    Duration(
+                      seconds: timer.tick,
+                    ),
+                status: SleepTimerStatus.play,
+              ),
+            );
+          },
         );
+      },
+      {
+        'duration': duration,
+        'port': sendPort,
       },
     );
   }
