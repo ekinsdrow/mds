@@ -5,23 +5,21 @@ import 'package:mds/features/sleep_timer/data/models/sleep_timer_state.dart';
 import 'package:mds/features/sleep_timer/data/models/sleep_timer_status.dart';
 import 'package:rxdart/rxdart.dart';
 
-//TODO: pause and resume
+// stop play
 class SleepTimer {
   SleepTimer._();
   static SleepTimer instance = SleepTimer._();
 
-  BehaviorSubject<SleepTimerState>? _stateStream;
-  Stream<SleepTimerState> get stateStream => _stateStream != null
-      ? _stateStream!.stream
-      : BehaviorSubject.seeded(
-          SleepTimerState.defaultValue(),
-        );
+  final _stateStream = BehaviorSubject<SleepTimerState>.seeded(
+    SleepTimerState.defaultValue(),
+  );
 
-  Isolate? _isolate;
+  Stream<SleepTimerState> get stateStream => _stateStream.stream;
+
   ReceivePort? _receivePort;
 
   Future<void> start(Duration duration) async {
-    _stateStream = BehaviorSubject.seeded(
+    _stateStream.add(
       SleepTimerState(
         duration: duration,
         status: SleepTimerStatus.play,
@@ -38,25 +36,20 @@ class SleepTimer {
     );
   }
 
-
   void stop() {
-    if (_stateStream != null) {
-      _stateStream!.add(
-        _stateStream!.value.copyWith(
-          duration: Duration.zero,
-          status: SleepTimerStatus.stop,
-        ),
-      );
+    _stateStream.add(
+      _stateStream.value.copyWith(
+        duration: Duration.zero,
+        status: SleepTimerStatus.stop,
+      ),
+    );
 
-      _stateStream!.close();
-      _receivePort?.close();
-      _isolate?.kill();
-    }
+    _receivePort?.close();
   }
 
   void _listenIsolateMessages(dynamic message) {
     if (message is SleepTimerState) {
-      _stateStream?.add(message);
+      _stateStream.add(message);
     } else if (message is String) {
       if (message == 'stop') {
         stop();

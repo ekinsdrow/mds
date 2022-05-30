@@ -25,6 +25,7 @@
   "server_error": "Server Error",
   "sorting": "Sorting",
   "start": "Start",
+  "stop": "Stop",
   "timeout_error": "Timeout error",
   "unknown_error": "Uknown Error"
 }
