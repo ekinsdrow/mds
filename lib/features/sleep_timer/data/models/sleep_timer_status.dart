@@ -1,0 +1,4 @@
+enum SleepTimerStatus {
+  stop,
+  play,
+}

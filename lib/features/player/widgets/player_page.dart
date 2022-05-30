@@ -9,10 +9,10 @@ import 'package:mds/common/widgets/progress_bar.dart';
 import 'package:mds/common/widgets/record_list_item.dart';
 import 'package:mds/features/favorites/blocs/favorites/favorites_bloc.dart';
 import 'package:mds/features/player/widgets/modals/info_modal.dart';
-import 'package:mds/features/player/widgets/modals/sleep_timer_modal.dart';
 import 'package:mds/features/player/widgets/modals/speed_modal.dart';
 import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/record_info/blocs/record_info/record_info_bloc.dart';
+import 'package:mds/features/sleep_timer/widgets/sleep_timer_modal.dart';
 import 'package:provider/provider.dart';
 
 class PlayerPage extends StatelessWidget {
