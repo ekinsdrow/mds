@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mds/features/app/data/notifiers/catalog_notifier.dart';
 import 'package:mds/features/history/bloc/history_bloc/history_bloc.dart';
 import 'package:mds/features/history/data/repository/history_repository.dart';
 
@@ -19,11 +20,24 @@ class HistoryScope extends StatelessWidget {
           create: (context) => HistoryRepository(),
         )
       ],
-      child: BlocProvider(
-        create: (context) => HistoryBloc(
-          historyRepository: context.read<IHistoryRepository>(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => HistoryBloc(
+              historyRepository: context.read<IHistoryRepository>(),
+            )..add(
+                const HistoryEvent.getRecordsIds(),
+              ),
+          ),
+        ],
+        child: BlocListener<HistoryBloc, HistoryState>(
+          listener: (context, state) => state.whenOrNull(
+            initial: (ids) => context.read<CatalogNotifier>().setHistory(
+                  history: ids,
+                ),
+          ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }

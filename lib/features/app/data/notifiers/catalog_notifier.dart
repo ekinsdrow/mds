@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mds/common/data/models/record.dart';
 import 'package:mds/features/app/data/enums/sort_enums.dart';
 import 'package:mds/features/app/data/notifiers/models/decorators/favorites_decorator.dart';
+import 'package:mds/features/app/data/notifiers/models/decorators/history_decorator.dart';
 import 'package:mds/features/app/data/notifiers/models/decorators/search_decorator.dart';
 import 'package:mds/features/app/data/notifiers/models/decorators/sort_decorator.dart';
 import 'package:mds/features/app/data/notifiers/models/records_collection.dart';
@@ -30,6 +31,22 @@ class CatalogNotifier extends ChangeNotifier {
 
   late IRecords _collection;
   List<Record> get nowList => _collection.getRecords;
+
+  //History
+  var _history = <String>[];
+
+  var _showOnlyHistory = false;
+  bool get showOnlyHistory => _showOnlyHistory;
+
+  void toogleShowOnlyHistory() {
+    _showOnlyHistory = !_showOnlyHistory;
+    _applyFilters();
+  }
+
+  void setHistory({required List<String> history}) {
+    _history = history;
+    _applyFilters();
+  }
 
   //Fav
   var _showOnlyFav = false;
@@ -104,6 +121,13 @@ class CatalogNotifier extends ChangeNotifier {
       records = SearchDecorator(
         records,
         request: _searchRequest,
+      );
+    }
+
+    if (_showOnlyHistory) {
+      records = HistoryDecorator(
+        recordCollection: records,
+        ids: _history,
       );
     }
 
