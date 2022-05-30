@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/sleep_timer/data/models/sleep_timer_state.dart';
 import 'package:mds/features/sleep_timer/data/models/sleep_timer_status.dart';
 import 'package:rxdart/rxdart.dart';
 
-// stop play
 class SleepTimer {
   SleepTimer._();
   static SleepTimer instance = SleepTimer._();
@@ -18,7 +18,12 @@ class SleepTimer {
 
   ReceivePort? _receivePort;
 
-  Future<void> start(Duration duration) async {
+  MdsAudioHandler? _audioHandler;
+
+  Future<void> start({
+    required Duration duration,
+    required MdsAudioHandler audioHandler,
+  }) async {
     _stateStream.add(
       SleepTimerState(
         duration: duration,
@@ -26,8 +31,9 @@ class SleepTimer {
       ),
     );
 
-    _receivePort = ReceivePort();
+    _audioHandler = audioHandler;
 
+    _receivePort = ReceivePort();
     _receivePort!.listen(_listenIsolateMessages);
 
     _spawnIsolate(
@@ -43,6 +49,8 @@ class SleepTimer {
         status: SleepTimerStatus.stop,
       ),
     );
+
+    _audioHandler?.stop();
 
     _receivePort?.close();
   }

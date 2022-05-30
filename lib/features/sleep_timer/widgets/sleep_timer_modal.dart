@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mds/common/assets/constants.dart';
 import 'package:mds/common/extensions/add_zero.dart';
+import 'package:mds/features/playing/logic/audio_handler.dart';
 import 'package:mds/features/sleep_timer/data/models/sleep_timer_state.dart';
 import 'package:mds/features/sleep_timer/data/models/sleep_timer_status.dart';
 import 'package:mds/features/sleep_timer/logic/sleep_timer.dart';
+import 'package:provider/provider.dart';
 
 void showSleepTimerModal(BuildContext context) {
   showModalBottomSheet(
@@ -82,7 +84,11 @@ class _SleepTimerState extends State<_SleepTimer> {
           _duration = Duration.zero;
         }
       });
-      SleepTimer.instance.start(_duration);
+
+      SleepTimer.instance.start(
+        duration: _duration,
+        audioHandler: context.read<MdsAudioHandler>(),
+      );
     }
   }
 
@@ -196,7 +202,10 @@ class _SleepTimerState extends State<_SleepTimer> {
                 onPressed: () {
                   if (_status == SleepTimerStatus.stop) {
                     if (_duration != Duration.zero) {
-                      SleepTimer.instance.start(_duration);
+                      SleepTimer.instance.start(
+                        duration: _duration,
+                        audioHandler: context.read<MdsAudioHandler>(),
+                      );
                     }
                   } else {
                     SleepTimer.instance.stop();
